@@ -1,0 +1,54 @@
+{ ... }:
+{
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    localVariables = {
+      CASE_SENSITIVE = "true";
+    };
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    shellAliases = {
+      ll = "eza -l --icons";
+      la = "eza -la --icons";
+      lt = "eza --tree --icons";
+      cat = "bat";
+      edit = "sudo -e";
+      update = "sudo nixos-rebuild switch";
+      screenshot = "slurp | grim -g - - | wl-copy";
+      sl3 = "sleep 3 && swaylock -f && systemctl suspend";
+    };
+
+    history = {
+      size = 10000;
+      ignoreAllDups = true;
+      path = "$HOME/.zsh_history";
+      ignorePatterns = [
+        "rm *"
+        "pkill *"
+        "cp *"
+      ];
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [
+        "git"
+        "sudo"
+      ];
+    };
+
+    envExtra = ''
+      local secrets_file="$HOME/.config/zsh/env.secrets"
+      [[ -f "$secrets_file" ]] && source "$secrets_file"
+    '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    # Import upstream starship config (Codeberg sensei/nixos: config/starship/starship.main.toml)
+    settings = builtins.fromTOML (builtins.readFile ./starship.main.toml);
+  };
+}
