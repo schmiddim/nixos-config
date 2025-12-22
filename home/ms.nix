@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.username = "ms";
   home.homeDirectory = "/home/ms";
   home.stateVersion = "25.11";
@@ -12,6 +10,7 @@
     wget
     google-chrome
     jetbrains.idea # -ultimate
+    freecad
     kubectl
     k9s
     htop
@@ -24,6 +23,6 @@
     gh
     xorg.xinput
     xorg.setxkbmap
-
+    alejandra
   ];
 }

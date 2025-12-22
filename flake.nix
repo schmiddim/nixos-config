@@ -7,8 +7,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  }: let
     system = "x86_64-linux";
   in {
     nixosConfigurations.p52-nixos = nixpkgs.lib.nixosSystem {

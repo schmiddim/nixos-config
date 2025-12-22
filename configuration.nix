@@ -1,10 +1,11 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -21,12 +22,11 @@
     evdi
   ];
 
-  boot.initrd.kernelModules = [ "evdi" ];
+  boot.initrd.kernelModules = ["evdi"];
 
   boot.kernelParams = [
-  "usbcore.autosuspend=-1"
-  "ucsi.disable_pm=1"
-
+    "usbcore.autosuspend=-1"
+    "ucsi.disable_pm=1"
   ];
 
   networking.hostName = "p52-nixos"; # Define your hostname.
@@ -93,18 +93,18 @@
     variant = "";
   };
   # Keychron = us (per device)
-services.xserver.displayManager.sessionCommands = ''
-  id="$(xinput list | awk -F'id=' '/Keychron/ && /Keyboard/ && /slave  keyboard/ {print $2}' | awk '{print $1; exit}')"
-  if [ -n "$id" ]; then
-    setxkbmap -device "$id" -model pc105 -layout us
-  fi
+  services.xserver.displayManager.sessionCommands = ''
+    id="$(xinput list | awk -F'id=' '/Keychron/ && /Keyboard/ && /slave  keyboard/ {print $2}' | awk '{print $1; exit}')"
+    if [ -n "$id" ]; then
+      setxkbmap -device "$id" -model pc105 -layout us
+    fi
 
-  # --- Touchpad  ---
-  tp_id="$(xinput list | awk -F'id=' '/Touchpad/ {print $2}' | awk '{print $1; exit}')"
-  if [ -n "$tp_id" ]; then
-      xinput disable "$tp_id"
-  fi
-'';
+    # --- Touchpad  ---
+    tp_id="$(xinput list | awk -F'id=' '/Touchpad/ {print $2}' | awk '{print $1; exit}')"
+    if [ -n "$tp_id" ]; then
+        xinput disable "$tp_id"
+    fi
+  '';
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.avahi = {
@@ -133,26 +133,24 @@ services.xserver.displayManager.sessionCommands = ''
     #media-session.enable = true;
   };
 
-# Autostart guake
+  # Autostart guake
   environment.etc."xdg/autostart/guake.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Guake Terminal
-    Exec=${pkgs.guake}/bin/guake
+       [Desktop Entry]
+       Type=Application
+       Name=Guake Terminal
+       Exec=${pkgs.guake}/bin/guake
 
- #   OnlyShowIn=X-Cinnamon;
-    X-GNOME-Autostart-enabled=true
-    Comment=Start Guake on login
+    #   OnlyShowIn=X-Cinnamon;
+       X-GNOME-Autostart-enabled=true
+       Comment=Start Guake on login
   '';
-
-
 
   programs.zsh = {
     enable = true;
     ohMyZsh = {
       enable = true;
       theme = "robbyrussell";
-      plugins = [ "git" "sudo" ];
+      plugins = ["git" "sudo"];
     };
   };
 
@@ -190,7 +188,6 @@ services.xserver.displayManager.sessionCommands = ''
     git
     gcc
     usbutils
-    alejandra
   ];
 
   environment.variables = {
@@ -209,12 +206,12 @@ services.xserver.displayManager.sessionCommands = ''
     ];
   };
 
-# clean up builds older than 14d
-nix.gc = {
-  automatic = true;
-  dates = "weekly";                 # oder "daily"
-  options = "--delete-older-than 14d";
-};
+  # clean up builds older than 14d
+  nix.gc = {
+    automatic = true;
+    dates = "weekly"; # oder "daily"
+    options = "--delete-older-than 14d";
+  };
   #home.sessionPath = [
   #  "$HOME/go/bin"
   #  "$HOME/bin"
@@ -244,5 +241,4 @@ nix.gc = {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }

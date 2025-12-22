@@ -3,7 +3,7 @@ FLAKE_DIR := /etc/nixos
 HOST := $(shell hostname)
 FLAKE := $(FLAKE_DIR)#$(HOST)
 
-.PHONY: help show check test build boot switch update upgrade diff gc clean
+.PHONY: fmt help show check test build boot switch update upgrade diff gc clean fmt
 
 help:
 	@echo "Targets:"
@@ -11,6 +11,7 @@ help:
 	@echo "  make check    - run flake checks"
 	@echo "  make test     - activate in test mode (no boot entry)"
 	@echo "  make boot     - build + set as default for next boot"
+	@echo "	 make fmt 	   - formatting Nix files with alejandra…"
 	@echo "  make switch   - build + switch now"
 	@echo "  make update   - update flake inputs (writes flake.lock)"
 	@echo "  make upgrade  - update + switch"
@@ -48,3 +49,5 @@ gc:
 
 clean:
 	rm -f result result-*
+fmt:
+	alejandra .
