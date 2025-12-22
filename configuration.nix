@@ -78,7 +78,16 @@ services.xserver.displayManager.sessionCommands = ''
   fi
 '';
   # Enable CUPS to print documents.
-  services.printing.enable = false;
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  services.printing.drivers = with pkgs; [
+    hplip
+  ];
+  programs.system-config-printer.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
