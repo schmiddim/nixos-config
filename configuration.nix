@@ -190,8 +190,17 @@ services.xserver.displayManager.sessionCommands = ''
     GOPATH = "$HOME/go";
     GOBIN = "$HOME/go/bin";
     PATH = "$HOME/go/bin:$PATH";
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
+  # kubernetes
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = [
+      "--write-kubeconfig-mode=644"
+    ];
+  };
 
 # clean up builds older than 14d
 nix.gc = {
