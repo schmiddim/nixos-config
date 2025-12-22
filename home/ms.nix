@@ -6,23 +6,39 @@
   home.packages = with pkgs; [
     thunderbird
     gnumake
-    vim
-    wget
     google-chrome
-    jetbrains.idea # -ultimate
+    jetbrains.idea
     freecad
     kubectl
     k9s
-    htop
-    git
     guake
     go
     gotools
     gcc
-    usbutils
     gh
     xorg.xinput
     xorg.setxkbmap
     alejandra
   ];
+
+  home.sessionVariables = {
+    GOPATH = "$HOME/go";
+    GOBIN = "$HOME/go/bin";
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  };
+
+  home.sessionPath = [
+    "$HOME/go/bin"
+  ];
+
+  xdg.enable = true;
+
+  xdg.configFile."autostart/guake.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Guake Terminal
+    Exec=${pkgs.guake}/bin/guake
+    X-GNOME-Autostart-enabled=true
+    Comment=Start Guake on login
+  '';
 }

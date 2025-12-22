@@ -133,18 +133,6 @@
     #media-session.enable = true;
   };
 
-  # Autostart guake
-  environment.etc."xdg/autostart/guake.desktop".text = ''
-       [Desktop Entry]
-       Type=Application
-       Name=Guake Terminal
-       Exec=${pkgs.guake}/bin/guake
-
-    #   OnlyShowIn=X-Cinnamon;
-       X-GNOME-Autostart-enabled=true
-       Comment=Start Guake on login
-  '';
-
   programs.zsh = {
     enable = true;
     ohMyZsh = {
@@ -190,13 +178,6 @@
     usbutils
   ];
 
-  environment.variables = {
-    GOPATH = "$HOME/go";
-    GOBIN = "$HOME/go/bin";
-    PATH = "$HOME/go/bin:$PATH";
-    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-  };
-
   # kubernetes
   services.k3s = {
     enable = true;
@@ -212,10 +193,7 @@
     dates = "weekly"; # oder "daily"
     options = "--delete-older-than 14d";
   };
-  #home.sessionPath = [
-  #  "$HOME/go/bin"
-  #  "$HOME/bin"
-  #];
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programstr.enable = true;
