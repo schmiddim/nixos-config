@@ -135,12 +135,19 @@ services.xserver.displayManager.sessionCommands = ''
 
 
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" "sudo" ];
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ms = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     description = "ms";
     extraGroups = [
       "networkmanager"
