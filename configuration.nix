@@ -21,7 +21,13 @@
     evdi
   ];
 
-  boot.kernelModules = [ "evdi" ];
+  boot.initrd.kernelModules = [ "evdi" ];
+
+  boot.kernelParams = [
+   "usbcore.aususpent=-1"
+   "usci.disable_pm=1"
+
+  ];
 
   networking.hostName = "p52-nixos"; # Define your hostname.
 
@@ -190,7 +196,6 @@ services.xserver.displayManager.sessionCommands = ''
     go
     gotools
     gcc
-    displaylink
     usbutils
     gh
     xorg.xinput
