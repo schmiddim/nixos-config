@@ -169,6 +169,13 @@ services.xserver.displayManager.sessionCommands = ''
     PATH = "$HOME/go/bin:$PATH";
   };
 
+
+# clean up builds older than 14d
+nix.gc = {
+  automatic = true;
+  dates = "weekly";                 # oder "daily"
+  options = "--delete-older-than 14d";
+};
   #home.sessionPath = [
   #  "$HOME/go/bin"
   #  "$HOME/bin"
