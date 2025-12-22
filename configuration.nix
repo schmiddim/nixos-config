@@ -92,6 +92,12 @@ services.xserver.displayManager.sessionCommands = ''
   if [ -n "$id" ]; then
     setxkbmap -device "$id" -model pc105 -layout us
   fi
+
+  # --- Touchpad  ---
+  tp_id="$(xinput list | awk -F'id=' '/Touchpad/ {print $2}' | awk '{print $1; exit}')"
+  if [ -n "$tp_id" ]; then
+      xinput disable "$tp_id"
+  fi
 '';
   # Enable CUPS to print documents.
   services.printing.enable = true;
