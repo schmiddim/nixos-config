@@ -144,6 +144,11 @@ services.xserver.displayManager.sessionCommands = ''
     };
   };
 
+  programs.zsh.interactiveShellInit = ''
+    autoload -Uz compinit
+    compinit
+    zstyle ':completion:*:-command-:*' tag-order '!parameters'
+  '';
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ms = {
     isNormalUser = true;
