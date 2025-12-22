@@ -1,1 +1,23 @@
-.idea
+# Nix build results
+/result
+/result-*
+/nix-result
+/nix-result-*
+
+# direnv
+/.direnv/
+/.direnv
+/.envrc
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs / temp
+*.log
+tmp/
+.cache/

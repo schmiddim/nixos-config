@@ -24,8 +24,8 @@
   boot.initrd.kernelModules = [ "evdi" ];
 
   boot.kernelParams = [
-   "usbcore.aususpent=-1"
-   "usci.disable_pm=1"
+  "usbcore.autosuspend=-1"
+  "ucsi.disable_pm=1"
 
   ];
 
@@ -186,20 +186,11 @@ services.xserver.displayManager.sessionCommands = ''
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    google-chrome
-    jetbrains.idea # -ultimate
-    kubectl
-    k9s
     htop
     git
-    guake
-    go
-    gotools
     gcc
     usbutils
-    gh
-    xorg.xinput
-    xorg.setxkbmap
+    alejandra
   ];
 
   environment.variables = {
