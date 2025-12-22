@@ -25,6 +25,22 @@
 
   networking.hostName = "p52-nixos"; # Define your hostname.
 
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16384;
+    }
+  ];
+
+  boot.resumeDevice = "/swapfile";
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
+  boot.kernel.sysctl."vm.swappiness" = 10;
+
   # Mouse Hack on Thinkpad
   #  boot.kernelModules = [ "psmouse"];
   #  boot.extraModprobeConfig = "options psmouse proto=imps";
