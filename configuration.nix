@@ -77,6 +77,11 @@
     variant = "";
   };
 
+/*
+Keyboard
+Bus 001 Device 014: ID 3434:d030 Keychron  Keychron Link
+*/
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -95,6 +100,20 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
+# Autostart guake
+  environment.etc."xdg/autostart/guake.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Guake Terminal
+    Exec=${pkgs.guake}/bin/guake
+
+ #   OnlyShowIn=X-Cinnamon;
+    X-GNOME-Autostart-enabled=true
+    Comment=Start Guake on login
+  '';
+
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -150,10 +169,8 @@
   #];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
+  # programstr.enable = true;
   # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
   # };
 
   # List services that you want to enable:
@@ -174,7 +191,7 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 
-  systemd.services.displaylink = {
+/*  systemd.services.displaylink = {
     description = "DisplayLink Manager";
     wantedBy = [ "multi-user.target" ];
     after = [ "graphical.target" ];
@@ -183,7 +200,7 @@
       ExecStart = "${pkgs.displaylink}/bin/DisplayLinkManager";
       Restart = "always";
     };
-  };
+  };*/
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
