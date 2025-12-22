@@ -58,17 +58,11 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  #services.xserver.videoDrivers = [  "modesetting" ];
-
   services.xserver.videoDrivers = [
     "displaylink"
     "modesetting"
   ];
 
-  # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   # Configure keymap in X11
@@ -76,14 +70,15 @@
     layout = "de";
     variant = "";
   };
-
-/*
-Keyboard
-Bus 001 Device 014: ID 3434:d030 Keychron  Keychron Link
-*/
-
+  # Keychron = us (per device)
+services.xserver.displayManager.sessionCommands = ''
+  id="$(xinput list | awk -F'id=' '/Keychron/ && /Keyboard/ && /slave  keyboard/ {print $2}' | awk '{print $1; exit}')"
+  if [ -n "$id" ]; then
+    setxkbmap -device "$id" -model pc105 -layout us
+  fi
+'';
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -154,7 +149,9 @@ Bus 001 Device 014: ID 3434:d030 Keychron  Keychron Link
     gcc
     displaylink
     usbutils
-
+    gh
+    xorg.xinput
+    xorg.setxkbmap
   ];
 
   environment.variables = {
@@ -191,16 +188,6 @@ Bus 001 Device 014: ID 3434:d030 Keychron  Keychron Link
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 
-/*  systemd.services.displaylink = {
-    description = "DisplayLink Manager";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "graphical.target" ];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.displaylink}/bin/DisplayLinkManager";
-      Restart = "always";
-    };
-  };*/
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
