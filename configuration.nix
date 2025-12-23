@@ -235,6 +235,13 @@ environment.etc."sway/config".text = ''
   input type:touchpad {
     events disabled_on_external_mouse
   }
+
+
+  # Bildschirm nach 5 Min sperren, nach 10 Min DPMS aus
+  exec_always swayidle -w \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 600 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"'
 '';
   # --- K3s ---
   services.k3s = {
