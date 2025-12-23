@@ -1,47 +1,44 @@
 SHELL := /usr/bin/env bash
-FLAKE_DIR := /etc/nixos
-HOST := $(shell hostname)
-FLAKE := $(FLAKE_DIR)\#$(HOST)
 
-.PHONY: fmt help show check test build boot switch update upgrade diff gc clean fmt
+NIXOS_DIR ?= /etc/nixos
+CONFIG    ?= $(NIXOS_DIR)/configuration.nix
+
+.PHONY: help where check test build boot switch diff gc clean fmt
 
 help:
 	@echo "Targets:"
-	@echo "  make show     - show flake outputs"
-	@echo "  make check    - run flake checks"
-	@echo "  make test     - activate in test mode (no boot entry)"
-	@echo "  make boot     - build + set as default for next boot"
-	@echo "	 make fmt 	   - formatting Nix files with alejandra…"
-	@echo "  make switch   - build + switch now"
-	@echo "  make update   - update flake inputs (writes flake.lock)"
-	@echo "  make upgrade  - update + switch"
-	@echo "  make diff     - diff closures (current vs new build)"
-	@echo "  make gc       - garbage collect (-d)"
-	@echo "  make clean    - remove local result* symlinks"
+	@echo "  make where   - show config path"
+	@echo "  make check   - dry build (sanity check)"
+	@echo "  make test    - activate in test mode"
+	@echo "  make build   - build system"
+	@echo "  make boot    - set as default for next boot"
+	@echo "  make switch  - build + switch now"
+	@echo "  make diff    - diff closures"
+	@echo "  make gc      - garbage collect (-d)"
+	@echo "  make clean   - remove result symlinks"
+	@echo "  make fmt     - format nix files"
 
-show:
-	nix flake show $(FLAKE_DIR)
+where:
+	@echo "Using config: $(CONFIG)"
 
 check:
-	nix flake check $(FLAKE_DIR)
+	sudo nixos-rebuild dry-build -I nixos-config=$(CONFIG)
 
 test:
-	sudo nixos-rebuild test --flake "$(FLAKE)"
+	sudo nixos-rebuild test -I nixos-config=$(CONFIG)
+
+build:
+	sudo nixos-rebuild build -I nixos-config=$(CONFIG)
 
 boot:
-	sudo nixos-rebuild boot --flake "$(FLAKE)"
+	sudo nixos-rebuild boot -I nixos-config=$(CONFIG)
 
 switch:
-	sudo nixos-rebuild switch --flake "$(FLAKE)"
-
-update:
-	cd $(FLAKE_DIR) && nix flake update
-
-upgrade: update switch
+	sudo nixos-rebuild switch -I nixos-config=$(CONFIG)
 
 diff:
 	@current="$$(readlink -f /run/current-system)"; \
-	next="$$(nix build --no-link --print-out-paths $(FLAKE_DIR)#nixosConfigurations.$(HOST).config.system.build.toplevel)"; \
+	next="$$(nixos-rebuild build -I nixos-config=$(CONFIG) --no-link --print-out-paths)"; \
 	nix store diff-closures "$$current" "$$next" || true
 
 gc:
@@ -49,5 +46,6 @@ gc:
 
 clean:
 	rm -f result result-*
+
 fmt:
-	alejandra .
+	alejandra $(NIXOS_DIR)

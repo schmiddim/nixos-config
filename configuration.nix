@@ -6,6 +6,10 @@
   pkgs,
   ...
 }: {
+  nix.nixPath = [
+    "nixos-config=/etc/nixos/configuration.nix"
+    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+  ];
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -50,12 +54,6 @@
   # Mouse Hack on Thinkpad
   #  boot.kernelModules = [ "psmouse"];
   #  boot.extraModprobeConfig = "options psmouse proto=imps";
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -178,6 +176,23 @@
     git
     gcc
     usbutils
+    nh
+    thunderbird
+    gnumake
+    google-chrome
+    jetbrains.idea
+    freecad
+    kubectl
+    k9s
+    guake
+    go
+    gotools
+    gcc
+    gh
+    xorg.xinput
+    xorg.setxkbmap
+    alejandra
+    gimp
   ];
 
   # kubernetes
@@ -201,16 +216,27 @@
     PATH = "$HOME/go/bin:$PATH";
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programstr.enable = true;
-  # programs.gnupg.agent = {
-  # };
+
+  # Autostart guake
+  environment.etc."xdg/autostart/guake.desktop".text = ''
+       [Desktop Entry]
+       Type=Application
+       Name=Guake Terminal
+       Exec=${pkgs.guake}/bin/guake
+
+    #   OnlyShowIn=X-Cinnamon;
+       X-GNOME-Autostart-enabled=true
+       Comment=Start Guake on login
+  '';
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
+  services.openssh.settings = {
+    #    PasswordAuthentication = true;
+    #    KbdInteractiveAuthentication = true;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
