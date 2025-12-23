@@ -109,7 +109,6 @@
     };
   };
 
-environment.etc."sway/config".source = "${pkgs.sway}/etc/sway/config";
 
   # --- X11 / Desktop (Cinnamon + LightDM) ---
   #  services.xserver.enable = true;
@@ -219,15 +218,24 @@ environment.etc."sway/config".source = "${pkgs.sway}/etc/sway/config";
   ];
 
   services.gnome.gnome-keyring.enable = true;
-  /*environment.etc."sway/config".text = ''
-    # Minimal: Terminal + Modkey
-    set $mod Mod4
-    bindsym $mod+Return exec ${pkgs.alacritty}/bin/alacritty
-    bindsym $mod+Shift+e exec "swaymsg exit"
+environment.etc."sway/config".text = ''
+  set $mod Mod4
 
+  # Terminal
+  bindsym $mod+Return exec ${pkgs.alacritty}/bin/alacritty
 
-  '';
-*/
+  # App launcher
+  bindsym $mod+d exec ${pkgs.wofi}/bin/wofi --show drun
+
+  # Reload / Exit
+  bindsym $mod+Shift+c reload
+  bindsym $mod+Shift+e exec "swaymsg exit"
+
+  # Touchpad (optional)
+  input type:touchpad {
+    events disabled_on_external_mouse
+  }
+'';
   # --- K3s ---
   services.k3s = {
     enable = true;
