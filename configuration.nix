@@ -76,6 +76,15 @@
 
   # --- Wayland / Sway ---
 
+# XDG Desktop Portal (wichtig für Wayland: Waybar/ScreenShare/Picker etc.)
+xdg.portal = {
+  enable = true;
+  wlr.enable = true;  # wlroots portal für Sway
+  extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+  ];
+};
+
   services.xserver.enable = false; # kein X11-Desktop mehr
 
   # Polkit ist in der Praxis fast immer nötig (NetworkManager-Applets, Mounts, etc.)
