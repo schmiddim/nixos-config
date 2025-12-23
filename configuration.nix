@@ -225,6 +225,7 @@ set $mod Mod4
 bindsym $mod+Shift+e exec "swaymsg exit"
 
 bar {
+  position top
   status_command while date; do sleep 1; done
 }
 
