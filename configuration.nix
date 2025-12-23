@@ -219,6 +219,12 @@
 
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
+
+  # Statusbar
+  bar {
+    swaybar_command waybar
+  }
+
   set $mod Mod4
 
   # Terminal
