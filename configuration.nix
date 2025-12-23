@@ -220,7 +220,6 @@
 
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
-#########################
 ############################
 # Sway – komplette Basis (konfliktarm)
 ############################
@@ -258,7 +257,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
-#bindsym $mod+l focus right
+bindsym $mod+l focus right
 
 # Fenster verschieben (vim-keys)
 bindsym $mod+Shift+h move left
@@ -294,7 +293,65 @@ bindsym $mod+4 workspace $ws4
 
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Sh
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+
+############################
+# Reload / Exit
+############################
+
+# Config neu laden
+bindsym $mod+Shift+c reload
+
+# Sway beenden
+bindsym $mod+Shift+e exec "swaymsg exit"
+
+############################
+# Lock Screen (sauber integriert)
+############################
+
+# Manuell sperren
+bindsym $mod+Shift+l exec swaylock -f -c 000000
+
+# Automatisch sperren + Display aus
+exec_always swayidle -w \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 600 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"'
+
+############################
+# Autostart / Tray
+############################
+
+exec_always nm-applet
+exec_always mako
+
+############################
+# Input
+############################
+
+input type:touchpad {
+  events disabled_on_external_mouse
+}
+
+############################
+# Statusleiste
+############################
+
+bar {
+  position top
+  swaybar_command waybar
+}
+
+############################
+# Optik
+############################
+
+default_border pixel 2
+gaps inner 6
+gaps outer 3
+
+floating_modifier $mod
 
 
 #######################
