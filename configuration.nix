@@ -206,6 +206,12 @@ services.greetd = {
     nh
 wofi 
 alacritty
+    # Basics, damit du nicht "nackt" dastehst:
+    swaylock swayidle
+    waybar
+    mako
+    grim slurp
+    wl-clipboard
   ];
 
   # --- K3s ---
