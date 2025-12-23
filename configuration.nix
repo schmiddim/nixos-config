@@ -72,34 +72,67 @@ boot.extraModprobeConfig = ''
   };
 
   boot.kernel.sysctl."vm.swappiness" = 10;
-
-
   networking.networkmanager.enable = true;
 
-  # --- X11 / Desktop (Cinnamon + LightDM) ---
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = ["displaylink" "modesetting"];
+# --- Wayland / Sway ---
+services.displaylink.enable = true;
 
-  services.xserver.desktopManager.cinnamon.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
+services.xserver.enable = false; # kein X11-Desktop mehr
 
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "";
+# Polkit ist in der Praxis fast immer nötig (NetworkManager-Applets, Mounts, etc.)
+security.polkit.enable = true;  # (wichtig für viele Desktop-Aktionen) :contentReference[oaicite:0]{index=0}
+
+programs.sway = {
+  enable = true;
+  wrapperFeatures.gtk = true;   # GTK-Apps bekommen die richtigen Env-Variablen :contentReference[oaicite:1]{index=1}
+  extraPackages = with pkgs; [
+    # Basics, damit du nicht "nackt" dastehst:
+    swaylock swayidle
+    waybar
+    mako
+    grim slurp
+    wl-clipboard
+    alacritty
+    tdrop
+  ];
+};
+
+# Login-Manager für Wayland: greetd + tuigreet (leichtgewichtig)
+services.greetd = {
+  enable = true;
+  settings = {
+    default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+      user = "greeter";
+    };
   };
+};
+
+
+  # --- X11 / Desktop (Cinnamon + LightDM) ---
+#  services.xserver.enable = true;
+#  services.xserver.videoDrivers = ["displaylink" "modesetting"];
+#
+#  services.xserver.desktopManager.cinnamon.enable = true;
+#  services.xserver.displayManager.lightdm.enable = true;
+#
+#  services.xserver.xkb = {
+#    layout = "de";
+#    variant = "";
+#  };
 
   # Per-device keymap + touchpad disable (X11 session)
-  services.xserver.displayManager.sessionCommands = ''
-    id="$(xinput list | awk -F'id=' '/Keychron/ && /Keyboard/ && /slave  keyboard/ {print $2}' | awk '{print $1; exit}')"
-    if [ -n "$id" ]; then
-      setxkbmap -device "$id" -model pc105 -layout us
-    fi
-
-    tp_id="$(xinput list | awk -F'id=' '/Touchpad/ {print $2}' | awk '{print $1; exit}')"
-    if [ -n "$tp_id" ]; then
-      xinput disable "$tp_id"
-    fi
-  '';
+#  services.xserver.displayManager.sessionCommands = ''
+#    id="$(xinput list | awk -F'id=' '/Keychron/ && /Keyboard/ && /slave  keyboard/ {print $2}' | awk '{print $1; exit}')"
+#    if [ -n "$id" ]; then
+#      setxkbmap -device "$id" -model pc105 -layout us
+#    fi
+#
+#    tp_id="$(xinput list | awk -F'id=' '/Touchpad/ {print $2}' | awk '{print $1; exit}')"
+#    if [ -n "$tp_id" ]; then
+#      xinput disable "$tp_id"
+#    fi
+#  '';
 
   # --- Printing / mDNS ---
   services.printing.enable = true;
