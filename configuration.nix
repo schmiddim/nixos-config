@@ -219,31 +219,17 @@
 
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
+#########################
 set $mod Mod4
 
-# Apps
-bindsym $mod+Return exec alacritty
-bindsym $mod+d exec wofi --show drun
-bindsym $mod+e exec thunar
-
-# Reload / Exit
-bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec "swaymsg exit"
 
-# Idle lock
-exec_always swayidle -w \
-  timeout 300 'swaylock -f -c 000000' \
-  timeout 600 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"'
-
-# Tray / Notifications
-exec_always nm-applet
-exec_always mako
-
-# Bar
 bar {
-  swaybar_command waybar
+  status_command while date; do sleep 1; done
 }
+
+
+#######################3
 '';
   # --- K3s ---
   services.k3s = {
