@@ -28,8 +28,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_6;
-  boot.extraModulePackages = with config.boot.kernelPackages; [evdi];
-  boot.initrd.kernelModules = ["evdi"];
+#  boot.extraModulePackages = with config.boot.kernelPackages; [evdi];
+#  boot.initrd.kernelModules = ["evdi"];
+
+boot.kernelModules = [ "psmouse" ];
+boot.extraModprobeConfig = ''
+  options psmouse proto=imps
+'';
 
   boot.kernelParams = [
     "usbcore.autosuspend=-1"
