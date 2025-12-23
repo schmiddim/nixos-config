@@ -222,11 +222,17 @@ environment.etc."sway/config".text = ''
 #########################
 set $mod Mod4
 
+bindsym $mod+Return exec alacritty
+bindsym $mod+d exec wofi --show drun
 bindsym $mod+Shift+e exec "swaymsg exit"
+bindsym $mod+Shift+c reload
+
+exec_always nm-applet
+exec_always mako
 
 bar {
   position top
-  status_command while date; do sleep 1; done
+  swaybar_command waybar
 }
 
 
