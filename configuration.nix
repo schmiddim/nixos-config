@@ -220,10 +220,6 @@
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
 
-  # Statusbar
-  bar {
-    swaybar_command waybar
-  }
 
   set $mod Mod4
 
@@ -241,6 +237,12 @@ environment.etc."sway/config".text = ''
   input type:touchpad {
     events disabled_on_external_mouse
   }
+
+    # Statusbar
+  bar {
+    swaybar_command waybar
+  }
+
 
 
   # Bildschirm nach 5 Min sperren, nach 10 Min DPMS aus
