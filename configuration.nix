@@ -133,6 +133,8 @@
     #media-session.enable = true;
   };
 
+  programs.nix-ld.enable = true;
+
   programs.zsh = {
     enable = true;
     ohMyZsh = {
@@ -140,13 +142,13 @@
       theme = "robbyrussell";
       plugins = ["git" "sudo"];
     };
+    interactiveShellInit = ''
+      autoload -Uz compinit
+      compinit
+      zstyle ':completion:*:-command-:*' tag-order '!parameters'
+    '';
   };
 
-  programs.zsh.interactiveShellInit = ''
-    autoload -Uz compinit
-    compinit
-    zstyle ':completion:*:-command-:*' tag-order '!parameters'
-  '';
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ms = {
     isNormalUser = true;
@@ -193,7 +195,12 @@
     dates = "weekly"; # oder "daily"
     options = "--delete-older-than 14d";
   };
-
+  environment.variables = {
+    GOPATH = "$HOME/go";
+    GOBIN = "$HOME/go/bin";
+    PATH = "$HOME/go/bin:$PATH";
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programstr.enable = true;

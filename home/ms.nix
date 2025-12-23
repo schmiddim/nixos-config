@@ -20,16 +20,16 @@
     xorg.setxkbmap
     alejandra
   ];
-
-  home.sessionVariables = {
-    GOPATH = "$HOME/go";
-    GOBIN = "$HOME/go/bin";
-    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-  };
-
-  home.sessionPath = [
-    "$HOME/go/bin"
-  ];
+  # does not fucking work
+  #  home.sessionVariables = {
+  #    GOPATH = "$HOME/go";
+  #    GOBIN = "$HOME/go/bin";
+  #    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  #  };
+  #
+  #  home.sessionPath = [
+  #    "$HOME/go/bin"
+  #  ];
 
   xdg.enable = true;
 

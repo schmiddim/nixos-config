@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 FLAKE_DIR := /etc/nixos
 HOST := $(shell hostname)
-FLAKE := $(FLAKE_DIR)#$(HOST)
+FLAKE := $(FLAKE_DIR)\#$(HOST)
 
 .PHONY: fmt help show check test build boot switch update upgrade diff gc clean fmt
 
