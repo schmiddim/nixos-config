@@ -320,19 +320,19 @@ exec_always nm-applet
 exec_always mako
 
 ############################
+# Statusleiste
+############################
+
+exec_always waybar
+
+############################
 # Input
 ############################
 input type:touchpad {
   events disabled_on_external_mouse
 }
 
-############################
-# Statusleiste
-############################
-bar {
-  position top
-  swaybar_command waybar
-}
+
 
 ############################
 # Optik
