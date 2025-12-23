@@ -208,6 +208,7 @@
     wofi
     alacritty
     # Basics, damit du nicht "nackt" dastehst:
+    networkmanagerapplet   # nm-applet
     swaylock
     swayidle
     waybar
@@ -220,24 +221,163 @@
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
 #########################
+############################
+# Sway – komplette Basis
+############################
+
+### Mod-Taste
 set $mod Mod4
 
+############################
+# Programme / Launcher
+############################
+
+# Terminal
 bindsym $mod+Return exec alacritty
+
+# App Launcher
 bindsym $mod+d exec wofi --show drun
-bindsym $mod+Shift+e exec "swaymsg exit"
+
+# Dateimanager
+bindsym $mod+e exec thunar
+
+############################
+# Fenstersteuerung
+############################
+
+# Fenster schließen
+bindsym $mod+Shift+q kill
+
+# Floating toggle
+bindsym $mod+Shift+space floating toggle
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Fokus bewegen
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Fenster verschieben
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+############################
+# Workspaces
+############################
+
+set $ws1 "1:web"
+set $ws2 "2:code"
+set $ws3 "3:term"
+set $ws4 "4:files"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+
+############################
+# Reload / Exit
+############################
+
+# Config neu laden
 bindsym $mod+Shift+c reload
 
+# Sway beenden
+bindsym $mod+Shift+e exec "swaymsg exit"
+
+############################
+# Lock Screen
+############################
+
+# Manuell sperren
+bindsym $mod+Shift+l exec swaylock -f -c 000000
+
+# Automatisch sperren + Display aus
+exec_always swayidle -w \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 600 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"'
+
+############################
+# Autostart / Tray
+############################
+
+# WLAN / Netzwerk
 exec_always nm-applet
+
+# Benachrichtigungen
 exec_always mako
+
+############################
+# Input
+############################
+
+# Touchpad nur aktiv, wenn keine Maus
+input type:touchpad {
+  events disabled_on_external_mouse
+}
+
+############################
+# Statusleiste
+############################
 
 bar {
   position top
   swaybar_command waybar
 }
 
+############################
+# Optik / Verhalten
+############################
 
-#######################3
+# Fensterrahmen minimal
+default_border pixel 2
+gaps inner 6
+gaps outer 3
+
+# Maus + Mod = Fenster bewegen
+floating_modifier $mod
+
+#######################
 '';
+
+environment.etc."xdg/waybar/style.css".text = ''
+* {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+}
+
+window#waybar {
+  background: #1e1e2e;
+  color: #cdd6f4;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  color: #cdd6f4;
+}
+
+#workspaces button.focused {
+  background: #89b4fa;
+  color: #1e1e2e;
+}
+
+#clock, #network, #battery {
+  padding: 0 10px;
+}
+'';
+
+
   # --- K3s ---
   services.k3s = {
     enable = true;
