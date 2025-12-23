@@ -28,8 +28,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_6;
-#  boot.extraModulePackages = with config.boot.kernelPackages; [evdi];
-#  boot.initrd.kernelModules = ["evdi"];
+  boot.extraModulePackages = with config.boot.kernelPackages; [evdi];
+  boot.initrd.kernelModules = ["evdi"];
 
 boot.kernelModules = [ "psmouse" ];
 boot.extraModprobeConfig = ''
@@ -75,7 +75,7 @@ boot.extraModprobeConfig = ''
   networking.networkmanager.enable = true;
 
 # --- Wayland / Sway ---
-services.displaylink.enable = true;
+
 
 services.xserver.enable = false; # kein X11-Desktop mehr
 
@@ -204,6 +204,8 @@ services.greetd = {
     xorg.setxkbmap
     alejandra
     nh
+wofi 
+alacritty
   ];
 
   # --- K3s ---
