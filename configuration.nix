@@ -86,7 +86,7 @@
     wrapperFeatures.gtk = true; # GTK-Apps bekommen die richtigen Env-Variablen :contentReference[oaicite:1]{index=1}
     extraPackages = with pkgs; [
       # Basics, damit du nicht "nackt" dastehst:
-      swaylock
+   #   swaylock
       swayidle
       waybar
       mako
