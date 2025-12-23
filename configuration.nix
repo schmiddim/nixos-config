@@ -215,7 +215,7 @@
     grim
     slurp
     wl-clipboard
-  #  thunar
+    pcmanfm
   ];
 
   services.gnome.gnome-keyring.enable = true;
@@ -231,7 +231,7 @@ set $mod Mod4
 ############################
 bindsym $mod+Return exec alacritty
 bindsym $mod+d exec wofi --show drun
-bindsym $mod+e exec thunar
+bindsym $mod+e exec pcmanfm
 
 ############################
 # Fenstersteuerung
