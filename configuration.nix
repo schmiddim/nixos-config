@@ -103,7 +103,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
         user = "greeter";
       };
     };
@@ -222,7 +222,7 @@
 environment.etc."sway/config".text = ''
 #########################
 ############################
-# Sway – komplette Basis
+# Sway – komplette Basis (konfliktarm)
 ############################
 
 ### Mod-Taste
@@ -252,22 +252,34 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+space floating toggle
 
 # Fullscreen
-bindsym $mod+f fullscreen toggle
+bindsym $mod+f fullscreen
 
-# Fokus bewegen
+# Fokus bewegen (vim-keys)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Fenster verschieben
+# Fenster verschieben (vim-keys)
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 ############################
-# Workspaces
+# Layout
+############################
+
+# Split
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Toggle tabbed/stacking (optional, aber praktisch)
+bindsym $mod+w layout tabbed
+bindsym $mod+s layout stacking
+
+############################
+# Workspaces (nur 1–4, damit es schlank bleibt)
 ############################
 
 set $ws1 "1:web"
@@ -282,71 +294,8 @@ bindsym $mod+4 workspace $ws4
 
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Sh
 
-############################
-# Reload / Exit
-############################
-
-# Config neu laden
-bindsym $mod+Shift+c reload
-
-# Sway beenden
-bindsym $mod+Shift+e exec "swaymsg exit"
-
-############################
-# Lock Screen
-############################
-
-# Manuell sperren
-bindsym $mod+Shift+l exec swaylock -f -c 000000
-
-# Automatisch sperren + Display aus
-exec_always swayidle -w \
-  timeout 300 'swaylock -f -c 000000' \
-  timeout 600 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"'
-
-############################
-# Autostart / Tray
-############################
-
-# WLAN / Netzwerk
-exec_always nm-applet
-
-# Benachrichtigungen
-exec_always mako
-
-############################
-# Input
-############################
-
-# Touchpad nur aktiv, wenn keine Maus
-input type:touchpad {
-  events disabled_on_external_mouse
-}
-
-############################
-# Statusleiste
-############################
-
-bar {
-  position top
-  swaybar_command waybar
-}
-
-############################
-# Optik / Verhalten
-############################
-
-# Fensterrahmen minimal
-default_border pixel 2
-gaps inner 6
-gaps outer 3
-
-# Maus + Mod = Fenster bewegen
-floating_modifier $mod
 
 #######################
 '';
