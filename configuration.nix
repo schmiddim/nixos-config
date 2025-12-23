@@ -219,6 +219,22 @@
   ];
 
   services.gnome.gnome-keyring.enable = true;
+
+
+  environment.etc."xdg/waybar/config".text = ''
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["sway/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "battery", "tray"],
+
+  "clock": {
+    "format": "{:%a %d.%m. %H:%M}"
+  }
+}
+'';
+
 environment.etc."sway/config".text = ''
 ############################
 # Sway – komplette Basis (ohne Binding-Kollisionen)
