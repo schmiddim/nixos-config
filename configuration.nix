@@ -207,8 +207,7 @@
     nh
     wofi
     alacritty
-    # Basics, damit du nicht "nackt" dastehst:
-    networkmanagerapplet   # nm-applet
+    networkmanagerapplet   
     swaylock
     swayidle
     waybar
@@ -216,7 +215,7 @@
     grim
     slurp
     wl-clipboard
-    thunar
+  #  thunar
   ];
 
   services.gnome.gnome-keyring.enable = true;
