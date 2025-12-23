@@ -258,7 +258,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
-bindsym $mod+l focus right
+#bindsym $mod+l focus right
 
 # Fenster verschieben (vim-keys)
 bindsym $mod+Shift+h move left
