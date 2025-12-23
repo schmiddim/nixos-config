@@ -19,8 +19,9 @@
     xorg.xinput
     xorg.setxkbmap
     alejandra
+    gimp
   ];
-  # does not fucking work
+  # does not work
   #  home.sessionVariables = {
   #    GOPATH = "$HOME/go";
   #    GOBIN = "$HOME/go/bin";
