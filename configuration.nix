@@ -216,71 +216,57 @@
     grim
     slurp
     wl-clipboard
+    thunar
   ];
 
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
 ############################
-# Sway – komplette Basis (konfliktarm)
+# Sway – komplette Basis (ohne Binding-Kollisionen)
 ############################
 
-### Mod-Taste
 set $mod Mod4
 
 ############################
 # Programme / Launcher
 ############################
-
-# Terminal
 bindsym $mod+Return exec alacritty
-
-# App Launcher
 bindsym $mod+d exec wofi --show drun
-
-# Dateimanager
 bindsym $mod+e exec thunar
 
 ############################
 # Fenstersteuerung
 ############################
-
-# Fenster schließen
 bindsym $mod+Shift+q kill
-
-# Floating toggle
 bindsym $mod+Shift+space floating toggle
-
-# Fullscreen
 bindsym $mod+f fullscreen
 
-# Fokus bewegen (vim-keys)
+# Fokus (vim-keys)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Fenster verschieben (vim-keys)
+# Move (vim-keys) — aber OHNE Shift+l
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Right move right
+
+# Optional: zusätzlich Move-right auf eine "vimige" Kombi
+bindsym $mod+Shift+Ctrl+l move right
 
 ############################
 # Layout
 ############################
-
-# Split
 bindsym $mod+b splith
 bindsym $mod+v splitv
-
-# Toggle tabbed/stacking (optional, aber praktisch)
 bindsym $mod+w layout tabbed
 bindsym $mod+s layout stacking
 
 ############################
-# Workspaces (nur 1–4, damit es schlank bleibt)
+# Workspaces
 ############################
-
 set $ws1 "1:web"
 set $ws2 "2:code"
 set $ws3 "3:term"
@@ -299,21 +285,14 @@ bindsym $mod+Shift+4 move container to workspace $ws4
 ############################
 # Reload / Exit
 ############################
-
-# Config neu laden
 bindsym $mod+Shift+c reload
-
-# Sway beenden
 bindsym $mod+Shift+e exec "swaymsg exit"
 
 ############################
-# Lock Screen (sauber integriert)
+# Lock Screen
 ############################
-
-# Manuell sperren
 bindsym $mod+Shift+l exec swaylock -f -c 000000
 
-# Automatisch sperren + Display aus
 exec_always swayidle -w \
   timeout 300 'swaylock -f -c 000000' \
   timeout 600 'swaymsg "output * dpms off"' \
@@ -322,14 +301,12 @@ exec_always swayidle -w \
 ############################
 # Autostart / Tray
 ############################
-
 exec_always nm-applet
 exec_always mako
 
 ############################
 # Input
 ############################
-
 input type:touchpad {
   events disabled_on_external_mouse
 }
@@ -337,7 +314,6 @@ input type:touchpad {
 ############################
 # Statusleiste
 ############################
-
 bar {
   position top
   swaybar_command waybar
@@ -346,12 +322,11 @@ bar {
 ############################
 # Optik
 ############################
-
 default_border pixel 2
 gaps inner 6
 gaps outer 3
-
 floating_modifier $mod
+
 
 
 #######################
