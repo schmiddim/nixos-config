@@ -214,6 +214,25 @@ alacritty
     wl-clipboard
   ];
 
+
+  environment.etc."sway/config".text = ''
+  # Minimal: Terminal + Modkey
+  set $mod Mod4
+  bindsym $mod+Return exec ${pkgs.alacritty}/bin/alacritty
+  bindsym $mod+Shift+e exec "swaymsg exit"
+
+  # Touchpad aus (oder: disabled_on_external_mouse)
+  input type:touchpad {
+    events disabled_on_external_mouse
+  }
+
+  # Keychron: Layout US nur für dieses Gerät (Identifier unten anpassen!)
+  input "KEYCHRON_IDENTIFIER_HIER" {
+    xkb_model "pc105"
+    xkb_layout "us"
+  }
+'';
+
   # --- K3s ---
   services.k3s = {
     enable = true;
