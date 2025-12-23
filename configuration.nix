@@ -219,37 +219,31 @@
 
   services.gnome.gnome-keyring.enable = true;
 environment.etc."sway/config".text = ''
+set $mod Mod4
 
+# Apps
+bindsym $mod+Return exec alacritty
+bindsym $mod+d exec wofi --show drun
+bindsym $mod+e exec thunar
 
-  set $mod Mod4
+# Reload / Exit
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec "swaymsg exit"
 
-  # Terminal
-  bindsym $mod+Return exec ${pkgs.alacritty}/bin/alacritty
-
-  # App launcher
-  bindsym $mod+d exec ${pkgs.wofi}/bin/wofi --show drun
-
-  # Reload / Exit
-  bindsym $mod+Shift+c reload
-  bindsym $mod+Shift+e exec "swaymsg exit"
-
-  # Touchpad (optional)
-  input type:touchpad {
-    events disabled_on_external_mouse
-  }
-
-    # Statusbar
-  bar {
-    swaybar_command waybar
-  }
-
-
-
-  # Bildschirm nach 5 Min sperren, nach 10 Min DPMS aus
-  exec_always swayidle -w \
+# Idle lock
+exec_always swayidle -w \
   timeout 300 'swaylock -f -c 000000' \
   timeout 600 'swaymsg "output * dpms off"' \
   resume 'swaymsg "output * dpms on"'
+
+# Tray / Notifications
+exec_always nm-applet
+exec_always mako
+
+# Bar
+bar {
+  swaybar_command waybar
+}
 '';
   # --- K3s ---
   services.k3s = {
