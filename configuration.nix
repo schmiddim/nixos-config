@@ -1,16 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{ config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-  ];
-
-  # --- Nix basics (flake-frei) ---
-  nix.nixPath = [
-    "nixos-config=/etc/nixos/configuration.nix"
-    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -21,28 +11,18 @@
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
-    settings.experimental-features = ["nix-command"];
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      auto-optimise-store = true;
+    };
   };
 
-  # --- Boot / Kernel ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
-  boot.extraModulePackages = with config.boot.kernelPackages; [evdi];
-  boot.initrd.kernelModules = ["evdi"];
 
-  boot.kernelModules = ["psmouse"];
-  boot.extraModprobeConfig = ''
-    options psmouse proto=imps
-  '';
+  networking.hostName = "nixos-wayland";
+  networking.networkmanager.enable = true;
 
-  boot.kernelParams = [
-    "usbcore.autosuspend=-1"
-    "ucsi.disable_pm=1"
-  ];
-
-  # --- Host / Time / Locale ---
-  networking.hostName = "p52-nixos";
   time.timeZone = "Europe/Berlin";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -58,59 +38,34 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 16384;
-    }
-  ];
-  boot.resumeDevice = "/swapfile";
+  services.xserver.enable = false;
 
-  zramSwap = {
+  security.polkit.enable = true;
+
+  xdg.portal = {
     enable = true;
-    memoryPercent = 50;
+    wlr.enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
-
-  boot.kernel.sysctl."vm.swappiness" = 10;
-  networking.networkmanager.enable = true;
-
-  # --- Wayland / Sway ---
-
-# XDG Desktop Portal (wichtig für Wayland: Waybar/ScreenShare/Picker etc.)
-xdg.portal = {
-  enable = true;
-  wlr.enable = true;  # wlroots portal für Sway
-extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-};
-
-  services.xserver.enable = false; # kein X11-Desktop mehr
-
-  # Polkit ist in der Praxis fast immer nötig (NetworkManager-Applets, Mounts, etc.)
-  security.polkit.enable = true; # (wichtig für viele Desktop-Aktionen) :contentReference[oaicite:0]{index=0}
 
   programs.sway = {
     enable = true;
-    wrapperFeatures.gtk = true; # GTK-Apps bekommen die richtigen Env-Variablen :contentReference[oaicite:1]{index=1}
+    wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      # Basics, damit du nicht "nackt" dastehst:
-   #   swaylock
       swayidle
-  #    waybar
+      swaylock
+      waybar
       mako
       grim
       slurp
       wl-clipboard
+      wofi
       alacritty
-      tdrop
+      kanshi
+      networkmanagerapplet
     ];
   };
-  programs.sway.extraSessionCommands = ''
-    export XDG_CURRENT_DESKTOP=sway
-    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
-    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
-  '';
-  # Login-Manager für Wayland: greetd + tuigreet (leichtgewichtig)
+
   services.greetd = {
     enable = true;
     settings = {
@@ -121,36 +76,10 @@ extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
   };
 
-
-  # --- X11 / Desktop (Cinnamon + LightDM) ---
-  #  services.xserver.enable = true;
-  #  services.xserver.videoDrivers = ["displaylink" "modesetting"];
-  #
-  #  services.xserver.desktopManager.cinnamon.enable = true;
-  #  services.xserver.displayManager.lightdm.enable = true;
-  #
-  #  services.xserver.xkb = {
-  #    layout = "de";
-  #    variant = "";
-  #  };
-
-  # Per-device keymap + touchpad disable (X11 session)
-  #  services.xserver.displayManager.sessionCommands = ''
-  #    id="$(xinput list | awk -F'id=' '/Keychron/ && /Keyboard/ && /slave  keyboard/ {print $2}' | awk '{print $1; exit}')"
-  #    if [ -n "$id" ]; then
-  #      setxkbmap -device "$id" -model pc105 -layout us
-  #    fi
-  #
-  #    tp_id="$(xinput list | awk -F'id=' '/Touchpad/ {print $2}' | awk '{print $1; exit}')"
-  #    if [ -n "$tp_id" ]; then
-  #      xinput disable "$tp_id"
-  #    fi
-  #  '';
-
-  # --- Printing / mDNS ---
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [hplip];
-  programs.system-config-printer.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.hplip];
+  };
 
   services.avahi = {
     enable = true;
@@ -158,7 +87,6 @@ extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     openFirewall = true;
   };
 
-  # --- Audio (PipeWire) ---
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -168,23 +96,10 @@ extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     pulse.enable = true;
   };
 
-  programs.nix-ld.enable = true; # intellij
+  programs.nix-ld.enable = true;
 
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
-      enable = true;
-      theme = "robbyrussell";
-      plugins = ["git" "sudo"];
-    };
-    interactiveShellInit = ''
-      autoload -Uz compinit
-      compinit
-      zstyle ':completion:*:-command-:*' tag-order '!parameters'
-    '';
-  };
+  programs.zsh.enable = true;
 
-  # --- User ---
   users.users.ms = {
     isNormalUser = true;
     description = "ms";
@@ -192,235 +107,13 @@ extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     extraGroups = ["networkmanager" "wheel"];
   };
 
-  programs.firefox.enable = true;
-programs.waybar.enable= true;
   environment.systemPackages = with pkgs; [
     vim
     wget
     htop
     git
-    gnumake
-    gcc
-    usbutils
-    thunderbird
-    google-chrome
-    jetbrains.idea
-    freecad
-    gimp
-    go
-    gotools
-    gh
-    kubectl
-    k9s
-    guake
-    xorg.xinput
-    xorg.setxkbmap
-    alejandra
-    nh
-    wofi
-    alacritty
-    networkmanagerapplet   
-    swaylock
-    swayidle
-
-    mako
-    grim
-    slurp
-    wl-clipboard
-    pcmanfm
-    kanshi
+    firefox
   ];
-
-  services.gnome.gnome-keyring.enable = true;
-
-
-  environment.etc."xdg/waybar/config".text = ''
-{
-  "layer": "top",
-  "position": "top",
-  "modules-left": ["sway/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right": ["network", "battery", "tray"],
-
-  "clock": {
-    "format": "{:%a %d.%m. %H:%M}"
-  }
-}
-'';
-
-environment.etc."sway/config".text = ''
-############################
-# Sway – komplette Basis
-############################
-set $env XDG_CURRENT_DESKTOP=sway
-exec_always --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
-exec_always --no-startup-id systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
-
-
-set $mod Mod4
-############################
-# Programme / Launcher
-############################
-bindsym $mod+Return exec alacritty
-bindsym $mod+d exec wofi --show drun
-bindsym $mod+e exec pcmanfm
-
-############################
-# Fenstersteuerung
-############################
-bindsym $mod+Shift+q kill
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+f fullscreen
-
-# Fokus (vim-keys)
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# Move (vim-keys) — aber OHNE Shift+l
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+Right move right
-
-# Optional: zusätzlich Move-right auf eine "vimige" Kombi
-bindsym $mod+Shift+Ctrl+l move right
-
-############################
-# Layout
-############################
-bindsym $mod+b splith
-bindsym $mod+v splitv
-bindsym $mod+w layout tabbed
-bindsym $mod+s layout stacking
-
-############################
-# Workspaces
-############################
-set $ws1 "1:web"
-set $ws2 "2:code"
-set $ws3 "3:term"
-set $ws4 "4:files"
-
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-
-############################
-# Reload / Exit
-############################
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exec "swaymsg exit"
-
-############################
-# Lock Screen
-############################
-bindsym $mod+Shift+l exec swaylock -f -c 000000
-
-exec_always swayidle -w \
-  timeout 300 'swaylock -f -c 000000' \
-  timeout 600 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"'
-
-############################
-# Autostart / Tray
-############################
-exec_always nm-applet
-exec_always mako
-
-############################
-# Statusleiste
-############################
-bar {
-    swaybar_command waybar
-}
-############################
-# Input
-############################
-input type:touchpad {
-  events disabled_on_external_mouse
-}
-
-
-
-############################
-# Optik
-############################
-default_border pixel 2
-gaps inner 6
-gaps outer 3
-floating_modifier $mod
-
-
-
-#######################
-'';
-
-environment.etc."xdg/waybar/style.css".text = ''
-* {
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-}
-
-window#waybar {
-  background: #1e1e2e;
-  color: #cdd6f4;
-}
-
-#workspaces button {
-  padding: 0 8px;
-  color: #cdd6f4;
-}
-
-#workspaces button.focused {
-  background: #89b4fa;
-  color: #1e1e2e;
-}
-
-#clock, #network, #battery {
-  padding: 0 10px;
-}
-'';
-
-
-  # --- K3s ---
-  services.k3s = {
-    enable = true;
-    role = "server";
-    extraFlags = ["--write-kubeconfig-mode=644"];
-  };
-
-  environment.sessionVariables = {
-    GOPATH = "$HOME/go";
-    GOBIN = "$HOME/go/bin";
-    PATH = "$HOME/go/bin:$PATH";
-    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-  };
-
-  # --- Autostart Guake ---
-  environment.etc."xdg/autostart/guake.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Guake Terminal
-    Exec=${pkgs.guake}/bin/guake
-    X-GNOME-Autostart-enabled=true
-    Comment=Start Guake on login
-  '';
-
-  # --- SSH ---
-  services.openssh.enable = true;
-  # services.openssh.settings = {
-  #   PasswordAuthentication = true;
-  #   KbdInteractiveAuthentication = true;
-  #   PermitRootLogin = "no";
-  # };
 
   system.stateVersion = "25.11";
 }
