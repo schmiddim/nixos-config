@@ -88,7 +88,8 @@
     packages = with pkgs; [
     #  thunderbird
   vim
-
+ git 
+kubectl
     ];
   };
 
