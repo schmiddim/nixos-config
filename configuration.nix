@@ -157,6 +157,20 @@ in
     PasswordAuthentication = true;
     KbdInteractiveAuthentication = true;
   };
+
+
+   nix.gc = {
+      automatic = true;
+      dates = "weekly";        # oder "daily"
+      options = "--delete-older-than 14d";
+    };
+
+    # Store optimieren (Deduplication)
+    nix.optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
+    };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
