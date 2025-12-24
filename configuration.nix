@@ -3,12 +3,19 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
+in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    (import "${home-manager}/nixos")
+    ./home.nix
+    ./hardware-configuration.nix
+  ];
+  home-manager.users.ms = {
+    home.stateVersion = "25.11";
+    # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -84,17 +91,24 @@
   users.users.ms = {
     isNormalUser = true;
     description = "ms";
-    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+
+    ];
     packages = with pkgs; [
-    #  thunderbird
-  vim
- git 
-kubectl
+      #  thunderbird
+      vim
+      git
+      kubectl
+      nixfmt-rfc-style
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -102,8 +116,8 @@ kubectl
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -117,11 +131,11 @@ kubectl
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-   services.openssh.enable = true;
+  services.openssh.enable = true;
   services.openssh.settings = {
-PasswordAuthentication = true;
-KbdInteractiveAuthentication = true;
-};
+    PasswordAuthentication = true;
+    KbdInteractiveAuthentication = true;
+  };
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
