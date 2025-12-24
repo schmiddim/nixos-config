@@ -4,6 +4,8 @@
 
 { config, pkgs, ... }:
 let
+#   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${nixRelease}.tar.gz" ;
+
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
 in
 {
@@ -52,19 +54,24 @@ in
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+services.displayManager.gdm.enable = true;
+services.desktopManager.gnome.enable = false;
+services.displayManager.defaultSession = "sway";
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+programs.sway = {
+  enable = true;
+  wrapperFeatures.gtk = true;
+};
 
+security.polkit.enable = true;
+
+xdg.portal = {
+  enable = true;
+  wlr.enable = true;
+  extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+};
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -107,7 +114,7 @@ in
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+
   programs.zsh.enable = true;
 
   # Allow unfree packages
@@ -118,7 +125,16 @@ in
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
+
+    grim # screenshot functionality
+        slurp # screenshot functionality
+        wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+        mako # notification system developed by swaywm maintainer
   ];
+  # Enable the gnome-keyring secrets vault.
+  # Will be exposed through DBus to programs willing to store secrets.
+  services.gnome.gnome-keyring.enable = true;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
