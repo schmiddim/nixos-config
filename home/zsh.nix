@@ -30,8 +30,5 @@
         "sudo"
       ];
     };
-
-
-    # shell = pkgs.zsh;
   };
 }

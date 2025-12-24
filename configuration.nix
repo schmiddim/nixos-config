@@ -11,10 +11,15 @@ in
 {
   imports = [
     (import "${home-manager}/nixos")
-
     ./hardware-configuration.nix
   ];
 
+  nix.nixPath = [
+    "nixos-config=/etc/nixos/configuration.nix"
+    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+  ];
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
   home-manager.users.ms = import ./home/home.nix;
 
   # Bootloader.

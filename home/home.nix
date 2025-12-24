@@ -8,6 +8,11 @@
 
   # Beispiel: weitere HM Pakete (optional)
   home.packages = with pkgs; [
+    thunderbird
+    google-chrome
+    jetbrains.idea-ultimate
+    freecad
+    gimp
     go
     gotools
     gh
@@ -30,10 +35,10 @@
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
     GOPATH = "${config.home.homeDirectory}/go";
     GOBIN = "${config.home.sessionVariables.GOPATH}/bin";
-#    PATH = "$GOBIN:$PATH";
+    #    PATH = "$GOBIN:$PATH";
 
   };
-  home.sessionPath =[
+  home.sessionPath = [
     "${config.home.sessionVariables.GOBIN}"
     "${config.home.homeDirectory}/bin"
   ];
