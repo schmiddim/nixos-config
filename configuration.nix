@@ -80,9 +80,8 @@
 xdg.portal = {
   enable = true;
   wlr.enable = true;  # wlroots portal für Sway
-  extraPortals = with pkgs; [
-    xdg-desktop-portal-gtk
-  ];
+extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
 };
 
   services.xserver.enable = false; # kein X11-Desktop mehr
@@ -97,7 +96,7 @@ xdg.portal = {
       # Basics, damit du nicht "nackt" dastehst:
    #   swaylock
       swayidle
-      waybar
+  #    waybar
       mako
       grim
       slurp
@@ -106,7 +105,11 @@ xdg.portal = {
       tdrop
     ];
   };
-
+  programs.sway.extraSessionCommands = ''
+    export XDG_CURRENT_DESKTOP=sway
+    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+  '';
   # Login-Manager für Wayland: greetd + tuigreet (leichtgewichtig)
   services.greetd = {
     enable = true;
@@ -190,7 +193,7 @@ xdg.portal = {
   };
 
   programs.firefox.enable = true;
-
+programs.waybar.enable= true;
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -219,12 +222,13 @@ xdg.portal = {
     networkmanagerapplet   
     swaylock
     swayidle
-    waybar
+
     mako
     grim
     slurp
     wl-clipboard
     pcmanfm
+    kanshi
   ];
 
   services.gnome.gnome-keyring.enable = true;
@@ -246,11 +250,14 @@ xdg.portal = {
 
 environment.etc."sway/config".text = ''
 ############################
-# Sway – komplette Basis (ohne Binding-Kollisionen)
+# Sway – komplette Basis
 ############################
+set $env XDG_CURRENT_DESKTOP=sway
+exec_always --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+exec_always --no-startup-id systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+
 
 set $mod Mod4
-
 ############################
 # Programme / Launcher
 ############################
@@ -331,9 +338,9 @@ exec_always mako
 ############################
 # Statusleiste
 ############################
-
-exec_always waybar
-
+bar {
+    swaybar_command waybar
+}
 ############################
 # Input
 ############################

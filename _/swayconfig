@@ -1,0 +1,112 @@
+############################
+# Sway – komplette Basis
+############################
+set $env XDG_CURRENT_DESKTOP=sway
+exec_always --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+exec_always --no-startup-id systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+
+
+set $mod Mod4
+############################
+# Programme / Launcher
+############################
+bindsym $mod+Return exec alacritty
+bindsym $mod+d exec wofi --show drun
+bindsym $mod+e exec pcmanfm
+
+############################
+# Fenstersteuerung
+############################
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+f fullscreen
+
+# Fokus (vim-keys)
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move (vim-keys) — aber OHNE Shift+l
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+Right move right
+
+# Optional: zusätzlich Move-right auf eine "vimige" Kombi
+bindsym $mod+Shift+Ctrl+l move right
+
+############################
+# Layout
+############################
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+w layout tabbed
+bindsym $mod+s layout stacking
+
+############################
+# Workspaces
+############################
+set $ws1 "1:web"
+set $ws2 "2:code"
+set $ws3 "3:term"
+set $ws4 "4:files"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+
+############################
+# Reload / Exit
+############################
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec "swaymsg exit"
+
+############################
+# Lock Screen
+############################
+bindsym $mod+Shift+l exec swaylock -f -c 000000
+
+exec_always swayidle -w \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 600 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"'
+
+############################
+# Autostart / Tray
+############################
+exec_always nm-applet
+exec_always mako
+
+############################
+# Statusleiste
+############################
+bar {
+    swaybar_command waybar
+}
+############################
+# Input
+############################
+input type:touchpad {
+  events disabled_on_external_mouse
+}
+
+
+
+############################
+# Optik
+############################
+default_border pixel 2
+gaps inner 6
+gaps outer 3
+floating_modifier $mod
+
+
+
+#######################
