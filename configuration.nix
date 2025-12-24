@@ -4,20 +4,18 @@
 
 { config, pkgs, ... }:
 let
-#   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${nixRelease}.tar.gz" ;
+  #   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${nixRelease}.tar.gz" ;
 
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
 in
 {
   imports = [
     (import "${home-manager}/nixos")
-    ./home.nix
+
     ./hardware-configuration.nix
   ];
-  home-manager.users.ms = {
-    home.stateVersion = "25.11";
-    # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
-  };
+
+  home-manager.users.ms = import ./home/home.nix;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -54,24 +52,24 @@ in
     LC_TIME = "de_DE.UTF-8";
   };
 
-services.xserver.enable = true;
+  services.xserver.enable = true;
 
-services.displayManager.gdm.enable = true;
-services.desktopManager.gnome.enable = false;
-services.displayManager.defaultSession = "sway";
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = false;
+  services.displayManager.defaultSession = "sway";
 
-programs.sway = {
-  enable = true;
-  wrapperFeatures.gtk = true;
-};
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
 
-security.polkit.enable = true;
+  security.polkit.enable = true;
 
-xdg.portal = {
-  enable = true;
-  wlr.enable = true;
-  extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-};
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -105,11 +103,8 @@ xdg.portal = {
 
     ];
     packages = with pkgs; [
-      #  thunderbird
       vim
       git
-      kubectl
-      nixfmt-rfc-style
     ];
   };
 
@@ -125,16 +120,14 @@ xdg.portal = {
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-
     grim # screenshot functionality
-        slurp # screenshot functionality
-        wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-        mako # notification system developed by swaywm maintainer
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    mako # notification system developed by swaywm maintainer
   ];
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
   services.gnome.gnome-keyring.enable = true;
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -145,7 +138,6 @@ xdg.portal = {
   # };
 
   # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.settings = {
