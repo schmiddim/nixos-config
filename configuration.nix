@@ -120,10 +120,11 @@ in
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    grim # screenshot functionality
-    slurp # screenshot functionality
-    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-    mako # notification system developed by swaywm maintainer
+    usbutils
+    vim
+    gnumake
+    htop
+
   ];
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
@@ -137,6 +138,13 @@ in
   #   enableSSHSupport = true;
   # };
 
+
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = ["--write-kubeconfig-mode=644"];
+  };
   # List services that you want to enable:
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
