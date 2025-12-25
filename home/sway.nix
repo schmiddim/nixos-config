@@ -6,7 +6,6 @@
     enable = true;
     wrapperFeatures.gtk = true; # fixes common GTK issues
     config = {
-    # klappt nicht
       input = {
         "type:touchpad" = {
           events = "disabled";
@@ -17,6 +16,15 @@
       terminal = "alacritty";
       startup = [
         { command = "alacritty"; }
+         {
+                  command = ''
+                    swayidle -w \
+                        timeout 300 'swaylock -f' \
+                        timeout 600 'swaymsg "output * dpms off"' \
+                        resume 'swaymsg "output * dpms on"' \
+                        before-sleep 'swaylock -f'
+                  '';
+                }
       ];
       bindswitches = {
 
@@ -28,7 +36,10 @@
         "Mod4+d" = "exec wofi --show drun";
         "Mod4+e" = "exec pcmanfm";
         "Mod4+q" = "kill";
-
+        ############################
+        # Lock Screen
+        ############################
+        "Mod4+Shift+l" = "exec swaylock -f -c 000000";
       };
 
     };
