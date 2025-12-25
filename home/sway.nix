@@ -15,16 +15,16 @@
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [
-        { command = "alacritty"; }
-         {
-                  command = ''
-                    swayidle -w \
-                        timeout 300 'swaylock -f' \
-                        timeout 600 'swaymsg "output * dpms off"' \
-                        resume 'swaymsg "output * dpms on"' \
-                        before-sleep 'swaylock -f'
-                  '';
-                }
+#        { command = "alacritty"; }
+        {
+          command = ''
+            swayidle -w \
+                timeout 300 'swaylock -f' \
+                timeout 600 'swaymsg "output * dpms off"' \
+                resume 'swaymsg "output * dpms on"' \
+                before-sleep 'swaylock -f'
+          '';
+        }
       ];
       bindswitches = {
 

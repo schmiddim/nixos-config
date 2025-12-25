@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 {
-
+/*
+https://mynixos.com/options/programs.alacritty
+*/
   programs.alacritty = {
     enable = true;
     theme = "dracula";   # Beispiel-Theme

@@ -144,6 +144,7 @@ in
 
   environment.sessionVariables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+    XDG_CACHE_HOME = "$HOME/.cache";
   };
 
   system.stateVersion = "25.11"; # Did you read the comment?
