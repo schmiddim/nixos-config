@@ -116,6 +116,7 @@ in
   # Install firefox.
 
   programs.zsh.enable = true;
+  programs.nix-ld.enable = true; # intellij
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
