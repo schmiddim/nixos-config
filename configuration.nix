@@ -25,7 +25,26 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+#  boot.kernelPackages = pkgs.linuxPackages_latest;
+boot.kernelPackages = pkgs.linuxPackages;
+
+boot.kernelParams = [
+#  "pcie_aspm=off"
+  "intel_iommu=on"
+];
+systemd.services.thunderbolt-pre-sleep = {
+  description = "Thunderbolt pre-suspend";
+  before = [ "sleep.target" ];
+  wantedBy = [ "sleep.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = "${pkgs.coreutils}/bin/true";
+  };
+};
+
+#services.udev.extraRules = ''
+#  ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+#'';
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -141,6 +160,10 @@ in
     automatic = true;
     dates = [ "weekly" ];
   };
+
+# Firmware Updates
+services.fwupd.enable = true;
+services.hardware.bolt.enable = true;
 
   environment.sessionVariables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";

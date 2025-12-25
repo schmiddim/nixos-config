@@ -11,6 +11,10 @@
           events = "disabled";
         };
       };
+##!/usr/bin/env bash
+#swaymsg -t subscribe '[ "output" ]' | while read -r _; do
+#  swaymsg "output * dpms on"
+#done
 
       modifier = "Mod4";
       terminal = "alacritty";
