@@ -9,7 +9,7 @@
 #        normal = {
 #          family = "JetBrains Mono"; # oder ein anderer Font
 #        };
-        size = 12.0;
+        size = 11.0;
       };
     };
   };
