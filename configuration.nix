@@ -30,7 +30,6 @@ in
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -39,7 +38,6 @@ in
 
   # Select internationalisation properties.
   i18n.defaultLocale = "de_DE.UTF-8";
-
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -53,12 +51,13 @@ in
     LC_TIME = "de_DE.UTF-8";
   };
 
-  services.xserver.enable = true;
-
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = false;
-  services.displayManager.defaultSession = "sway";
-
+  services.greetd.enable = true;
+  programs.regreet.enable = true;
+  services.xserver.enable = false;
+  services.gnome.gnome-keyring.enable = true;
+#  services.displayManager.sddm.enable = true;
+#  services.displayManager.sddm.wayland.enable = true;
+#  services.displayManager.defaultSession = "sway";
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -90,9 +89,6 @@ in
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ms = {
     isNormalUser = true;
@@ -101,51 +97,31 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
-
-    ];
-    packages = with pkgs; [
-      vim
-      git
     ];
   };
 
-  # Install firefox.
 
   programs.zsh.enable = true;
-  programs.nix-ld.enable = true; # intellij
+  programs.nix-ld.enable = true; # for intellij
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
+    git
     usbutils
     vim
     gnumake
     htop
-
+    regreet
+    libinput
   ];
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
-  services.gnome.gnome-keyring.enable = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-
 
   services.k3s = {
     enable = true;
     role = "server";
-    extraFlags = ["--write-kubeconfig-mode=644"];
+    extraFlags = [ "--write-kubeconfig-mode=644" ];
   };
   # List services that you want to enable:
   # Enable the OpenSSH daemon.
@@ -155,31 +131,21 @@ in
     KbdInteractiveAuthentication = true;
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly"; # oder "daily"
+    options = "--delete-older-than 14d";
+  };
 
-   nix.gc = {
-      automatic = true;
-      dates = "weekly";        # oder "daily"
-      options = "--delete-older-than 14d";
-    };
+  nix.optimise = {
+    automatic = true;
+    dates = [ "weekly" ];
+  };
 
-    # Store optimieren (Deduplication)
-    nix.optimise = {
-      automatic = true;
-      dates = [ "weekly" ];
-    };
+  environment.sessionVariables = {
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }

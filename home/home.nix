@@ -3,6 +3,8 @@
 {
   imports = [
     ./zsh.nix
+    ./alacritty.nix
+    ./sway.nix
   ];
   home.stateVersion = "25.11";
 

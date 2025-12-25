@@ -5,7 +5,14 @@
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true; # fixes common GTK issues
-    config =  {
+    config = {
+    # klappt nicht
+      input = {
+        "type:touchpad" = {
+          events = "disabled";
+        };
+      };
+
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [
@@ -13,15 +20,14 @@
       ];
       bindswitches = {
 
-
       };
       keybindings = {
 
-        "${config.modifier}+Shift+c" = "reload";
-        "${config.modifier}+Shift+e" = "exec 'swaymsg exit'";
-        "${config.modifier}+d" = "exec wofi --show drun";
-        "${config.modifier}+e" = "exec pcmanfm";
-        "${config.modifier}+q" = "kill";
+        "Mod4+Shift+c" = "reload";
+        "Mod4+Shift+e" = "exec 'swaymsg exit'";
+        "Mod4+d" = "exec wofi --show drun";
+        "Mod4+e" = "exec pcmanfm";
+        "Mod4+q" = "kill";
 
       };
 
