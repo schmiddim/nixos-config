@@ -4,8 +4,6 @@
 
 { config, pkgs, ... }:
 let
-  #   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-${nixRelease}.tar.gz" ;
-
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
 in
 {
@@ -32,9 +30,6 @@ in
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -43,7 +38,8 @@ in
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "de_DE.UTF-8";
+
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
