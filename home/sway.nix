@@ -6,20 +6,21 @@
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
-#    wayland.systemd.target = "sway-session.target";
 
     wrapperFeatures.gtk = true; # fixes common GTK issues
+    extraConfig = ''
+        set $ws1 "1:web"
+        set $ws2 "2:code"
+        set $ws3 "3:term"
+        set $ws4 "4:files"
+
+    '''
     config = {
       input = {
         "type:touchpad" = {
           events = "disabled";
         };
       };
-##!/usr/bin/env bash
-#swaymsg -t subscribe '[ "output" ]' | while read -r _; do
-#  swaymsg "output * dpms on"
-#done
-
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [
