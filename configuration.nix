@@ -145,6 +145,8 @@ systemd.services.thunderbolt-pre-sleep = {
     htop
     regreet
     libinput
+
+     pkgs.orchis-theme
   ];
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
