@@ -50,7 +50,7 @@
         ############################
         "Mod4+Shift+l" = "exec swaylock -f -c 000000";
         ## Web screen
-        "Mod4+n" = "exec sh -lc '/home/ms/.local/scripts/bin/sway-split.sh >> $HOME/web-setup.log 2>&1'";
+        "Mod4+n" = "exec sh -lc '/home/ms/.local/scripts/bin/sway-split.sh  >> $HOME/web-setup.log 2>&1'";
 
       };
 
