@@ -93,11 +93,7 @@ systemd.services.thunderbolt-pre-sleep = {
     enable = true;
     wrapperFeatures.gtk = true;
   };
-  gtk = {
 
-    theme.name = "Orchis-Dark";
-    iconTheme.name = "Papirus-Dark";
-  };
   security.polkit.enable = true;
 
   xdg.portal = {
