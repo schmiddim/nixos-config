@@ -93,7 +93,11 @@ systemd.services.thunderbolt-pre-sleep = {
     enable = true;
     wrapperFeatures.gtk = true;
   };
-
+  gtk = {
+    enable = true;
+    theme.name = "Orchis-Dark";
+    iconTheme.name = "Papirus-Dark";
+  };
   security.polkit.enable = true;
 
   xdg.portal = {
@@ -145,6 +149,8 @@ systemd.services.thunderbolt-pre-sleep = {
     htop
     regreet
     libinput
+
+     pkgs.orchis-theme
   ];
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
