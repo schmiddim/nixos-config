@@ -9,10 +9,10 @@
 
     wrapperFeatures.gtk = true; # fixes common GTK issues
     extraConfig = ''
-        set \$ws1 "1:web"
-        set \$ws2 "2:code"
-        set \$ws3 "3:term"
-        set \$ws4 "4:files"
+        set \\$ws1 "1:web"
+        set \\$ws2 "2:code"
+        set \\$ws3 "3:term"
+        set \\$ws4 "4:files"
 
     '';
     config = {
@@ -52,7 +52,7 @@
         "Mod4+Shift+l" = "exec swaylock -f -c 000000";
 
         ## Web screen Opens a new Workspace and displays 2 web pages in split
-        "Mod4+n" = "exec sh -lc 'sway-split-notion-gpt.sh  >> /tmpsway-split-notion-gpt.log 2>&1'";
+        "Mod4+n" = "exec sh -lc 'sway-split-notion-gpt.sh  >> /tmp/sway-split-notion-gpt.log 2>&1'";
 
       };
 
