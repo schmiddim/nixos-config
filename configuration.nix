@@ -94,7 +94,7 @@ systemd.services.thunderbolt-pre-sleep = {
     wrapperFeatures.gtk = true;
   };
   gtk = {
-    enable = true;
+
     theme.name = "Orchis-Dark";
     iconTheme.name = "Papirus-Dark";
   };
