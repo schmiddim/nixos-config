@@ -14,7 +14,7 @@
         set $ws3 "3:term"
         set $ws4 "4:files"
 
-    '''
+    '';
     config = {
       input = {
         "type:touchpad" = {
