@@ -49,8 +49,9 @@
         # Lock Screen
         ############################
         "Mod4+Shift+l" = "exec swaylock -f -c 000000";
-        ## Web screen
-        "Mod4+n" = "exec sh -lc 'web-setup >> $HOME/web-setup.log 2>&1'";
+
+        ## Web screen Opens a new Workspace and displays 2 web pages in split
+        "Mod4+n" = "exec sh -lc 'sway-split-notion-gpt.sh  >> /tmpsway-split-notion-gpt.log 2>&1'";
 
       };
 
