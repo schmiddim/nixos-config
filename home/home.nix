@@ -48,6 +48,8 @@ in
     #    PATH = "$GOBIN:$PATH";
 
   };
+
+   home.file.".local/scripts/bin".source = ./shell-scripts;
   home.sessionPath = [
     "${config.home.sessionVariables.GOBIN}"
     "${config.home.homeDirectory}/bin"

@@ -1,9 +1,13 @@
 { config, pkgs, ... }:
 
 {
+  wayland.systemd.target = "sway-session.target";
   # https://mynixos.com/options/wayland.windowManager.sway.config
   wayland.windowManager.sway = {
     enable = true;
+    systemd.enable = true;
+#    wayland.systemd.target = "sway-session.target";
+
     wrapperFeatures.gtk = true; # fixes common GTK issues
     config = {
       input = {
@@ -45,8 +49,8 @@
         # Lock Screen
         ############################
         "Mod4+Shift+l" = "exec swaylock -f -c 000000";
-
-        "Mod4+n" = "exec web-setup";
+        ## Web screen
+        "Mod4+n" = "exec sh -lc 'web-setup >> $HOME/web-setup.log 2>&1'";
 
       };
 

@@ -84,6 +84,8 @@ systemd.services.thunderbolt-pre-sleep = {
   programs.regreet.enable = true;
   services.xserver.enable = false;
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true; ##hmm
+
 #  services.displayManager.sddm.enable = true;
 #  services.displayManager.sddm.wayland.enable = true;
 #  services.displayManager.defaultSession = "sway";
