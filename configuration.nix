@@ -27,10 +27,20 @@ in
   # Use latest kernel.
 #  boot.kernelPackages = pkgs.linuxPackages_latest;
 boot.kernelPackages = pkgs.linuxPackages;
+boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
+boot.kernelModules = [ "evdi" ];
+# Erforderlich, um den DisplayLink-Manager Dienst zu starten
+# (Dies aktiviert keinen X-Server, solange services.xserver.enable = false bleibt)
+services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+
+services.udev.extraRules = ''
+  # DisplayLink (D6000) Power Management Fix
+  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", ATTR{power/control}="on"
+'';
 
 boot.kernelParams = [
-#  "pcie_aspm=off"
-  "intel_iommu=on"
+"intel_iommu=on"
+  "iommu=pt"
 ];
 systemd.services.thunderbolt-pre-sleep = {
   description = "Thunderbolt pre-suspend";
@@ -164,10 +174,21 @@ systemd.services.thunderbolt-pre-sleep = {
 # Firmware Updates
 services.fwupd.enable = true;
 services.hardware.bolt.enable = true;
+hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
 
   environment.sessionVariables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
     XDG_CACHE_HOME = "$HOME/.cache";
+
+    # WLR_DRM_DEVICES = "..."; # Erstmal auskommentieren!
+        WLR_NO_HARDWARE_CURSORS = "1";
+        # Erforderlich für Nvidia + Wayland/Sway:
+        WLR_RENDERER = "vulkan";
+        XDG_CURRENT_DESKTOP = "sway";
   };
 
   system.stateVersion = "25.11"; # Did you read the comment?

@@ -40,10 +40,14 @@
         "Mod4+d" = "exec wofi --show drun";
         "Mod4+e" = "exec pcmanfm";
         "Mod4+q" = "kill";
+
         ############################
         # Lock Screen
         ############################
         "Mod4+Shift+l" = "exec swaylock -f -c 000000";
+
+        "Mod4+n" = "exec web-setup";
+
       };
 
     };

@@ -1,10 +1,15 @@
 { config, pkgs, ... }:
 
+
+let
+  swayScripts = import ./shell-scripts/sway-split.nix { inherit pkgs; };
+in
 {
   imports = [
     ./zsh.nix
     ./alacritty.nix
     ./sway.nix
+
   ];
   home.stateVersion = "25.11";
 
@@ -22,6 +27,7 @@
     k9s
     gcc
     wget
+    jq
 
     neofetch
     alacritty
