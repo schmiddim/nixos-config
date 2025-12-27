@@ -53,6 +53,7 @@ in
   home.sessionPath = [
     "${config.home.sessionVariables.GOBIN}"
     "${config.home.homeDirectory}/bin"
+    "${config.home.homeDirectory}/.local/scripts/bin"
   ];
 
 }
