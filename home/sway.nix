@@ -9,10 +9,10 @@
 
     wrapperFeatures.gtk = true; # fixes common GTK issues
     extraConfig = ''
-        set $ws1 "1:web"
-        set $ws2 "2:code"
-        set $ws3 "3:term"
-        set $ws4 "4:files"
+        set \$ws1 "1:web"
+        set \$ws2 "2:code"
+        set \$ws3 "3:term"
+        set \$ws4 "4:files"
 
     '';
     config = {
