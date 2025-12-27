@@ -5,21 +5,31 @@
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true; # fixes common GTK issues
+    extraConfig = ''
+    bindsym Mod4+n exec sh -lc '
+      swaymsg "workspace notes; layout splith"
+      swaymsg "[title=\".*Notion.*\"] focus" || google-chrome --app=https://www.notion.so
+      swaymsg "[title=\".*ChatGPT.*\"] focus" || google-chrome --app=https://chat.openai.com
+    '
+
+    # Fenster automatisch auf Workspace notes (beide sind Chrome)
+    assign [class="Google-chrome"] workspace notes
+
+    # Reihenfolge
+    for_window [title=".*Notion.*"] move left
+    for_window [title=".*ChatGPT.*"] move right
+    '';
     config = {
       input = {
         "type:touchpad" = {
           events = "disabled";
         };
       };
-##!/usr/bin/env bash
-#swaymsg -t subscribe '[ "output" ]' | while read -r _; do
-#  swaymsg "output * dpms on"
-#done
 
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [
-#        { command = "alacritty"; }
+        #        { command = "alacritty"; }
         {
           command = ''
             swayidle -w \
@@ -33,6 +43,8 @@
       bindswitches = {
 
       };
+
+
       keybindings = {
 
         "Mod4+Shift+c" = "reload";
@@ -44,6 +56,7 @@
         # Lock Screen
         ############################
         "Mod4+Shift+l" = "exec swaylock -f -c 000000";
+
       };
 
     };
