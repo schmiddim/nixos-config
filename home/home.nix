@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 
-
-let
-  swayScripts = import ./shell-scripts/sway-split.nix { inherit pkgs; };
-in
 {
   imports = [
     ./zsh.nix

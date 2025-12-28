@@ -7,6 +7,9 @@ let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
 in
 {
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   imports = [
     (import "${home-manager}/nixos")
     ./hardware-configuration.nix
@@ -86,9 +89,6 @@ systemd.services.thunderbolt-pre-sleep = {
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true; ##hmm
 
-#  services.displayManager.sddm.enable = true;
-#  services.displayManager.sddm.wayland.enable = true;
-#  services.displayManager.defaultSession = "sway";
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -103,6 +103,8 @@ systemd.services.thunderbolt-pre-sleep = {
   };
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns4 = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -115,9 +117,6 @@ systemd.services.thunderbolt-pre-sleep = {
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -145,8 +144,6 @@ systemd.services.thunderbolt-pre-sleep = {
     htop
     regreet
     libinput
-
-     pkgs.orchis-theme
   ];
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
