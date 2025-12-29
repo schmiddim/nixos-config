@@ -48,6 +48,11 @@ in
     kernelParams = [
       "intel_iommu=on"
       "iommu=pt"
+
+      # TrackPoint / psmouse Stabilität
+      "psmouse.synaptics_intertouch=0"
+      "psmouse.resetafter=0"
+      "psmouse.smps=1"
     ];
   };
 
