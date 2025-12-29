@@ -48,6 +48,7 @@ in
     kernelParams = [
       "intel_iommu=on"
       "iommu=pt"
+      "usbcore.autosuspend=-1"  # usb docking station
 
       # TrackPoint / psmouse Stabilität
       "psmouse.synaptics_intertouch=0"
@@ -165,7 +166,9 @@ in
     ];
     udev.extraRules = ''
       # DisplayLink (D6000) Power Management Fix
-      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", ATTR{power/control}="on"
+#      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", ATTR{power/control}="on"
+      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", TEST=="power/control", ATTR{power/control}="on"
+
     '';
 
   };
