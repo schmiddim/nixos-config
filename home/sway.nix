@@ -98,7 +98,7 @@ in
         "${mod}+Shift+9" = "move container to workspace number 9";
         "${mod}+Shift+0" = "move container to workspace number 10";
 
-        #        ############################
+        #############################
         # Lock Screen
         ############################
         "${mod}+Shift+l" = "exec swaylock -f -c 000000";
@@ -106,6 +106,21 @@ in
         ## Web screen Opens a new Workspace and displays 2 web pages in split
         "${mod}+n" =
           "exec sh -lc '.local/scripts/bin/sway-split-notion-gpt.sh  >> /tmp/sway-split-notion-gpt.log 2>&1'";
+
+
+
+        ##############
+        # audio shit
+        ##############
+# https://wiki.archlinux.org/title/Sway#:~:text=or%20media%20players%3A-,~/.config/sway/config,-bindsym%20XF86AudioRaiseVolume%20exec the fuck bluetooth!!
+"XF86AudioRaiseVolume" =
+  "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%+'";
+
+"XF86AudioLowerVolume" =
+  "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%-'";
+
+"XF86AudioMute" =
+  "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-mute {} toggle'";
 
       };
       output = {
