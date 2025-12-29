@@ -87,6 +87,7 @@ in
 
   programs = {
     zsh.enable = true;
+    seahorse.enable = true;
     nix-ld.enable = true; # for intellij
     regreet.enable = true;
     sway = {
@@ -98,7 +99,11 @@ in
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+
+    ];
   };
   services = {
     # Enable CUPS to print documents.
@@ -106,6 +111,7 @@ in
     avahi.enable = true;
     avahi.nssmdns4 = true;
     pulseaudio.enable = false;
+    flatpak.enable = true;
     # Enable sound with pipewire.
     pipewire = {
       enable = true;
@@ -177,6 +183,9 @@ in
     htop
     regreet
     libinput
+    xdg-utils
+    xdg-desktop-portal-wlr
+    overskride
   ];
 
   nix.optimise = {
