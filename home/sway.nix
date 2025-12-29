@@ -63,15 +63,19 @@ in
         "${mod}+Left" = "focus left";
         "${mod}+Right" = "focus right";
         "${mod}+Down" = "focus down";
+
+
+        # Move windows
+        "${mod}+Shift+Left"="move left";
+        "${mod}+Shift+Down"="move down";
+        "${mod}+Shift+Up"="move up";
+        "${mod}+Shift+Right"="move right";
         ############################
         # Layout
         ############################
         "${mod}+s" = "layout stacking";
         "${mod}+w" = "layout tabbed";
         "${mod}+e" = "layout toggle split";
-        "${mod}+a" = "mark --add sel"; # Fenster markieren
-        # Markierte Fenster zusammenführen
-        "${mod}+Shift+space"= "[con_mark=\"sel\"] focus; split toggle";
         "${mod}+r" = "mode resize";
 
 
