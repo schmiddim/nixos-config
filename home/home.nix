@@ -55,6 +55,7 @@
 
   programs = {
     # https://github.com/Alexays/Waybar/blob/master/resources/config.jsonc
+    # https://mynixos.com/home-manager/option/programs.waybar.settings
     waybar = {
       enable = true;
     };
