@@ -8,7 +8,10 @@ let
 in
 {
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   imports = [
     (import "${home-manager}/nixos")
@@ -28,36 +31,39 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
-#  boot.kernelPackages = pkgs.linuxPackages_latest;
-boot.kernelPackages = pkgs.linuxPackages;
-boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
-boot.kernelModules = [ "evdi" ];
-# Erforderlich, um den DisplayLink-Manager Dienst zu starten
-# (Dies aktiviert keinen X-Server, solange services.xserver.enable = false bleibt)
-services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  #  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages;
+  boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
+  boot.kernelModules = [ "evdi" ];
+  # Erforderlich, um den DisplayLink-Manager Dienst zu starten
+  # (Dies aktiviert keinen X-Server, solange services.xserver.enable = false bleibt)
+  services.xserver.videoDrivers = [
+    "displaylink"
+    "modesetting"
+  ];
 
-services.udev.extraRules = ''
-  # DisplayLink (D6000) Power Management Fix
-  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", ATTR{power/control}="on"
-'';
+  services.udev.extraRules = ''
+    # DisplayLink (D6000) Power Management Fix
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", ATTR{power/control}="on"
+  '';
 
-boot.kernelParams = [
-"intel_iommu=on"
-  "iommu=pt"
-];
-systemd.services.thunderbolt-pre-sleep = {
-  description = "Thunderbolt pre-suspend";
-  before = [ "sleep.target" ];
-  wantedBy = [ "sleep.target" ];
-  serviceConfig = {
-    Type = "oneshot";
-    ExecStart = "${pkgs.coreutils}/bin/true";
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "iommu=pt"
+  ];
+  systemd.services.thunderbolt-pre-sleep = {
+    description = "Thunderbolt pre-suspend";
+    before = [ "sleep.target" ];
+    wantedBy = [ "sleep.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.coreutils}/bin/true";
+    };
   };
-};
 
-#services.udev.extraRules = ''
-#  ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
-#'';
+  #services.udev.extraRules = ''
+  #  ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+  #'';
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -87,7 +93,7 @@ systemd.services.thunderbolt-pre-sleep = {
   programs.regreet.enable = true;
   services.xserver.enable = false;
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.greetd.enableGnomeKeyring = true; ##hmm
+  security.pam.services.greetd.enableGnomeKeyring = true; # #hmm
 
   programs.sway = {
     enable = true;
@@ -130,7 +136,6 @@ systemd.services.thunderbolt-pre-sleep = {
     ];
   };
 
-
   programs.zsh.enable = true;
   programs.nix-ld.enable = true; # for intellij
 
@@ -172,24 +177,34 @@ systemd.services.thunderbolt-pre-sleep = {
     dates = [ "weekly" ];
   };
 
-# Firmware Updates
-services.fwupd.enable = true;
-services.hardware.bolt.enable = true;
-hardware.graphics = {
+  # Firmware Updates
+  services.fwupd.enable = true;
+  services.hardware.bolt.enable = true;
+  hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
 
+  fonts = {
+    fontconfig.enable = true;
+    fontDir = {
+      enable = true;
+    };
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.symbols-only
+    ];
+  };
 
   environment.sessionVariables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
     XDG_CACHE_HOME = "$HOME/.cache";
 
     # WLR_DRM_DEVICES = "..."; # Erstmal auskommentieren!
-        WLR_NO_HARDWARE_CURSORS = "1";
-        # Erforderlich für Nvidia + Wayland/Sway:
-        WLR_RENDERER = "vulkan";
-        XDG_CURRENT_DESKTOP = "sway";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    # Erforderlich für Nvidia + Wayland/Sway:
+    WLR_RENDERER = "vulkan";
+    XDG_CURRENT_DESKTOP = "sway";
   };
 
   system.stateVersion = "25.11"; # Did you read the comment?

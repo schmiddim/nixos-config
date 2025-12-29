@@ -24,7 +24,6 @@
     gcc
     wget
     jq
-
     neofetch
     alacritty
     firefox
@@ -36,20 +35,35 @@
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     mako # notification system developed by swaywm maintainer
     wofi
+    pavucontrol # audio settings
   ];
+
   home.sessionVariables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
     GOPATH = "${config.home.homeDirectory}/go";
     GOBIN = "${config.home.sessionVariables.GOPATH}/bin";
-    #    PATH = "$GOBIN:$PATH";
+    XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
 
   };
 
-   home.file.".local/scripts/bin".source = ./shell-scripts;
+  home.file.".local/scripts/bin".source = ./shell-scripts;
   home.sessionPath = [
     "${config.home.sessionVariables.GOBIN}"
     "${config.home.homeDirectory}/bin"
     "${config.home.homeDirectory}/.local/scripts/bin"
   ];
 
+  programs = {
+    # https://github.com/Alexays/Waybar/blob/master/resources/config.jsonc
+    waybar = {
+      enable = true;
+    };
+    #  https://nixos.wiki/wiki/Neovim
+    neovim = {
+      enable = true;
+      extraConfig = ''
+        set number relativenumber
+      '';
+    };
+  };
 }
