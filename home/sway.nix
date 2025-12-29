@@ -69,7 +69,11 @@ in
         "${mod}+s" = "layout stacking";
         "${mod}+w" = "layout tabbed";
         "${mod}+e" = "layout toggle split";
+        "${mod}+a" = "mark --add sel"; # Fenster markieren
+        # Markierte Fenster zusammenführen
+        "${mod}+Shift+space"= "[con_mark=\"sel\"] focus; split toggle";
         "${mod}+r" = "mode resize";
+
 
         ############################
         # Workspaces
