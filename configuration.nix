@@ -118,6 +118,14 @@ in
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.enable = true;
+      wireplumber.extraConfig = {
+        "11-bluetooth-policy" = {
+          "wireplumber.settings" = {
+            "bluetooth.autoswitch-profile" = true;
+          };
+        };
+      };
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;
 
@@ -185,7 +193,10 @@ in
     libinput
     xdg-utils
     xdg-desktop-portal-wlr
-    overskride
+    bluez
+    bluez-tools
+    bluetui
+
   ];
 
   nix.optimise = {
@@ -194,9 +205,18 @@ in
   };
 
   hardware = {
+
+    enableRedistributableFirmware = true;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+
+        };
+      };
     };
     graphics = {
       enable = true;
@@ -225,5 +245,6 @@ in
     WLR_RENDERER = "vulkan";
     XDG_CURRENT_DESKTOP = "sway";
   };
+
   system.stateVersion = "25.11"; # Did you read the comment?
 }
