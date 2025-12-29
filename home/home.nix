@@ -13,7 +13,7 @@
   home.packages = with pkgs; [
     thunderbird
     google-chrome
-    jetbrains.idea-ultimate
+    jetbrains.idea
     freecad
     gimp
     go
