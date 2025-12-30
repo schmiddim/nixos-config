@@ -36,6 +36,7 @@
     mako # notification system developed by swaywm maintainer
     wofi
     pavucontrol # audio settings
+    signal-desktop
   ];
 
   home.sessionVariables = {
