@@ -37,6 +37,9 @@
     wofi
     pavucontrol # audio settings
     signal-desktop
+    nodejs
+
+    wdisplays # screen management for wayland
   ];
 
   home.sessionVariables = {
