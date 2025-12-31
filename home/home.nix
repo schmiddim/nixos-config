@@ -5,6 +5,7 @@
     ./zsh.nix
     ./alacritty.nix
     ./sway.nix
+    ./stylix.nix
 
   ];
   home.stateVersion = "25.11";
@@ -62,7 +63,31 @@
     # https://mynixos.com/home-manager/option/programs.waybar.settings
     waybar = {
       enable = true;
+#      settings.mainBar.height = 24;
+#      style = ''
+#        * {
+#          font-size: 11px;
+#        }
+#
+#        window#waybar {
+#          padding: 0 6px;
+#        }
+#
+#        #workspaces button {
+#          padding: 0 6px;
+#        }
+#
+#        #clock,
+#        #battery,
+#        #network,
+#        #pulseaudio,
+#        #tray {
+#          padding: 0 6px;
+#        }
+#      '';
+
     };
+
     #  https://nixos.wiki/wiki/Neovim
     neovim = {
       enable = true;

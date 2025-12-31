@@ -1,9 +1,5 @@
 { ... }:
 let
-  wp = builtins.path {
-    path = /run/current-system/sw/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png;
-    name = "wallpaper.png";
-  };
   mod="Mod4";
 in
 {
@@ -13,6 +9,11 @@ in
     enable = true;
     wrapperFeatures.gtk = true; # fixes common GTK issues
     extraConfig = ''
+    # focus
+    client.focused          #5e81ac #5e81ac #ffffff #5e81ac #5e81ac
+    client.focused_inactive #3b4252 #3b4252 #d8dee9 #3b4252 #3b4252
+    client.unfocused        #2e3440 #2e3440 #888888 #2e3440 #2e3440
+    client.urgent           #bf616a #bf616a #ffffff #bf616a #bf616a
     '';
     config = {
       bars = [
@@ -130,11 +131,6 @@ in
 "XF86AudioMute" =
   "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-mute {} toggle'";
 
-      };
-      output = {
-        "*" = {
-          "bg" = "${wp} fill";
-        };
       };
     };
   };
