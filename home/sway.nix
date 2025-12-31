@@ -51,6 +51,7 @@ in
         "${mod}+d" = "exec wofi --show drun";
         "${mod}+q" = "kill";
         "${mod}+Return" = "exec alacritty";
+        "Ctrl+Shift+l" = "exec swaylock -f && systemctl suspend";
 
         ############################
         # Split horizontal, vertical
