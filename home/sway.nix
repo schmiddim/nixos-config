@@ -7,6 +7,9 @@ in
   # https://mynixos.com/options/wayland.windowManager.sway.config
   wayland.windowManager.sway = {
     enable = true;
+    extraOptions = [
+     "--unsupported-gpu"        # Dockingstation...
+    ];
     wrapperFeatures.gtk = true; # fixes common GTK issues
     extraConfig = ''
     # focus
@@ -51,7 +54,7 @@ in
         "${mod}+d" = "exec wofi --show drun";
         "${mod}+q" = "kill";
         "${mod}+Return" = "exec alacritty";
-        "Ctrl+Shift+l" = "exec swaylock -f && systemctl suspend";
+        "Ctrl+Shift+l" = "exec systemctl suspend";
 
         ############################
         # Split horizontal, vertical
