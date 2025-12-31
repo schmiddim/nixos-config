@@ -1,6 +1,6 @@
 { ... }:
 let
-  mod="Mod4";
+  mod = "Mod4";
 in
 {
   wayland.systemd.target = "sway-session.target";
@@ -8,15 +8,15 @@ in
   wayland.windowManager.sway = {
     enable = true;
     extraOptions = [
-     "--unsupported-gpu"        # Dockingstation...
+      "--unsupported-gpu" # Dockingstation...
     ];
     wrapperFeatures.gtk = true; # fixes common GTK issues
     extraConfig = ''
-    # focus
-    client.focused          #5e81ac #5e81ac #ffffff #5e81ac #5e81ac
-    client.focused_inactive #3b4252 #3b4252 #d8dee9 #3b4252 #3b4252
-    client.unfocused        #2e3440 #2e3440 #888888 #2e3440 #2e3440
-    client.urgent           #bf616a #bf616a #ffffff #bf616a #bf616a
+      # focus
+      client.focused          #5e81ac #5e81ac #ffffff #5e81ac #5e81ac
+      client.focused_inactive #3b4252 #3b4252 #d8dee9 #3b4252 #3b4252
+      client.unfocused        #2e3440 #2e3440 #888888 #2e3440 #2e3440
+      client.urgent           #bf616a #bf616a #ffffff #bf616a #bf616a
     '';
     config = {
       bars = [
@@ -68,12 +68,11 @@ in
         "${mod}+Right" = "focus right";
         "${mod}+Down" = "focus down";
 
-
         # Move windows
-        "${mod}+Shift+Left"="move left";
-        "${mod}+Shift+Down"="move down";
-        "${mod}+Shift+Up"="move up";
-        "${mod}+Shift+Right"="move right";
+        "${mod}+Shift+Left" = "move left";
+        "${mod}+Shift+Down" = "move down";
+        "${mod}+Shift+Up" = "move up";
+        "${mod}+Shift+Right" = "move right";
         ############################
         # Layout
         ############################
@@ -81,7 +80,6 @@ in
         "${mod}+w" = "layout tabbed";
         "${mod}+e" = "layout toggle split";
         "${mod}+r" = "mode resize";
-
 
         ############################
         # Workspaces
@@ -119,20 +117,18 @@ in
         "${mod}+n" =
           "exec sh -lc '.local/scripts/bin/sway-split-notion-gpt.sh  >> /tmp/sway-split-notion-gpt.log 2>&1'";
 
-
-
         ##############
         # audio shit
         ##############
-# https://wiki.archlinux.org/title/Sway#:~:text=or%20media%20players%3A-,~/.config/sway/config,-bindsym%20XF86AudioRaiseVolume%20exec the fuck bluetooth!!
-"XF86AudioRaiseVolume" =
-  "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%+'";
+        # https://wiki.archlinux.org/title/Sway#:~:text=or%20media%20players%3A-,~/.config/sway/config,-bindsym%20XF86AudioRaiseVolume%20exec the fuck bluetooth!!
+        "XF86AudioRaiseVolume" =
+          "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%+'";
 
-"XF86AudioLowerVolume" =
-  "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%-'";
+        "XF86AudioLowerVolume" =
+          "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%-'";
 
-"XF86AudioMute" =
-  "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-mute {} toggle'";
+        "XF86AudioMute" =
+          "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-mute {} toggle'";
 
       };
     };

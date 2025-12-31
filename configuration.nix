@@ -30,7 +30,6 @@ in
     options = "--delete-older-than 14d";
   };
 
-
   nixpkgs.config.allowUnfree = true;
   home-manager.useGlobalPkgs = false;
   home-manager.useUserPackages = true;
@@ -48,7 +47,7 @@ in
     kernelParams = [
       "intel_iommu=on"
       "iommu=pt"
-      "usbcore.autosuspend=-1"  # usb docking station
+      "usbcore.autosuspend=-1" # usb docking station
 
       # TrackPoint / psmouse Stabilität
       "psmouse.synaptics_intertouch=0"
@@ -165,13 +164,13 @@ in
       "modesetting"
     ];
     udev.extraRules = ''
-    # DisplayLink (D6000) Power Management Fix
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", TEST=="power/control", ATTR{power/control}="on"
+      # DisplayLink (D6000) Power Management Fix
+      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17e9", TEST=="power/control", ATTR{power/control}="on"
 
-    # Default: USB no wakeup
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/wakeup", ATTR{power/wakeup}="disabled"
-    # External Keybaord can wakeup
-    ACTION=="add", SUBSYSTEM=="input", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", ATTR{power/wakeup}="enabled"
+      # Default: USB no wakeup
+      ACTION=="add", SUBSYSTEM=="usb", TEST=="power/wakeup", ATTR{power/wakeup}="disabled"
+      # External Keybaord can wakeup
+      ACTION=="add", SUBSYSTEM=="input", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", ATTR{power/wakeup}="enabled"
 
     '';
   };

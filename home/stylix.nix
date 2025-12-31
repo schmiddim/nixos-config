@@ -18,16 +18,15 @@ in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
 
     opacity = {
-        desktop = 0.3;   # Bars/Widgets (Waybar zählt hier rein)
-        terminal = 0.9;  # optional
-        popups = 1.0;    # optional
+      desktop = 0.3; # Bars/Widgets (Waybar zählt hier rein)
+      terminal = 0.9; # optional
+      popups = 1.0; # optional
     };
 
     targets.waybar = {
-        colors.enable = true;
-        opacity.enable = true;  # nutzt config.stylix.opacity
-  };
-
+      colors.enable = true;
+      opacity.enable = true; # nutzt config.stylix.opacity
+    };
 
   };
 }

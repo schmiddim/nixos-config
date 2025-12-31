@@ -7,6 +7,7 @@
     ./alacritty.nix
     ./sway.nix
     ./stylix.nix
+    ./kanshi.nix
 
   ];
   home.stateVersion = "25.11";
