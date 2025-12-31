@@ -30,9 +30,9 @@ in
     options = "--delete-older-than 14d";
   };
 
-  nixpkgs.config.allowUnfree = true;
 
-  home-manager.useGlobalPkgs = true;
+  nixpkgs.config.allowUnfree = true;
+  home-manager.useGlobalPkgs = false;
   home-manager.useUserPackages = true;
   home-manager.users.ms = import ./home/home.nix;
 

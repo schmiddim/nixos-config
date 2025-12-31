@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
   imports = [
     ./zsh.nix
     ./alacritty.nix
@@ -39,8 +40,9 @@
     pavucontrol # audio settings
     signal-desktop
     nodejs
-
     wdisplays # screen management for wayland
+    cliphist
+    ripgrep
   ];
 
   home.sessionVariables = {
@@ -63,29 +65,6 @@
     # https://mynixos.com/home-manager/option/programs.waybar.settings
     waybar = {
       enable = true;
-#      settings.mainBar.height = 24;
-#      style = ''
-#        * {
-#          font-size: 11px;
-#        }
-#
-#        window#waybar {
-#          padding: 0 6px;
-#        }
-#
-#        #workspaces button {
-#          padding: 0 6px;
-#        }
-#
-#        #clock,
-#        #battery,
-#        #network,
-#        #pulseaudio,
-#        #tray {
-#          padding: 0 6px;
-#        }
-#      '';
-
     };
 
     #  https://nixos.wiki/wiki/Neovim

@@ -9,7 +9,7 @@
       ll = "ls -l";
       edit = "sudo -e";
       update = "sudo nixos-rebuild switch";
-      screenshot = " slurp | grim -g - - | wl-copy";
+      screenshot = "slurp | grim -g - - | wl-copy";
       sl3 = "sleep 3 && swaylock -f && systemctl suspend";
 
     };
