@@ -12,15 +12,15 @@
 
           outputs = [
             {
-              criteria = "DVI-I-1";
-              mode = "1920x1080@143.981Hz";
+              criteria = "Iiyama North America PL2760H 1164011302154";
+              mode = "1920x1080";
               position = "0,0";
               scale = 1.0;
               status = "enable";
             }
 
             {
-              criteria = "DVI-I-2";
+              criteria = "Iiyama North America PL2790 11306JK401162";
               mode = "1920x1080@60Hz";
               position = "1920,0";
               scale = 1.0;

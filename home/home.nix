@@ -8,6 +8,7 @@
     ./sway.nix
     ./stylix.nix
     ./kanshi.nix
+    ./waybar.nix
 
   ];
   home.stateVersion = "25.11";
@@ -64,11 +65,6 @@
   ];
 
   programs = {
-    # https://github.com/Alexays/Waybar/blob/master/resources/config.jsonc
-    # https://mynixos.com/home-manager/option/programs.waybar.settings
-    waybar = {
-      enable = true;
-    };
 
     #  https://nixos.wiki/wiki/Neovim
     neovim = {
