@@ -36,7 +36,7 @@
           #          "keyboard-state"
           #          "sway/language"
           "battery"
-          "battery#bat2"
+#          "battery#bat2"
           "clock"
           "tray"
 #          "custom/power"
@@ -109,7 +109,7 @@
         };
 
         memory = {
-          format = "{}% ";
+          format = "{}% ";
         };
 
         #        temperature = {
@@ -168,9 +168,9 @@
         network = {
           # "interface": "wlp2*",  # im Default auskommentiert
           format-wifi = "{essid} ({signalStrength}%) ";
-          format-ethernet = "{ipaddr}/{cidr} ";
-          tooltip-format = "{ifname} via {gwaddr} ";
-          format-linked = "{ifname} (No IP) ";
+          format-ethernet = "{ipaddr}/{cidr} 󰈀";
+          tooltip-format = "{ifname} via {gwaddr} 󰈀";
+          format-linked = "{ifname} (No IP) 󰈂";
           format-disconnected = "Disconnected ⚠";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
