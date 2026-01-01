@@ -12,7 +12,6 @@
   ];
   home.stateVersion = "25.11";
 
-  # Beispiel: weitere HM Pakete (optional)
   home.packages = with pkgs; [
     thunderbird
     google-chrome
@@ -38,6 +37,9 @@
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     mako # notification system developed by swaywm maintainer
     wofi
+    rofi
+    imagemagick
+    file
     pavucontrol # audio settings
     signal-desktop
     nodejs
@@ -74,6 +76,21 @@
       extraConfig = ''
         set number relativenumber
       '';
+    };
+  };
+
+  # clipboard history
+  services = {
+    cliphist = {
+      enable = true;
+      allowImages = true;
+      systemdTargets = [ "sway-session.target" ];
+      extraOptions = [
+        "-max-items"
+        "2000"
+        "-max-dedupe-search"
+        "50"
+      ];
     };
   };
 }

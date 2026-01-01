@@ -55,6 +55,7 @@ in
         "${mod}+q" = "kill";
         "${mod}+Return" = "exec alacritty";
         "Ctrl+Shift+l" = "exec systemctl suspend";
+        "${mod}+Shift+v" = "exec  rofi -modi clipboard:$HOME/.local/scripts/bin/cliphist-rofi-img.sh -show clipboard -show-icons";
 
         ############################
         # Split horizontal, vertical
