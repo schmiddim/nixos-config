@@ -1,4 +1,4 @@
-HOST ?= nixos
+HOST ?= p52
 FLAKE ?= .
 NIX_ARGS ?=
 
