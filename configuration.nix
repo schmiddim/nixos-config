@@ -3,24 +3,16 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
-in
 {
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
+  nix.settings.warn-dirty = false; # flakes sollen ohne git-Status-Gate funktionieren
 
   imports = [
-    (import "${home-manager}/nixos")
     ./hardware-configuration.nix
-  ];
-
-  nix.nixPath = [
-    "nixos-config=/etc/nixos/configuration.nix"
-    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
   ];
 
   # cleanup old stuff
@@ -66,7 +58,7 @@ in
     };
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "p52"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking

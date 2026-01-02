@@ -33,5 +33,9 @@
         "sudo"
       ];
     };
+
+    initExtra = ''
+      PROMPT="%F{blue}%n@%m%f %F{yellow}%~%f %# "
+    '';
   };
 }
