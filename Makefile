@@ -31,10 +31,11 @@ dry-switch:
 	nixos-rebuild dry-activate --flake $(FLAKE)#$(HOST) $(NIX_ARGS)
 
 check:
-	nix flake check $(FLAKE)
+	nix flake check --flake $(FLAKE)
 
 update:
-	nix flake update $(FLAKE)
+	nix flake update --flake $(FLAKE)
 
 lock:
-	nix flake lock $(FLAKE)
+	nix flake lock --flake $(FLAKE)
+
