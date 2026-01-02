@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   programs.zsh = {
     enable = true;
@@ -33,5 +33,9 @@
         "sudo"
       ];
     };
+
+    initContent = ''
+      PROMPT="%F{blue}%n@%m%f %F{yellow}%~%f %# "
+    '';
   };
 }
