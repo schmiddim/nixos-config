@@ -47,6 +47,7 @@
     wdisplays # screen management for wayland
     cliphist
     ripgrep
+    codex
   ];
 
   home.sessionVariables = {
