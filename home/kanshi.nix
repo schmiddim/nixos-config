@@ -46,14 +46,6 @@
               scale = 1.0;
               status = "enable";
             }
-            {
-              criteria = "DVI-I-1";
-              status = "disable";
-            }
-            {
-              criteria = "DVI-I-2";
-              status = "disable";
-            }
           ];
         };
       }

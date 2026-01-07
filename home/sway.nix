@@ -17,6 +17,10 @@ in
       client.focused_inactive #3b4252 #3b4252 #d8dee9 #3b4252 #3b4252
       client.unfocused        #2e3440 #2e3440 #888888 #2e3440 #2e3440
       client.urgent           #bf616a #bf616a #ffffff #bf616a #bf616a
+
+      # keep pointer visible (TrackPoint + DisplayLink sometimes lose hardware cursor)
+      # Wenn der Cursor trotzdem weg ist, bitte swaymsg -t get_inputs und swaymsg -t get_outputs schicken; dann können wir eine gerätespezifische Input-Section ergänzen.
+      seat seat0 hide_cursor 0
     '';
     config = {
       bars = [

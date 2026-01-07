@@ -31,7 +31,7 @@ dry-switch:
 	nixos-rebuild dry-activate --flake $(FLAKE)#$(HOST) $(NIX_ARGS)
 
 check:
-	nix flake check --flake $(FLAKE)
+	nix flake check
 
 update:
 	nix flake update --flake $(FLAKE)
