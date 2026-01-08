@@ -3,6 +3,10 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    completionInit = ''
+      zstyle ':completion:*' tag-order '!parameters'
+      autoload -U compinit && compinit
+    '';
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
