@@ -109,6 +109,16 @@
     avahi.nssmdns4 = true;
     pulseaudio.enable = false;
     flatpak.enable = true;
+    fstrim.enable = true;
+    irqbalance.enable = true;
+    smartd.enable = true;
+    sysstat.enable = true;
+    thermald.enable = true;
+    journald.extraConfig = ''
+      Storage=persistent
+      SystemMaxUse=1G
+      RuntimeMaxUse=256M
+    '';
     # Enable sound with pipewire.
     pipewire = {
       enable = true;
@@ -192,6 +202,16 @@
     vim
     gnumake
     htop
+    btop
+    iotop
+    lm_sensors
+    lshw
+    ncdu
+    nvme-cli
+    pciutils
+    powertop
+    smartmontools
+    sysstat
     regreet
     libinput
     xdg-utils
@@ -210,6 +230,7 @@
   hardware = {
 
     enableRedistributableFirmware = true;
+    cpu.intel.updateMicrocode = true;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
