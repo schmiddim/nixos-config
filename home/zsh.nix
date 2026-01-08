@@ -3,6 +3,9 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    localVariables = {
+      CASE_SENSITIVE = "true";
+    };
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {

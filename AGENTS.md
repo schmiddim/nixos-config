@@ -57,6 +57,8 @@ Context7 genutzt wird, z. B.:
 - Home-Manager Dokumentation (latest):
     - https://nix-community.github.io/home-manager/options.xhtml
     - https://nix-community.github.io/home-manager/index.html
+- Nixos Support Forum:
+    - https://discourse.nixos.org/
 
 **Wenn eine Option nicht eindeutig dokumentiert ist:**
 → Aufgabe abbrechen und Rückfrage stellen.
