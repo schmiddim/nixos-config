@@ -7,6 +7,64 @@
 Wenn Struktur/Dateinamen unklar sind, zuerst nachfragen, statt neue Pfade zu erfinden.
 
 ---
+## Wissensquellen (verpflichtend)
+
+Der Agent MUSS sich bei allen NixOS-, Home-Manager- und Flake-bezogenen Arbeiten an der
+**offiziellen, aktuellen Dokumentation** orientieren.
+
+Zusätzlich gilt:
+
+### ⚠️ Verbindliche Nutzung von Context7 (Codex MCP)
+
+Bei allen der folgenden Tätigkeiten MUSS Context7 verwendet werden:
+
+- Verwendung oder Änderung von:
+    - NixOS-Optionen
+    - Home-Manager-Optionen
+    - Modulen
+    - Systemd-Units
+    - Desktop-Konfigurationen (z. B. Sway, Wayland, PipeWire)
+- Hinzufügen neuer Pakete, Services oder Optionen
+- Refactorings, bei denen Optionsnamen, Defaults oder Semantik relevant sind
+
+**Regel:**  
+Der Agent darf keine Option, kein Attribut und kein Modul „aus dem Gedächtnis“ verwenden.
+
+Stattdessen:
+- Immer **Context7 über Codex CLI (MCP)** nutzen
+- Nur Optionen vorschlagen, die in der **aktuellen offiziellen Doku** existieren
+- Bei Unsicherheit zuerst nachschlagen, dann implementieren
+
+### Technische Umsetzung
+
+Context7 wird über Codex CLI via MCP eingebunden.
+
+Der Agent muss bei Doku-Abfragen implizit oder explizit davon ausgehen, dass
+Context7 genutzt wird, z. B.:
+
+- „Use context7 to verify the current NixOS option name“
+- „Look up the Home-Manager option via context7“
+
+---
+
+### Offizielle Referenzen (immer aktuell)
+
+- NixOS Optionen & Pakete:
+    - https://search.nixos.org/options
+    - https://search.nixos.org/packages
+- NixOS Handbuch (stable & unstable, jeweils latest):
+    - https://nixos.org/manual/nixos/stable/
+- Home-Manager Dokumentation (latest):
+    - https://nix-community.github.io/home-manager/options.xhtml
+    - https://nix-community.github.io/home-manager/index.html
+- Nixos Support Forum:
+    - https://discourse.nixos.org/
+
+**Wenn eine Option nicht eindeutig dokumentiert ist:**
+→ Aufgabe abbrechen und Rückfrage stellen.
+
+--
+
 
 ## Task-Workflow mit TODO.md
 
@@ -20,11 +78,8 @@ Dieser Abschnitt definiert, wie der Agent Aufgaben aus `TODO.md` abarbeitet.
 - Erledigte Aufgaben werden durchgestrichen:
     - [x] ~~Add module for laptop X~~
 
-Der Agent darf keine anderen Strukturen in `TODO.md` verändern als die jeweilige Task-Zeile.
+- Der Agent darf keine anderen Strukturen in `TODO.md` verändern als die jeweilige Task-Zeile.
 ---
-
-## @todo-agent
-
 ### Rolle
 
 Ein **implementierender** Agent, der Aufgaben aus `TODO.md` bearbeitet und dafür vollständige Git-Branches und Pull
@@ -63,10 +118,8 @@ Für jede einzelne Aufgabe in `TODO.md`:
         - Wie die Aufgabe aus `TODO.md` gelöst wurde.
     - Niemals Aenderungen auf dem Masterbranch machen
     - Immer git pull ausfuehren bevor du einen branch erstellst. Falls der Branch schon exisitert: loeschen - auch remote
-    - Keine Nachfragen noetig fuer git Operationen (inklusive push von feature branches)
-    - Keine Nachfragen noetig fur gh * Operationen
-    - 
     - Wenn der Task abgeschlossen ist git checkout master ausfuerhen
+    - Wenn die AGENTS.md oder TODO.md nicht von dir geandert wurde - mit in den branch aufnehmen via git stash + pull und pop
 
 5. **TODO.md aktualisieren**
     - Die bearbeitete Zeile in `TODO.md` aktualisieren:
@@ -75,7 +128,8 @@ Für jede einzelne Aufgabe in `TODO.md`:
     - Keine neuen Tasks hinzufügen oder andere bestehende Tasks umformulieren.
 
 6. **Pull Request erstellen**
-    - Einen Pull Request vom Feature Branch gegen den Standard-Branch öffnen.
+    - Einen Pull Request vom Feature Branch gegen den Standard-Branch öffnen. 
+    - Achte darauf, dass die Newlines richtig gesetzt sind "\n" klappt nicht so recht
     - PR-Titel:
         - `feat: <kurze Zusammenfassung der Aufgabe>`
     - PR-Beschreibung:
@@ -84,7 +138,7 @@ Für jede einzelne Aufgabe in `TODO.md`:
             - Problem / Aufgabe.
             - Lösung / Änderungen.
             - Hinweise für manuelle Tests (falls relevant).
-
+      
 ---
 
 ### Rolle
@@ -94,25 +148,6 @@ Ein **spezialisierter** Agent für dieses Repository, mit Fokus auf:
 - NixOS‑Systemkonfiguration (Flakes, Module, Hosts).
 - Home‑Manager‑Konfigurationen.
 - Desktop/Tools, die im Repo bereits angelegt sind.
-
----
-
-### Wissensquellen (immer verwenden)
-
-Der Agent muss sich an der **offiziellen, aktuellen** Nix‑Doku orientieren und bei Unsicherheit aktiv nachschlagen:
-
-- NixOS Optionen & Pakete:
-    - https://search.nixos.org/options
-    - https://search.nixos.org/packages
-- NixOS Handbuch (stable & unstable, jeweils „latest“):
-    - https://nixos.org/manual/nixos/stable/
-    - https://nixos.org/manual/nixos/unstable/
-- Home‑Manager Dokumentation (aktuelle Version):
-    - https://nix-community.github.io/home-manager/options.xhtml
-    - https://nix-community.github.io/home-manager/index.html
-
-Regel: Wenn es Zweifel zu einer Option oder einem Modul gibt, muss der Agent erst in der offiziellen Doku (latest)
-nachsehen, bevor er Code vorschlägt.
 
 ---
 
