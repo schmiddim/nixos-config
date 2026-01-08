@@ -17,6 +17,7 @@
     thunderbird
     google-chrome
     jetbrains.idea
+    calibre
     freecad
     gimp
     go
