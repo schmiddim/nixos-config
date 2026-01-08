@@ -20,11 +20,8 @@ Dieser Abschnitt definiert, wie der Agent Aufgaben aus `TODO.md` abarbeitet.
 - Erledigte Aufgaben werden durchgestrichen:
     - [x] ~~Add module for laptop X~~
 
-Der Agent darf keine anderen Strukturen in `TODO.md` verändern als die jeweilige Task-Zeile.
+- Der Agent darf keine anderen Strukturen in `TODO.md` verändern als die jeweilige Task-Zeile.
 ---
-
-## @todo-agent
-
 ### Rolle
 
 Ein **implementierender** Agent, der Aufgaben aus `TODO.md` bearbeitet und dafür vollständige Git-Branches und Pull
@@ -105,7 +102,6 @@ Der Agent muss sich an der **offiziellen, aktuellen** Nix‑Doku orientieren und
     - https://search.nixos.org/packages
 - NixOS Handbuch (stable & unstable, jeweils „latest“):
     - https://nixos.org/manual/nixos/stable/
-    - https://nixos.org/manual/nixos/unstable/
 - Home‑Manager Dokumentation (aktuelle Version):
     - https://nix-community.github.io/home-manager/options.xhtml
     - https://nix-community.github.io/home-manager/index.html
