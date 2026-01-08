@@ -7,6 +7,62 @@
 Wenn Struktur/Dateinamen unklar sind, zuerst nachfragen, statt neue Pfade zu erfinden.
 
 ---
+## Wissensquellen (verpflichtend)
+
+Der Agent MUSS sich bei allen NixOS-, Home-Manager- und Flake-bezogenen Arbeiten an der
+**offiziellen, aktuellen Dokumentation** orientieren.
+
+Zusätzlich gilt:
+
+### ⚠️ Verbindliche Nutzung von Context7 (Codex MCP)
+
+Bei allen der folgenden Tätigkeiten MUSS Context7 verwendet werden:
+
+- Verwendung oder Änderung von:
+    - NixOS-Optionen
+    - Home-Manager-Optionen
+    - Modulen
+    - Systemd-Units
+    - Desktop-Konfigurationen (z. B. Sway, Wayland, PipeWire)
+- Hinzufügen neuer Pakete, Services oder Optionen
+- Refactorings, bei denen Optionsnamen, Defaults oder Semantik relevant sind
+
+**Regel:**  
+Der Agent darf keine Option, kein Attribut und kein Modul „aus dem Gedächtnis“ verwenden.
+
+Stattdessen:
+- Immer **Context7 über Codex CLI (MCP)** nutzen
+- Nur Optionen vorschlagen, die in der **aktuellen offiziellen Doku** existieren
+- Bei Unsicherheit zuerst nachschlagen, dann implementieren
+
+### Technische Umsetzung
+
+Context7 wird über Codex CLI via MCP eingebunden.
+
+Der Agent muss bei Doku-Abfragen implizit oder explizit davon ausgehen, dass
+Context7 genutzt wird, z. B.:
+
+- „Use context7 to verify the current NixOS option name“
+- „Look up the Home-Manager option via context7“
+
+---
+
+### Offizielle Referenzen (immer aktuell)
+
+- NixOS Optionen & Pakete:
+    - https://search.nixos.org/options
+    - https://search.nixos.org/packages
+- NixOS Handbuch (stable & unstable, jeweils latest):
+    - https://nixos.org/manual/nixos/stable/
+- Home-Manager Dokumentation (latest):
+    - https://nix-community.github.io/home-manager/options.xhtml
+    - https://nix-community.github.io/home-manager/index.html
+
+**Wenn eine Option nicht eindeutig dokumentiert ist:**
+→ Aufgabe abbrechen und Rückfrage stellen.
+
+--
+
 
 ## Task-Workflow mit TODO.md
 
@@ -90,24 +146,6 @@ Ein **spezialisierter** Agent für dieses Repository, mit Fokus auf:
 - NixOS‑Systemkonfiguration (Flakes, Module, Hosts).
 - Home‑Manager‑Konfigurationen.
 - Desktop/Tools, die im Repo bereits angelegt sind.
-
----
-
-### Wissensquellen (immer verwenden)
-
-Der Agent muss sich an der **offiziellen, aktuellen** Nix‑Doku orientieren und bei Unsicherheit aktiv nachschlagen:
-
-- NixOS Optionen & Pakete:
-    - https://search.nixos.org/options
-    - https://search.nixos.org/packages
-- NixOS Handbuch (stable & unstable, jeweils „latest“):
-    - https://nixos.org/manual/nixos/stable/
-- Home‑Manager Dokumentation (aktuelle Version):
-    - https://nix-community.github.io/home-manager/options.xhtml
-    - https://nix-community.github.io/home-manager/index.html
-
-Regel: Wenn es Zweifel zu einer Option oder einem Modul gibt, muss der Agent erst in der offiziellen Doku (latest)
-nachsehen, bevor er Code vorschlägt.
 
 ---
 
