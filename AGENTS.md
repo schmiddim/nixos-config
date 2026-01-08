@@ -73,7 +73,8 @@ Für jede einzelne Aufgabe in `TODO.md`:
     - Keine neuen Tasks hinzufügen oder andere bestehende Tasks umformulieren.
 
 6. **Pull Request erstellen**
-    - Einen Pull Request vom Feature Branch gegen den Standard-Branch öffnen.
+    - Einen Pull Request vom Feature Branch gegen den Standard-Branch öffnen. 
+    - Achte darauf, dass die Newlines richtig gesetzt sind "\n" klappt nicht so recht
     - PR-Titel:
         - `feat: <kurze Zusammenfassung der Aufgabe>`
     - PR-Beschreibung:
@@ -82,7 +83,7 @@ Für jede einzelne Aufgabe in `TODO.md`:
             - Problem / Aufgabe.
             - Lösung / Änderungen.
             - Hinweise für manuelle Tests (falls relevant).
-
+      
 ---
 
 ### Rolle
