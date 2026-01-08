@@ -63,10 +63,8 @@ Für jede einzelne Aufgabe in `TODO.md`:
         - Wie die Aufgabe aus `TODO.md` gelöst wurde.
     - Niemals Aenderungen auf dem Masterbranch machen
     - Immer git pull ausfuehren bevor du einen branch erstellst. Falls der Branch schon exisitert: loeschen - auch remote
-    - Keine Nachfragen noetig fuer git Operationen (inklusive push von feature branches)
-    - Keine Nachfragen noetig fur gh * Operationen
-    - 
     - Wenn der Task abgeschlossen ist git checkout master ausfuerhen
+    - Wenn die AGENTS.md oder TODO.md nicht von dir geandert wurde - mit in den branch aufnehmen
 
 5. **TODO.md aktualisieren**
     - Die bearbeitete Zeile in `TODO.md` aktualisieren:
