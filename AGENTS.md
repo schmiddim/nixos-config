@@ -112,3 +112,4 @@ Wenn eine Option genutzt wird:
 - Der Agent darf relevante Issues lesen, um Requirements zu klären. 
 - Nutze dafür das unter .git/config konfigurierte repo
 - Wenn ein Issue unklar ist: stelle Rückfragen im PR-Text (oder als Kommentar), statt zu raten.
+- Wenn der Pull Request erstelle ist darfst du das Issue schliessen
