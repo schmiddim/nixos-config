@@ -1,237 +1,166 @@
-## Projektüberblick
+# AGENTS.md — nixos-config (ThinkPad P52)
 
-- Persönliches NixOS‑Repository mit Flakes, mehreren Hosts und Home‑Manager‑Konfigurationen.
-- Ziel: Reproduzierbare System‑ und User‑Konfigurationen für Workstations/Laptops, inkl. Desktop‑Setup und Dev‑Umgebung.
-- Alle Änderungen erfolgen deklarativ über Nix‑Dateien in diesem Repo.
+## Scope
+Dieses Repo ist eine NixOS-Flake-Konfiguration für den Host `p52` (ThinkPad P52) inkl. Home-Manager.
+Alle Änderungen müssen **reproduzierbar, reviewbar und nicht-destruktiv** sein.
 
-Wenn Struktur/Dateinamen unklar sind, zuerst nachfragen, statt neue Pfade zu erfinden.
+Dieses Repo wird **niemals aktiv auf ein laufendes System angewendet**.
 
----
-## Wissensquellen (verpflichtend)
+## 🔒 HARTE REGEL: KEINE AKTIVIERUNG
+**Es ist strikt verboten, folgende Befehle auszuführen oder vorzuschlagen:**
+- `make switch`
+- `make boot`
+- `nixos-rebuild switch`
+- `nixos-rebuild boot`
 
-Der Agent MUSS sich bei allen NixOS-, Home-Manager- und Flake-bezogenen Arbeiten an der
-**offiziellen, aktuellen Dokumentation** orientieren.
-
-Zusätzlich gilt:
-
-### ⚠️ Verbindliche Nutzung von Context7 (Codex MCP)
-
-Bei allen der folgenden Tätigkeiten MUSS Context7 verwendet werden:
-
-- Verwendung oder Änderung von:
-    - NixOS-Optionen
-    - Home-Manager-Optionen
-    - Modulen
-    - Systemd-Units
-    - Desktop-Konfigurationen (z. B. Sway, Wayland, PipeWire)
-- Hinzufügen neuer Pakete, Services oder Optionen
-- Refactorings, bei denen Optionsnamen, Defaults oder Semantik relevant sind
-
-**Regel:**  
-Der Agent darf keine Option, kein Attribut und kein Modul „aus dem Gedächtnis“ verwenden.
-
-Stattdessen:
-- Immer **Context7 über Codex CLI (MCP)** nutzen
-- Nur Optionen vorschlagen, die in der **aktuellen offiziellen Doku** existieren
-- Bei Unsicherheit zuerst nachschlagen, dann implementieren
-
-### Technische Umsetzung
-
-Context7 wird über Codex CLI via MCP eingebunden.
-
-Der Agent muss bei Doku-Abfragen implizit oder explizit davon ausgehen, dass
-Context7 genutzt wird, z. B.:
-
-- „Use context7 to verify the current NixOS option name“
-- „Look up the Home-Manager option via context7“
-
----
-
-### Offizielle Referenzen (immer aktuell)
-
-- NixOS Optionen & Pakete:
-    - https://search.nixos.org/options
-    - https://search.nixos.org/packages
-- NixOS Handbuch (stable & unstable, jeweils latest):
-    - https://nixos.org/manual/nixos/stable/
-- Home-Manager Dokumentation (latest):
-    - https://nix-community.github.io/home-manager/options.xhtml
-    - https://nix-community.github.io/home-manager/index.html
-- Nixos Support Forum:
-    - https://discourse.nixos.org/
-
-**Wenn eine Option nicht eindeutig dokumentiert ist:**
-→ Aufgabe abbrechen und Rückfrage stellen.
+➡️ Auch nicht „als Vorschlag“, „optional“, „zum Testen“ oder „wenn gewünscht“.  
+➡️ Änderungen werden **nur gebaut, geprüft oder dry-run validiert**.
 
 --
+## 🔁 Standard-Workflow: Branch → Push → Pull Request (verbindlich)
 
+Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
 
-## Task-Workflow mit TODO.md
+1) Erstelle einen neuen Branch (nie direkt auf default branch arbeiten)
+    - Branch-Schema: `codex/<kurzer-slug>` oder `codex/issue-<nr>-<slug>`
+    - Beispiel: `codex/issue-12-nvidia-suspend`
 
-Dieser Abschnitt definiert, wie der Agent Aufgaben aus `TODO.md` abarbeitet.
+2) Commit-Regeln
+    - Kleine, reviewbare Commits (max. ~200 LoC pro Commit, wenn möglich)
+    - Commit-Message: prägnant + was/warum
+    - Keine Lockfile-Änderungen (`flake.lock`), außer Aufgabe ist Update/Lock.
 
-### TODO.md-Konvention
+3) Push
+    - Push den Branch ins Origin (upstream setzen).
 
-- Aufgaben stehen als Markdown-Checkboxen, z.B.:
-    - [ ] Add module for laptop X
-    - [ ] Refactor sway config for multi-monitor
-- Erledigte Aufgaben werden durchgestrichen:
-    - [x] ~~Add module for laptop X~~
+4) Pull Request erstellen
+    - PR-Titel: wie Branch / Issue
+    - PR-Beschreibung muss enthalten:
+        - Was geändert wurde (Bulletpoints)
+        - Wie es verifiziert wurde: `make check`, `make build`, ggf. `make dry-switch`
+        - Hinweise zu Risiko-Bereichen (Boot/FS/GPU/etc.), falls betroffen
+        - Wenn `flake.lock` geändert: warum + was genau updated wurde
 
-- Der Agent darf keine anderen Strukturen in `TODO.md` verändern als die jeweilige Task-Zeile.
----
-### Rolle
-
-Ein **implementierender** Agent, der Aufgaben aus `TODO.md` bearbeitet und dafür vollständige Git-Branches und Pull
-Requests vorbereitet.
-
-### Vorgehensweise pro Aufgabe
-
-Für jede einzelne Aufgabe in `TODO.md`:
-
-1. **Aufgabe auswählen und verstehen**
-    - `TODO.md` lesen.
-    - Eine einzelne offene Aufgabe (`[ ] …`) auswählen.
-    - Kurz intern planen, welche Dateien/Module im Repo betroffen sind.
-
-2. **Feature Branch anlegen**
-    - Einen neuen Feature Branch aus dem Standard-Branch (z.B. `main` oder `master`) erstellen.
-    - Branch-Namensschema:
-        - `feat/todo-<kurzer-kebab-name>`  
-          Beispiel: `feat/todo-refactor-sway-dock-setup`
-
-3. **Aufgabe implementieren**
-    - Nur die Änderungen vornehmen, die direkt zur Lösung der gewählten Aufgabe notwendig sind.
-    - Repository-Struktur und Modul-Aufteilung respektieren (Hosts, Module, Home-Manager, etc.).
-    - Keine `switch`-Befehle vorschlagen oder ausführen (siehe globale Verbote in dieser AGENTS.md).
-
-4. **Commit erstellen**
-    - Alle relevanten Änderungen in einem oder wenigen sinnvollen Commits speichern.
-    - Commit-Message:
-        - Kurze, prägnante Zusammenfassung der Aufgabe.
-        - Referenz auf den TODO-Text.
-        - Beispiel:
-            - `feat: refactor sway config for dock setup`
-            - `fix: enable firmware updates for laptop profile`
-    - Im Commit-Body kurz beschreiben:
-        - Welche Dateien geändert wurden.
-        - Wie die Aufgabe aus `TODO.md` gelöst wurde.
-    - Niemals Aenderungen auf dem Masterbranch machen
-    - Immer git pull ausfuehren bevor du einen branch erstellst. Falls der Branch schon exisitert: loeschen - auch remote
-    - Wenn der Task abgeschlossen ist git checkout master ausfuerhen
-    - Wenn die AGENTS.md oder TODO.md nicht von dir geandert wurde - mit in den branch aufnehmen via git stash + pull und pop
-
-5. **TODO.md aktualisieren**
-    - Die bearbeitete Zeile in `TODO.md` aktualisieren:
-        - `[ ] Task text` → `[x] ~~Task text~~`
-    - Nur diese eine Task-Zeile ändern.
-    - Keine neuen Tasks hinzufügen oder andere bestehende Tasks umformulieren.
-
-6. **Pull Request erstellen**
-    - Einen Pull Request vom Feature Branch gegen den Standard-Branch öffnen. 
-    - Achte darauf, dass die Newlines richtig gesetzt sind "\n" klappt nicht so recht
-    - PR-Titel:
-        - `feat: <kurze Zusammenfassung der Aufgabe>`
-    - PR-Beschreibung:
-        - Referenz auf die Zeile aus `TODO.md`.
-        - Kurzfassung:
-            - Problem / Aufgabe.
-            - Lösung / Änderungen.
-            - Hinweise für manuelle Tests (falls relevant).
-      
----
-
-### Rolle
-
-Ein **spezialisierter** Agent für dieses Repository, mit Fokus auf:
-
-- NixOS‑Systemkonfiguration (Flakes, Module, Hosts).
-- Home‑Manager‑Konfigurationen.
-- Desktop/Tools, die im Repo bereits angelegt sind.
+5) Keine Aktivierung
+    - Niemals `make switch` oder `make boot` ausführen oder vorschlagen.
 
 ---
 
-### Repository-Kontext
+## Default-Werte & Variablen
+- Default `HOST=p52`
+- Default `FLAKE=.`
+- Optional `NIX_ARGS` für zusätzliche Flags (z.B. `--show-trace`, `-L`)
 
-Der Agent soll die Struktur dieses Repos respektieren, zum Beispiel (Beispiele, nicht abschließend):
-
-- `flake.nix`, `flake.lock`
-- System‑/Host‑Configs, z.B. `hosts/…/default.nix` oder ähnliche Struktur
-- Home‑Manager‑Configs, z.B. `home/…`
-- Module/Profiles unter `modules/`, `profiles/` oder ähnlich
-- Scripts/Overlays, falls vorhanden
-
-Neue Konfigurationen sollen sich in diese Struktur einfügen (z.B. neues Host‑Verzeichnis, neues Modul statt alles in
-eine einzige Datei).
+Beispiele:
+- `make build`
+- `make dry-switch`
+- `make build NIX_ARGS="--show-trace -L"`
 
 ---
 
-### Erlaubte Aufgaben
+## Golden Path (erlaubte Targets)
+**Nutze ausschließlich diese Makefile-Targets.**
 
-Der Agent darf:
+### Checks (immer Pflicht)
+- `make check`
+    - führt `nix flake check` aus
 
-- Nix‑Code lesen und erklären.
-- Vorschläge für:
-    - neue Module,
-    - neue Hosts,
-    - zusätzliche Optionen
-      machen und passende Snippets liefern.
-- Bestehende Konfigurationen refactoren (z.B. große Dateien in kleinere Module aufteilen).
-- Beispiele für:
-    - `environment.etc`‑Einträge,
-    - `systemd.services`,
-    - Home‑Manager‑Module,
-    - Desktop‑Konfigurationen (Sway, Wayland, Apps)
-      formulieren, **immer** auf Basis der offiziellen Doku.
+### Build (ohne Aktivierung)
+- `make build`
+- optional: `make build HOST=p52`
 
-Bei allen Vorschlägen:
+### Dry-Run der Aktivierung (nur Analyse)
+- `make dry-switch`
+    - zeigt Änderungen, ohne sie anzuwenden
 
-- Kurze Einordnung (warum so, welche Optionen wichtig sind).
-- Hinweis geben, wo im Repo das Snippet sinnvoll platziert werden sollte (z.B. „als neues Modul in
-  `modules/desktop/sway.nix` einbinden“).
+### Flake / Lockfile
+- Inputs aktualisieren (bewusst, mit Begründung):
+    - `make update`
+- Lockfile schreiben ohne Updates:
+    - `make lock`
 
 ---
 
-### Strikte Verbote
-
-Der Agent darf **keine** Befehle vorschlagen oder ausführen, die einen `switch` machen:
-
-- Nicht erlaubte Befehlsbeispiele:
-    - `sudo nixos-rebuild switch …`
-    - `nixos-rebuild switch --flake …`
-    - `home-manager switch`
-    - `nh os switch`, `nh home switch`
-    - jegliche Varianten von `* switch` (auch `test`/`boot` nur, wenn explizit angefordert – default: keine
-      Laufzeit‑Kommandos).
-
-Stattdessen:
-
-- Nur deklarativen Nix‑Code liefern.
-- Höchstens allgemein erwähnen, **dass** der Nutzer „ein Rebuild/Deploy mit seinem bevorzugten Workflow ausführen“ muss,
-  **ohne** konkrete `switch`‑Commands zu nennen.
-
-Weitere Verbote:
-
-- Keine nicht‑offiziellen oder veralteten Blogposts als Wahrheit benutzen, wenn sie der offiziellen Doku widersprechen.
-- Keine Distribution‑fremden Anweisungen (apt/yum etc.).
-- Keine geheimen Pfade/Keys erfinden (z.B. für Secrets).
+## Flake- & Lockfile-Policy
+- `flake.lock` **niemals nebenbei ändern**
+- Änderungen an Inputs **nur**, wenn explizit gewünscht oder klar begründet
+- Bei Updates: kurz erklären *welche* Inputs sich ändern und *warum*
 
 ---
 
-### Code‑Stil & Antworten
-
-- Nix‑Code stets in ```nix ```‑Blöcken.
-- Möglichst modulare Beispiele (eigene Dateien/Module statt ewig langer `configuration.nix`).
-- Kommentare im Code kurz und präzise, vorzugsweise auf Deutsch, Identifikatoren auf Englisch.
-- Antwortsprache:
-    - Standard: Deutsch für Erklärungen.
-    - Englisch für kurze technische Namen, IDs, Attribute.
+## Repo-Landkarte
+- `flake.nix`
+    - definiert `nixosConfigurations.p52`
+    - bindet `nixos-hardware` + `home-manager` ein
+- `configuration.nix`
+    - Haupt-Systemkonfiguration
+- `hardware-configuration.nix`
+    - hardware-spezifisch → **hands-off**
+- `home/`
+    - Home-Manager Konfigurationen
+- `Makefile`
+    - einzig erlaubte Entry-Points für Checks & Builds
 
 ---
 
-## Allgemeine Richtlinien für alle Agenten
+## 📚 Dokumentationspflicht (Context7 & GitHub MCP)
 
-- Repository‑Struktur respektieren; keine neuen Top‑Level‑Ordner ohne klaren Grund.
-- Bei Unsicherheit zuerst Rückfragen stellen (z.B. „Wo liegen bei dir die Host‑Configs?“).
-- Änderungen immer so vorschlagen, dass sie git‑diff‑freundlich und nachvollziehbar sind.
-- Kein Annahmen über Secrets, Passwörter oder private Endpunkte treffen; Nutzer muss solche Werte selbst einsetzen.
+Bei unklaren Optionen, Paketen oder Modulen:
+- **nicht raten**
+- **nicht halluzinieren**
+- **immer zuerst in offizieller Doku nachschlagen**
+
+Bevorzugte Quellen (immer aktuell):
+
+### NixOS
+- Optionen: https://search.nixos.org/options
+- Pakete: https://search.nixos.org/packages
+- Handbuch (stable/latest): https://nixos.org/manual/nixos/stable/
+
+### Home Manager
+- Optionen: https://nix-community.github.io/home-manager/options.xhtml
+- Handbuch: https://nix-community.github.io/home-manager/index.html
+
+### Community / Edge Cases
+- NixOS Discourse: https://discourse.nixos.org/
+
+➡️ **Context7 und GitHub MCP aktiv nutzen**, um:
+- Optionsdefinitionen nachzulesen
+- Modulverhalten zu verifizieren
+- Beispiele aus offizieller Doku oder Issues zu prüfen
+
+Wenn eine Option genutzt wird:
+- kurz erwähnen, **wo sie dokumentiert ist**
+- idealerweise mit Link oder exaktem Optionspfad
+
+---
+
+## Change Policy (Arbeitsweise)
+- Kleine, reviewbare Diffs
+- Keine Refactors ohne expliziten Auftrag
+- Bei Unsicherheit: erst erklären, dann ändern
+- Systemkritische Bereiche (Kernel, Boot, FS, GPU, Power):
+    - erst Plan + Risiko, dann Umsetzung
+
+---
+
+## Guardrails / Tabus
+- Keine Secrets, Tokens oder Passwörter committen
+- `hardware-configuration.nix` nicht ändern (außer ausdrücklich gefordert)
+- Keine Bootloader-/FS-/Partition-/Encryption-Änderungen ohne klaren Auftrag
+- Keine großflächigen Reformatierungen ohne Nutzen
+
+---
+
+## Definition of Done
+- [ ] `make check` grün
+- [ ] `make build` erfolgreich
+- [ ] ggf. `make dry-switch` geprüft
+- [ ] Diff minimal & erklärbar
+- [ ] `flake.lock` nur geändert, wenn beabsichtigt
+- [ ] verwendete Optionen sind dokumentiert / referenziert
+
+
+## Issues als Arbeitsinput
+- Der Agent darf relevante Issues lesen, um Requirements zu klären.
+- Wenn ein Issue unklar ist: stelle Rückfragen im PR-Text (oder als Kommentar), statt zu raten.
