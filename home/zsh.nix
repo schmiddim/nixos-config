@@ -37,6 +37,11 @@
       ];
     };
 
+    envExtra = ''
+      local secrets_file="$HOME/.config/zsh/env.secrets"
+      [[ -f "$secrets_file" ]] && source "$secrets_file"
+    '';
+
     initContent = ''
       PROMPT="%F{blue}%n@%m%f %F{yellow}%~%f %# "
     '';
