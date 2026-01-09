@@ -2,7 +2,7 @@ HOST ?= p52
 FLAKE ?= .
 NIX_ARGS ?=
 
-.PHONY: help switch boot build dry-switch check update host-check fmt
+.PHONY: help switch boot build dry-switch check update fmt
 
 help:
 	@echo "Available targets (override HOST=<name> or FLAKE=<path> as needed):"
@@ -13,7 +13,6 @@ help:
 	@echo "  dry-switch  Show what would change without activating (dry activate)."
 	@echo "  check       Run flake checks."
 	@echo "  update      Update flake inputs (equivalent to nix flake update)."
-	@echo "  host-check  Verify the current hostname matches HOST."
 	@echo "  fmt      Format all .nix files with nixfmt-rfc-style."
 	@echo ""
 	@echo "Examples:"
@@ -30,7 +29,7 @@ build:
 	nixos-rebuild build --flake $(FLAKE)#$(HOST) $(NIX_ARGS)
 
 dry-build:
-	nixos-rebuild dry-build --flake .#$(HOST) -L
+	nixos-rebuild dry-build --flake $(FLAKE)#$(HOST) -L $(NIX_ARGS)
 
 dry-switch:
 	nixos-rebuild dry-activate --flake $(FLAKE)#$(HOST) $(NIX_ARGS)
@@ -38,18 +37,7 @@ dry-switch:
 check:
 	nix flake check
 
+fmt: 
+	 nix run nixpkgs#nixfmt-rfc-style -- $(shell find . -name '*.nix' -not -path './.git/*' -not -path '././*')
 update:
 	nix flake update --flake $(FLAKE)
-
-
-host-check:
-	@actual="$$(hostname)"; \
-	if [ "$$actual" = "$(HOST)" ]; then \
-		echo "Host matches: $$actual"; \
-	else \
-		echo "Host mismatch: expected $(HOST), got $$actual" >&2; \
-		exit 1; \
-	fi
-
-fmt:
-	nix run nixpkgs#nixfmt-rfc-style -- $(shell find . -name '*.nix' -not -path './.git/*')
