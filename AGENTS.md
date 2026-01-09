@@ -32,8 +32,9 @@ Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
 
 3) Push
     - Push den Branch ins Origin (upstream setzen).
+4) Falls Du auf dem Host P52 bist: führe erstmal checks aus um zu prüfen, ob das alles so klappt
 
-4) Pull Request erstellen
+5) Pull Request erstellen
     - PR-Titel: wie Branch / Issue
     - PR-Beschreibung muss enthalten:
         - Was geändert wurde (Bulletpoints)
@@ -44,6 +45,7 @@ Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
 5) Keine Aktivierung
     - Niemals `make switch` oder `make boot` ausführen oder vorschlagen.
 
+6) Wenn der Pull Request erfolgreich ausgeführt wurde master branch auschecken
 ---
 
 ## Default-Werte & Variablen
@@ -78,7 +80,9 @@ Beispiele:
     - `make update`
 - Lockfile schreiben ohne Updates:
     - `make lock`
-
+### Host Check
+- Pruefen, ob Du auf dem richtigen Host bist
+  -  `make host-check`
 ---
 
 ## Flake- & Lockfile-Policy
@@ -162,5 +166,6 @@ Wenn eine Option genutzt wird:
 
 
 ## Issues als Arbeitsinput
-- Der Agent darf relevante Issues lesen, um Requirements zu klären.
+- Der Agent darf relevante Issues lesen, um Requirements zu klären. 
+- Nutze dafür das unter .git/config konfigurierte repo
 - Wenn ein Issue unklar ist: stelle Rückfragen im PR-Text (oder als Kommentar), statt zu raten.
