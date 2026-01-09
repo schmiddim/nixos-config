@@ -4,3 +4,4 @@
 [x] ~~Erzeuge mir die Shortcuts aber bitte die Kommandos nicht auflisten~~
 [x] ~~install calibre~~
 [x] ~~zsh: tab completion schlaegt mir immer Variablen vor. das will ich nicht. schalt das ab.~~
+[x] ~~remove calibre~~
