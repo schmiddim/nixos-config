@@ -2,7 +2,7 @@ HOST ?= p52
 FLAKE ?= .
 NIX_ARGS ?=
 
-.PHONY: help switch boot build dry-switch check update lock
+.PHONY: help switch boot build dry-switch check update lock host-check
 
 help:
 	@echo "Available targets (override HOST=<name> or FLAKE=<path> as needed):"
@@ -13,6 +13,7 @@ help:
 	@echo "  check       Run flake checks."
 	@echo "  update      Update flake inputs (equivalent to nix flake update)."
 	@echo "  lock        Write a lock file without updating inputs."
+	@echo "  host-check  Verify the current hostname matches HOST."
 	@echo ""
 	@echo "Examples:"
 	@echo "  make update"
@@ -39,3 +40,11 @@ update:
 lock:
 	nix flake lock --flake $(FLAKE)
 
+host-check:
+	@actual="$$(hostname)"; \
+	if [ "$$actual" = "$(HOST)" ]; then \
+		echo "Host matches: $$actual"; \
+	else \
+		echo "Host mismatch: expected $(HOST), got $$actual" >&2; \
+		exit 1; \
+	fi
