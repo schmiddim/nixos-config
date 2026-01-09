@@ -25,7 +25,7 @@
 
         modules-right = [
           #          "mpd"
-#          "idle_inhibitor"
+          #          "idle_inhibitor"
           "pulseaudio"
           "network"
           "power-profiles-daemon"
@@ -36,10 +36,10 @@
           #          "keyboard-state"
           #          "sway/language"
           "battery"
-#          "battery#bat2"
+          #          "battery#bat2"
           "clock"
           "tray"
-#          "custom/power"
+          #          "custom/power"
         ];
 
         # Module configs (wie Default)
@@ -83,13 +83,13 @@
         #          tooltip-format-disconnected = "MPD (disconnected)";
         #        };
 
-#        idle_inhibitor = {
-#          format = "{icon}";
-#          format-icons = {
-#            activated = "";
-#            deactivated = "";
-#          };
-#        };
+        #        idle_inhibitor = {
+        #          format = "{icon}";
+        #          format-icons = {
+        #            activated = "";
+        #            deactivated = "";
+        #          };
+        #        };
 
         tray = {
           # "icon-size": 21,   # im Default auskommentiert
@@ -149,9 +149,9 @@
           ];
         };
 
-#        "battery#bat2" = {
-#          bat = "BAT2";
-#        };
+        #        "battery#bat2" = {
+        #          bat = "BAT2";
+        #        };
 
         "power-profiles-daemon" = {
           format = "{icon}";
@@ -212,41 +212,41 @@
           # exec = "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null";
         };
 
-#        "custom/power" = {
-#          format = "⏻ ";
-#          tooltip = false;
-#          menu = "on-click";
-#          menu-file = "$HOME/.config/waybar/power_menu.xml";
-#          menu-actions = {
-#            shutdown = "shutdown";
-#            reboot = "reboot";
-#            suspend = "systemctl suspend";
-#            hibernate = "systemctl hibernate";
-#          };
-#        };
+        #        "custom/power" = {
+        #          format = "⏻ ";
+        #          tooltip = false;
+        #          menu = "on-click";
+        #          menu-file = "$HOME/.config/waybar/power_menu.xml";
+        #          menu-actions = {
+        #            shutdown = "shutdown";
+        #            reboot = "reboot";
+        #            suspend = "systemctl suspend";
+        #            hibernate = "systemctl hibernate";
+        #          };
+        #        };
       }
     ];
-        style = ''
-          /* wichtig: min-height auf 0, sonst erzwingen Module Minimums */
-          * { min-height: 0; }
+    style = ''
+      /* wichtig: min-height auf 0, sonst erzwingen Module Minimums */
+      * { min-height: 0; }
 
-          /* NUR workspaces kompakter machen */
-          #workspaces button {
-            padding: 0px 6px;    /* vertikal 0 => deutlich niedriger */
-            margin: 0px 1px;
-            border-radius: 0px;  /* optional: falls radius Höhe „optisch“ erhöht */
-          }
+      /* NUR workspaces kompakter machen */
+      #workspaces button {
+        padding: 0px 6px;    /* vertikal 0 => deutlich niedriger */
+        margin: 0px 1px;
+        border-radius: 0px;  /* optional: falls radius Höhe „optisch“ erhöht */
+      }
 
-          /* falls active/hover extra padding bekommen: */
-          #workspaces button.focused,
-          #workspaces button.visible,
-          #workspaces button.urgent {
-            padding: 0px 6px;
-          }
+      /* falls active/hover extra padding bekommen: */
+      #workspaces button.focused,
+      #workspaces button.visible,
+      #workspaces button.urgent {
+        padding: 0px 6px;
+      }
 
-          /* optional, wenn Schrift zu groß ist */
-          #workspaces * { font-size: 12px; }
-        '';
+      /* optional, wenn Schrift zu groß ist */
+      #workspaces * { font-size: 12px; }
+    '';
   };
 
 }

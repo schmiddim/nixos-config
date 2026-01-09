@@ -25,14 +25,15 @@ Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
     - Branch-Schema: `codex/<kurzer-slug>` oder `codex/issue-<nr>-<slug>`
     - Beispiel: `codex/issue-12-nvidia-suspend`
 
-2) Commit-Regeln
+2) Falls Du auf dem Host P52 bist (findest du mit dem Befehl `host-check` heraus:
+- Folge dem Golden Path
+
+3) Commit-Regeln
     - Kleine, reviewbare Commits (max. ~200 LoC pro Commit, wenn möglich)
     - Commit-Message: prägnant + was/warum
     - Keine Lockfile-Änderungen (`flake.lock`), außer Aufgabe ist Update/Lock.
-
-3) Push
+4) Push
     - Push den Branch ins Origin (upstream setzen).
-4) Falls Du auf dem Host P52 bist: führe erstmal checks aus um zu prüfen, ob das alles so klappt
 
 5) Pull Request erstellen
     - PR-Titel: wie Branch / Issue
@@ -42,10 +43,10 @@ Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
         - Hinweise zu Risiko-Bereichen (Boot/FS/GPU/etc.), falls betroffen
         - Wenn `flake.lock` geändert: warum + was genau updated wurde
 
-5) Keine Aktivierung
+6) Keine Aktivierung
     - Niemals `make switch` oder `make boot` ausführen oder vorschlagen.
 
-6) Wenn der Pull Request erfolgreich ausgeführt wurde master branch auschecken
+7) Wenn der Pull Request erfolgreich ausgeführt wurde master branch lokal auschecken
 ---
 
 ## Default-Werte & Variablen
@@ -54,35 +55,16 @@ Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
 - Optional `NIX_ARGS` für zusätzliche Flags (z.B. `--show-trace`, `-L`)
 
 Beispiele:
-- `make build`
-- `make dry-switch`
-- `make build NIX_ARGS="--show-trace -L"`
+- `make check`
+- `make dry-build`
 
 ---
 
 ## Golden Path (erlaubte Targets)
 **Nutze ausschließlich diese Makefile-Targets.**
-
-### Checks (immer Pflicht)
-- `make check`
-    - führt `nix flake check` aus
-
-### Build (ohne Aktivierung)
-- `make build`
-- optional: `make build HOST=p52`
-
-### Dry-Run der Aktivierung (nur Analyse)
-- `make dry-switch`
-    - zeigt Änderungen, ohne sie anzuwenden
-
-### Flake / Lockfile
-- Inputs aktualisieren (bewusst, mit Begründung):
-    - `make update`
-- Lockfile schreiben ohne Updates:
-    - `make lock`
-### Host Check
-- Pruefen, ob Du auf dem richtigen Host bist
-  -  `make host-check`
+- `make fmt`   formatiert alle dateien
+- `make dry-build`  Evaluate NixOS config and show planned changes (no build, no activation, no sudo)
+- `make check`   Run flake checks.
 ---
 
 ## Flake- & Lockfile-Policy
