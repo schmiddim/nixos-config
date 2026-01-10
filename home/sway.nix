@@ -33,6 +33,10 @@ in
         "type:touchpad" = {
           events = "disabled";
         };
+        "type:keyboard" = {
+          xkb_layout = "us";
+          xkb_variant = "altgr-intl";
+        };
       };
       modifier = "Mod4";
       terminal = "alacritty";
