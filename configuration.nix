@@ -127,6 +127,14 @@
       #jack.enable = true;
 
     };
+    upower = {
+      enable = true;
+      usePercentageForPolicy = true;
+      percentageLow = 10;
+      percentageCritical = 5;
+      percentageAction = 3;
+      criticalPowerAction = "PowerOff";
+    };
     k3s = {
       enable = true;
       role = "server";
