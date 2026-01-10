@@ -41,6 +41,8 @@
     rofi
     imagemagick
     file
+    mpv
+    alsa-utils
     pavucontrol # audio settings
     signal-desktop
     nodejs
