@@ -130,7 +130,9 @@
     k3s = {
       enable = true;
       role = "server";
-      extraFlags = [ "--write-kubeconfig-mode=644" ];
+      extraFlags = [
+        "--write-kubeconfig-mode=644"
+      ];
     };
     # List services that you want to enable:
     # Enable the OpenSSH daemon.
@@ -165,6 +167,147 @@
       ACTION=="add", SUBSYSTEM=="input", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", ATTR{power/wakeup}="enabled"
 
     '';
+    grafana = {
+      enable = true;
+      settings.server.http_addr = "127.0.0.1";
+      provision = {
+        enable = true;
+        datasources = {
+          settings.datasources = [
+            {
+              name = "Prometheus";
+              type = "prometheus";
+              url = "http://localhost:9090";
+              isDefault = true;
+            }
+            {
+              name = "Loki";
+              type = "loki";
+              url = "http://localhost:3100";
+            }
+          ];
+        };
+      };
+    };
+    prometheus = {
+      enable = true;
+      retentionTime = "7d";
+      scrapeConfigs = [
+        {
+          job_name = "prometheus";
+          static_configs = [
+            { targets = [ "localhost:9090" ]; }
+          ];
+        }
+        {
+          job_name = "node";
+          static_configs = [
+            {
+              targets = [
+                "localhost:${toString config.services.prometheus.exporters.node.port}"
+              ];
+            }
+          ];
+        }
+      ];
+    };
+    prometheus.exporters.node = {
+      enable = true;
+      port = 9100;
+    };
+    loki = {
+      enable = true;
+      configuration = {
+        server = {
+          http_listen_port = 3100;
+          grpc_listen_port = 9095;
+        };
+        auth_enabled = false;
+        common = {
+          instance_addr = "127.0.0.1";
+          path_prefix = "/var/lib/loki";
+          ring.kvstore.store = "inmemory";
+          replication_factor = 1;
+          storage.filesystem = {
+            chunks_directory = "/var/lib/loki/chunks";
+            rules_directory = "/var/lib/loki/rules";
+          };
+        };
+        schema_config.configs = [
+          {
+            from = "2024-01-01";
+            store = "boltdb-shipper";
+            object_store = "filesystem";
+            schema = "v13";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+        ];
+        storage_config = {
+          boltdb_shipper = {
+            active_index_directory = "/var/lib/loki/index";
+            cache_location = "/var/lib/loki/cache";
+          };
+          filesystem = {
+            directory = "/var/lib/loki/chunks";
+          };
+        };
+        limits_config = {
+          retention_period = "168h";
+          allow_structured_metadata = false;
+        };
+        compactor = {
+          working_directory = "/var/lib/loki/compactor";
+          compaction_interval = "10m";
+          retention_enabled = true;
+          delete_request_store = "filesystem";
+        };
+        ruler = {
+          storage = {
+            type = "local";
+            local = {
+              directory = "/var/lib/loki/rules";
+            };
+          };
+          ring.kvstore.store = "inmemory";
+        };
+      };
+    };
+    promtail = {
+      enable = true;
+      configuration = {
+        server = {
+          http_listen_port = 9080;
+          grpc_listen_port = 0;
+        };
+        clients = [
+          {
+            url = "http://127.0.0.1:3100/loki/api/v1/push";
+          }
+        ];
+        positions.filename = "/var/cache/promtail/positions.yaml";
+        scrape_configs = [
+          {
+            job_name = "journal";
+            journal = {
+              max_age = "12h";
+              labels = {
+                job = "systemd-journal";
+                host = config.networking.hostName;
+              };
+            };
+            relabel_configs = [
+              {
+                source_labels = [ "__journal__systemd_unit" ];
+                target_label = "unit";
+              }
+            ];
+          }
+        ];
+      };
+    };
   };
 
   # Enable sound with pipewire.
@@ -199,7 +342,7 @@
     bluez
     bluez-tools
     bluetui
-
+    mcp-grafana
   ];
 
   nix.optimise = {
