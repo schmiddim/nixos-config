@@ -180,7 +180,9 @@
     description = "ms";
     shell = pkgs.zsh;
     extraGroups = [
+      "audio"
       "networkmanager"
+      "video"
       "wheel"
       "input"
     ];
