@@ -33,6 +33,9 @@ in
         "type:touchpad" = {
           events = "disabled";
         };
+        "type:keyboard" = {
+          xkb_numlock = "enabled";
+        };
       };
       modifier = "Mod4";
       terminal = "alacritty";
