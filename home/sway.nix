@@ -1,6 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 let
   mod = "Mod4";
+  wtype = "${pkgs.wtype}/bin/wtype";
 in
 {
   wayland.systemd.target = "sway-session.target";
@@ -35,6 +36,8 @@ in
         };
         "type:keyboard" = {
           xkb_numlock = "enabled";
+          xkb_layout = "us"; # keep plain US; umlauts are injected via Mod5 bindings below
+          xkb_options = "lv3:ralt_switch"; # make Right Alt a level3 switch (Mod5)
         };
       };
       modifier = "Mod4";
@@ -65,13 +68,13 @@ in
         "${mod}+Shift+v" =
           "exec  rofi -modi clipboard:$HOME/.local/scripts/bin/cliphist-rofi-img.sh -show clipboard -show-icons";
 
-        ############################
+        #############################
         # Split horizontal, vertical
         "${mod}+h" = "splith";
         "${mod}+v" = "splitv";
-        ############################
+        #############################
         # focus
-        ############################
+        #############################
         "${mod}+Up" = "focus up";
         "${mod}+Left" = "focus left";
         "${mod}+Right" = "focus right";
@@ -82,17 +85,17 @@ in
         "${mod}+Shift+Down" = "move down";
         "${mod}+Shift+Up" = "move up";
         "${mod}+Shift+Right" = "move right";
-        ############################
+        #############################
         # Layout
-        ############################
+        #############################
         "${mod}+s" = "layout stacking";
         "${mod}+w" = "layout tabbed";
         "${mod}+e" = "layout toggle split";
         "${mod}+r" = "mode resize";
 
-        ############################
+        #############################
         # Workspaces
-        ############################
+        #############################
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
         "${mod}+3" = "workspace number 3";
@@ -103,9 +106,9 @@ in
         "${mod}+8" = "workspace number 8";
         "${mod}+9" = "workspace number 9";
         "${mod}+0" = "workspace number 10";
-        ############################
+        #############################
         # Switch to Workspaces
-        ############################
+        #############################
         "${mod}+Shift+1" = "move container to workspace number 1";
         "${mod}+Shift+2" = "move container to workspace number 2";
         "${mod}+Shift+3" = "move container to workspace number 3";
@@ -119,16 +122,16 @@ in
 
         #############################
         # Lock Screen
-        ############################
+        #############################
         "${mod}+Shift+l" = "exec swaylock -f -c 000000";
 
         ## Web screen Opens a new Workspace and displays 2 web pages in split
         "${mod}+n" =
           "exec sh -lc '.local/scripts/bin/sway-split-notion-gpt.sh  >> /tmp/sway-split-notion-gpt.log 2>&1'";
 
-        ##############
-        # audio
-        ##############
+        #############################
+        # Thinkpad Special Keys
+        #############################
         # Audio
         "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
@@ -143,6 +146,18 @@ in
         "XF86Switch_VT_1" = "exec wdisplays";
         "XF86Switch_VT_2" = "exec wdisplays";
 
+        #############################
+        # Umlauts
+        #############################
+        # AltGr bindings for umlauts while keeping US layout
+        "Mod5+semicolon" = "exec ${wtype} ö";
+        "Mod5+Shift+semicolon" = "exec ${wtype} Ö";
+        "Mod5+apostrophe" = "exec ${wtype} ä";
+        "Mod5+Shift+apostrophe" = "exec ${wtype} Ä";
+        "Mod5+bracketleft" = "exec ${wtype} ü";
+        "Mod5+Shift+bracketleft" = "exec ${wtype} Ü";
+        "Mod5+minus" = "exec ${wtype} ß";
+        "Mod5+Shift+minus" = "exec ${wtype} ẞ";
       };
     };
   };

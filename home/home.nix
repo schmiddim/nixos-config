@@ -56,6 +56,7 @@
     libnotify
     codex
     wev
+    wtype
   ];
 
   home.sessionVariables = {
