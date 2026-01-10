@@ -140,6 +140,14 @@
       role = "server";
       extraFlags = [
         "--write-kubeconfig-mode=644"
+        "--disable traefik"
+        "--disable metrics-server"
+        "--disable servicelb"
+        "--disable local-storage"
+        "--kube-apiserver-arg=v=0"
+        "--kube-controller-manager-arg=v=0"
+        "--kube-scheduler-arg=v=0"
+        "--kubelet-arg=v=0"
       ];
     };
     # List services that you want to enable:
