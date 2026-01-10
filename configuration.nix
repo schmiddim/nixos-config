@@ -45,7 +45,7 @@
       "psmouse.synaptics_intertouch=0"
       "psmouse.resetafter=0"
       "psmouse.smps=1"
-       # More Trackpoint fixes
+      # More Trackpoint fixes
       "i8042.nomux=1"
       "i8042.nopnp=1"
       "i8042.reset=1"

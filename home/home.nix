@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -50,6 +55,7 @@
     ripgrep
     libnotify
     codex
+    wev
   ];
 
   home.sessionVariables = {
@@ -101,7 +107,16 @@
     };
     Service = {
       ExecStart = "${config.home.homeDirectory}/.local/scripts/bin/battery-notify.sh";
-      Environment = "PATH=${lib.makeBinPath [ pkgs.bash pkgs.coreutils pkgs.gawk pkgs.ripgrep pkgs.upower pkgs.libnotify ]}";
+      Environment = "PATH=${
+        lib.makeBinPath [
+          pkgs.bash
+          pkgs.coreutils
+          pkgs.gawk
+          pkgs.ripgrep
+          pkgs.upower
+          pkgs.libnotify
+        ]
+      }";
       Restart = "always";
       RestartSec = 10;
     };

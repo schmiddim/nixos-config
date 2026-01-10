@@ -33,14 +33,6 @@ in
         "type:touchpad" = {
           events = "disabled";
         };
-        "type:keyboard" = {
-          xkb_layout = "us";
-          xkb_variant = "altgr-intl";
-        };
-         "1:2:AT_Raw_Set_2_keyboard" = {
-            xkb_layout = "us";
-            xkb_variant = "altgr-intl";
-          };
       };
       modifier = "Mod4";
       terminal = "alacritty";
@@ -132,17 +124,21 @@ in
           "exec sh -lc '.local/scripts/bin/sway-split-notion-gpt.sh  >> /tmp/sway-split-notion-gpt.log 2>&1'";
 
         ##############
-        # audio shit
+        # audio
         ##############
-        # https://wiki.archlinux.org/title/Sway#:~:text=or%20media%20players%3A-,~/.config/sway/config,-bindsym%20XF86AudioRaiseVolume%20exec the fuck bluetooth!!
-        "XF86AudioRaiseVolume" =
-          "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%+'";
+        # Audio
+        "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+        "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
 
-        "XF86AudioLowerVolume" =
-          "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-volume {} 5%-'";
+        # Brightness
+        "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
+        "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
 
-        "XF86AudioMute" =
-          "exec sh -c 'wpctl status | awk \"/Sinks:/{f=1;next} /Sources:/{f=0} f && /^[[:space:]]+[0-9]+\\\\./{gsub(\\\\\"\\\\.\\\\\",\\\\\"\\\\\",$1); print $1}\" | xargs -n1 -I{} wpctl set-mute {} toggle'";
+        # Display switch (Fn+F8)
+        "XF86Display" = "exec wdisplays";
+        "XF86Switch_VT_1" = "exec wdisplays";
+        "XF86Switch_VT_2" = "exec wdisplays";
 
       };
     };
