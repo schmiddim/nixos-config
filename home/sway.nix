@@ -37,6 +37,10 @@ in
           xkb_layout = "us";
           xkb_variant = "altgr-intl";
         };
+         "1:2:AT_Raw_Set_2_keyboard" = {
+            xkb_layout = "us";
+            xkb_variant = "altgr-intl";
+          };
       };
       modifier = "Mod4";
       terminal = "alacritty";
