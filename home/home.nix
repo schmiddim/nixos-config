@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -47,6 +47,7 @@
     wdisplays # screen management for wayland
     cliphist
     ripgrep
+    libnotify
     codex
   ];
 
@@ -88,6 +89,23 @@
         "-max-dedupe-search"
         "50"
       ];
+    };
+  };
+
+  systemd.user.services.battery-notify = {
+    Unit = {
+      Description = "Battery low notification";
+      PartOf = [ "sway-session.target" ];
+      After = [ "sway-session.target" ];
+    };
+    Service = {
+      ExecStart = "${config.home.homeDirectory}/.local/scripts/bin/battery-notify.sh";
+      Environment = "PATH=${lib.makeBinPath [ pkgs.bash pkgs.coreutils pkgs.gawk pkgs.ripgrep pkgs.upower pkgs.libnotify ]}";
+      Restart = "always";
+      RestartSec = 10;
+    };
+    Install = {
+      WantedBy = [ "sway-session.target" ];
     };
   };
 }
