@@ -64,6 +64,7 @@
     GOPATH = "${config.home.homeDirectory}/go";
     GOBIN = "${config.home.sessionVariables.GOPATH}/bin";
     XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
+    NIXOS_OZONE_WL = "1"; # run Chromium/Chrome on Wayland for smoother input + wtype support
 
   };
 
