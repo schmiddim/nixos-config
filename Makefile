@@ -2,7 +2,7 @@ HOST ?= p52
 FLAKE ?= .
 NIX_ARGS ?=
 
-.PHONY: help switch boot build dry-switch check update fmt
+.PHONY: help switch boot build dry-switch check update fmt cleanup
 
 help:
 	@echo "Available targets (override HOST=<name> or FLAKE=<path> as needed):"
@@ -14,6 +14,7 @@ help:
 	@echo "  check       Run flake checks."
 	@echo "  update      Update flake inputs (equivalent to nix flake update)."
 	@echo "  fmt      Format all .nix files with nixfmt-rfc-style."
+	@echo "  cleanup     Garbage collect old generations (system + user) and optimise the store."
 	@echo ""
 	@echo "Examples:"
 	@echo "  make update"
@@ -41,3 +42,8 @@ fmt:
 	 nix run nixpkgs#nixfmt-rfc-style -- $(shell find . -name '*.nix' -not -path './.git/*' -not -path '././*')
 update:
 	nix flake update --flake $(FLAKE)
+
+cleanup:
+	sudo nix-collect-garbage --delete-older-than 14d
+	nix-collect-garbage --delete-older-than 14d
+	nix store optimise
