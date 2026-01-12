@@ -32,6 +32,7 @@
     k9s
     gcc
     wget
+    curl
     jq
     neofetch
     alacritty

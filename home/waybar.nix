@@ -37,21 +37,11 @@
           #          "sway/language"
           "battery"
           #          "battery#bat2"
+          "custom/weather"
           "clock"
           "tray"
           #          "custom/power"
         ];
-
-        # Module configs (wie Default)
-        #        "keyboard-state" = {
-        #          numlock = true;
-        #          capslock = true;
-        #          format = "{name} {icon}";
-        #          format-icons = {
-        #            locked = "";
-        #            unlocked = "";
-        #          };
-        #        };
 
         "sway/mode" = {
           format = "{}";
@@ -67,29 +57,6 @@
           tooltip = true;
           tooltip-format = "{app}: {title}";
         };
-
-        #        mpd = {
-        #          format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
-        #          format-disconnected = "Disconnected ";
-        #          format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
-        #          unknown-tag = "N/A";
-        #          interval = 5;
-        #          consume-icons = { on = " "; };
-        #          random-icons = { off = " "; on = " "; };
-        #          repeat-icons = { on = " "; };
-        #          single-icons = { on = "1 "; };
-        #          state-icons = { paused = ""; playing = ""; };
-        #          tooltip-format = "MPD (connected)";
-        #          tooltip-format-disconnected = "MPD (disconnected)";
-        #        };
-
-        #        idle_inhibitor = {
-        #          format = "{icon}";
-        #          format-icons = {
-        #            activated = "";
-        #            deactivated = "";
-        #          };
-        #        };
 
         tray = {
           # "icon-size": 21,   # im Default auskommentiert
@@ -111,21 +78,6 @@
         memory = {
           format = "{}% ";
         };
-
-        #        temperature = {
-        #          # "thermal-zone": 2,                   # im Default auskommentiert
-        #          # "hwmon-path": "/sys/class/...",      # im Default auskommentiert
-        #          critical-threshold = 80;
-        #          # "format-critical": "{temperatureC}°C {icon}",  # auskommentiert
-        #          format = "{temperatureC}°C {icon}";
-        #          format-icons = [ "" "" "" ];
-        #        };
-
-        #        backlight = {
-        #          # "device": "acpi_video1",  # im Default auskommentiert
-        #          format = "{percent}% {icon}";
-        #          format-icons = [ "" "" "" "" "" "" "" "" "" ];
-        #        };
 
         battery = {
           states = {
@@ -149,9 +101,13 @@
           ];
         };
 
-        #        "battery#bat2" = {
-        #          bat = "BAT2";
-        #        };
+        "custom/weather" = {
+          format = "{icon} {text}";
+          return-type = "json";
+          interval = 900;
+          exec = "$HOME/.local/scripts/bin/weather-waybar.sh";
+          tooltip = true;
+        };
 
         "power-profiles-daemon" = {
           format = "{icon}";
@@ -212,19 +168,6 @@
           exec = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null";
           # exec = "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null";
         };
-
-        #        "custom/power" = {
-        #          format = "⏻ ";
-        #          tooltip = false;
-        #          menu = "on-click";
-        #          menu-file = "$HOME/.config/waybar/power_menu.xml";
-        #          menu-actions = {
-        #            shutdown = "shutdown";
-        #            reboot = "reboot";
-        #            suspend = "systemctl suspend";
-        #            hibernate = "systemctl hibernate";
-        #          };
-        #        };
       }
     ];
     style = ''
