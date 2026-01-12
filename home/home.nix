@@ -14,6 +14,7 @@
     ./stylix.nix
     ./kanshi.nix
     ./waybar.nix
+    ./mutt.nix
 
   ];
   home.stateVersion = "25.11";
