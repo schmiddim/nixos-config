@@ -41,9 +41,12 @@
       local secrets_file="$HOME/.config/zsh/env.secrets"
       [[ -f "$secrets_file" ]] && source "$secrets_file"
     '';
+  };
 
-    initContent = ''
-      PROMPT="%F{blue}%n@%m%f %F{yellow}%~%f %# "
-    '';
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    # Import upstream starship config (Codeberg sensei/nixos: config/starship/starship.main.toml)
+    settings = builtins.fromTOML (builtins.readFile ./starship.main.toml);
   };
 }
