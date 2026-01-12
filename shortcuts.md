@@ -53,3 +53,4 @@ Modifikator: Mod4 (Super/Windows)
 | XF86AudioRaiseVolume | Lautstaerke erhoehen | Erhoeht die Lautstaerke aller erkannten Sinks um 5 Prozent. |
 | XF86AudioLowerVolume | Lautstaerke senken | Verringert die Lautstaerke aller erkannten Sinks um 5 Prozent. |
 | XF86AudioMute | Mute umschalten | Schaltet Mute fuer alle erkannten Sinks um. |
+| XF86AudioMicMute | Mikrofon stummschalten | Schaltet Mute fuer die Standard-Quelle um. |
