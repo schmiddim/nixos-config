@@ -86,10 +86,7 @@
       signature = {
         showSignature = "append";
         text = ''
-          Michael Schmitt
-          Hermine-von-Parish-Straße 74
-          81245 München
-          01719579720
+
         '';
       };
       mbsync.enable = true;
