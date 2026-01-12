@@ -24,7 +24,10 @@
     ];
     macros = [
       {
-        map = [ "index" "pager" ];
+        map = [
+          "index"
+          "pager"
+        ];
         key = "<f5>";
         action = "<shell-escape>mbsync -a<enter>";
       }
