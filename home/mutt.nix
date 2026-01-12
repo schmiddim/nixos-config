@@ -17,7 +17,7 @@
     };
     binds = [
       {
-        map = [ "index" "pager" ];
+        map = [ "index" ];
         key = "\\Cb";
         action = "<enter-command>toggle sidebar_visible<enter><refresh>";
       }
@@ -49,7 +49,7 @@
       color header magenta default "^Date:"
       color sidebar_new brightgreen default
       color sidebar_flagged brightyellow default
-      set status_format="[%r] %f %h %m (%?M?%M/?%m) %?p?%p%%? %> %?d?%d? %?t?%t? %?n?%n? %?O?%O? %?S?%S?"
+      set status_format="[%r] %f %h %m (%<M?%M/%m>) %<p?%p%%> %> %<d?%d> %<t?%t> %<n?%n> %<O?%O> %<S?%S>"
     '';
   };
 
@@ -96,6 +96,7 @@
         '';
       };
       mbsync.enable = true;
+      mbsync.create = "maildir";
       msmtp.enable = true;
       neomutt = {
         enable = true;
