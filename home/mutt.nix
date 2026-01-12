@@ -62,10 +62,7 @@
       passwordCommand = [
         "bash"
         "-lc"
-        ''
-          source "$HOME/.config/zsh/env.secrets"
-          printf %s "$GMX_MAIL_PASSWD"
-        ''
+        "source \"$HOME/.config/zsh/env.secrets\"; printf %s \"$GMX_MAIL_PASSWD\""
       ];
       imap = {
         host = "imap.gmx.net";
