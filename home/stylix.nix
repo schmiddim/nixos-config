@@ -3,7 +3,7 @@
 let
   stylixSrc = builtins.fetchTarball {
     url = "https://github.com/nix-community/stylix/archive/release-25.11.tar.gz";
-    sha256 = "0ijz33px4lml59rwxj2835mpbc9w3g81j67ywqyj8apbn5cvcayj";
+    sha256 = "0lh4ah6k3l31ijap62bsi9258m7y542q2k3xrjlxi3nrr2yvbr6f";
   };
 in
 {
