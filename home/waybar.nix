@@ -175,6 +175,16 @@
       /* wichtig: min-height auf 0, sonst erzwingen Module Minimums */
       * { min-height: 0; }
 
+      tooltip {
+        background: rgba(30, 60, 90, 0.9);
+        color: #e8f0ff;
+        border: 1px solid rgba(80, 140, 200, 0.7);
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      tooltip label { color: #e8f0ff; }
+
       /* NUR workspaces kompakter machen */
       #workspaces button {
         padding: 0px 6px;    /* vertikal 0 => deutlich niedriger */
