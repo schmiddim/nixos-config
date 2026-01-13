@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   mod = "Mod4";
-  ydotool = "${pkgs.ydotool}/bin/ydotool";
+  typeChar = "${config.home.homeDirectory}/.local/scripts/bin/type-char.sh";
 in
 {
   wayland.systemd.target = "sway-session.target";
@@ -148,17 +148,17 @@ in
         "XF86Switch_VT_2" = "exec wdisplays";
 
         #############################
-        # Umlauts (ydotool works in all apps incl. Chrome)
+        # Umlauts (clipboard method - works in all apps incl. Chrome)
         #############################
         # AltGr bindings for umlauts while keeping US layout
-        "Mod5+semicolon" = "exec ${ydotool} type 'ö'";
-        "Mod5+Shift+semicolon" = "exec ${ydotool} type 'Ö'";
-        "Mod5+apostrophe" = "exec ${ydotool} type 'ä'";
-        "Mod5+Shift+apostrophe" = "exec ${ydotool} type 'Ä'";
-        "Mod5+bracketleft" = "exec ${ydotool} type 'ü'";
-        "Mod5+Shift+bracketleft" = "exec ${ydotool} type 'Ü'";
-        "Mod5+minus" = "exec ${ydotool} type 'ß'";
-        "Mod5+Shift+minus" = "exec ${ydotool} type 'ẞ'";
+        "Mod5+semicolon" = "exec ${typeChar} ö";
+        "Mod5+Shift+semicolon" = "exec ${typeChar} Ö";
+        "Mod5+apostrophe" = "exec ${typeChar} ä";
+        "Mod5+Shift+apostrophe" = "exec ${typeChar} Ä";
+        "Mod5+bracketleft" = "exec ${typeChar} ü";
+        "Mod5+Shift+bracketleft" = "exec ${typeChar} Ü";
+        "Mod5+minus" = "exec ${typeChar} ß";
+        "Mod5+Shift+minus" = "exec ${typeChar} ẞ";
       };
     };
   };
