@@ -9,12 +9,14 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      ll = "ls -l";
+      ll = "eza -l --icons";
+      la = "eza -la --icons";
+      lt = "eza --tree --icons";
+      cat = "bat";
       edit = "sudo -e";
       update = "sudo nixos-rebuild switch";
       screenshot = "slurp | grim -g - - | wl-copy";
       sl3 = "sleep 3 && swaylock -f && systemctl suspend";
-
     };
 
     history = {
