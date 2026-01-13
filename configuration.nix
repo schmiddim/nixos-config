@@ -96,7 +96,6 @@
       enable = true;
       wrapperFeatures.gtk = true;
     };
-    ydotool.enable = true; # uinput-based input automation (works in all apps incl. Chrome)
   };
 
   xdg.portal = {

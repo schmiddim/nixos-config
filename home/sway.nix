@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   mod = "Mod4";
-  ydotool = "${pkgs.ydotool}/bin/ydotool";
+  wtype = "${pkgs.wtype}/bin/wtype";
 in
 {
   wayland.systemd.target = "sway-session.target";
@@ -148,17 +148,17 @@ in
         "XF86Switch_VT_2" = "exec wdisplays";
 
         #############################
-        # Umlauts (ydotool works in all apps incl. Chrome)
+        # Umlauts
         #############################
         # AltGr bindings for umlauts while keeping US layout
-        "Mod5+semicolon" = "exec ${ydotool} type 'ö'";
-        "Mod5+Shift+semicolon" = "exec ${ydotool} type 'Ö'";
-        "Mod5+apostrophe" = "exec ${ydotool} type 'ä'";
-        "Mod5+Shift+apostrophe" = "exec ${ydotool} type 'Ä'";
-        "Mod5+bracketleft" = "exec ${ydotool} type 'ü'";
-        "Mod5+Shift+bracketleft" = "exec ${ydotool} type 'Ü'";
-        "Mod5+minus" = "exec ${ydotool} type 'ß'";
-        "Mod5+Shift+minus" = "exec ${ydotool} type 'ẞ'";
+        "Mod5+semicolon" = "exec ${wtype} ö";
+        "Mod5+Shift+semicolon" = "exec ${wtype} Ö";
+        "Mod5+apostrophe" = "exec ${wtype} ä";
+        "Mod5+Shift+apostrophe" = "exec ${wtype} Ä";
+        "Mod5+bracketleft" = "exec ${wtype} ü";
+        "Mod5+Shift+bracketleft" = "exec ${wtype} Ü";
+        "Mod5+minus" = "exec ${wtype} ß";
+        "Mod5+Shift+minus" = "exec ${wtype} ẞ";
       };
     };
   };
