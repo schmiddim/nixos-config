@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  unstablePkgs,
   ...
 }:
 
@@ -60,7 +61,7 @@
     wev
     wtype
     mplayer
-    opencode
+    unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
     obs-studio # screen recording with PipeWire support for Wayland
     # Modern CLI tools
     fzf # fuzzy finder

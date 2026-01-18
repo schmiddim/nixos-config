@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     home-manager = {
@@ -15,12 +16,17 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       nixos-hardware,
       home-manager,
       ...
     }:
     let
       system = "x86_64-linux";
+      unstablePkgs = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
       nixosConfigurations.p52 = nixpkgs.lib.nixosSystem {
@@ -34,6 +40,7 @@
             nixpkgs.hostPlatform = system;
             home-manager.useGlobalPkgs = false;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit unstablePkgs; };
           }
         ];
       };
