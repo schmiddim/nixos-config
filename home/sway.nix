@@ -2,7 +2,7 @@
 let
   mod = "Mod4";
   wtype = "${pkgs.wtype}/bin/wtype";
-  volume_script = "${config.home.homeDirectory}/.local/scripts/bin/volume-notify.sh";
+  swayosd_client = "${pkgs.swayosd}/bin/swayosd-client";
 in
 {
   wayland.systemd.target = "sway-session.target";
@@ -45,6 +45,10 @@ in
       terminal = "alacritty";
       startup = [
         #        { command = "alacritty"; }
+        {
+          command = "${pkgs.swayosd}/bin/swayosd-server";
+          always = true;
+        }
         {
           command = ''
             swayidle -w \
@@ -134,14 +138,14 @@ in
         # Thinkpad Special Keys
         #############################
         # Audio
-        "XF86AudioMute" = "exec ${volume_script} toggle";
+        "XF86AudioMute" = "exec ${swayosd_client} output-volume mute-toggle";
         "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        "XF86AudioLowerVolume" = "exec ${volume_script} down";
-        "XF86AudioRaiseVolume" = "exec ${volume_script} up";
+        "XF86AudioLowerVolume" = "exec ${swayosd_client} output-volume lower";
+        "XF86AudioRaiseVolume" = "exec ${swayosd_client} output-volume raise";
 
         # Brightness
-        "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
-        "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
+        "XF86MonBrightnessDown" = "exec ${swayosd_client} output-brightness lower";
+        "XF86MonBrightnessUp" = "exec ${swayosd_client} output-brightness raise";
 
         # Display switch (Fn+F8)
         "XF86Display" = "exec wdisplays";
