@@ -59,6 +59,8 @@
     codex
     wev
     wtype
+    mplayer
+    opencode
     obs-studio # screen recording with PipeWire support for Wayland
     # Modern CLI tools
     fzf # fuzzy finder

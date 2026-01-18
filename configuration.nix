@@ -400,13 +400,6 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      # Intel VAAPI/QSV support for hardware video encoding (OBS, ffmpeg)
-      # https://nixos.org/manual/nixos/stable/index.html#sec-gpu-accel
-      extraPackages = with pkgs; [
-        intel-media-driver # LIBVA_DRIVER_NAME=iHD (modern, Broadwell+)
-        intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (legacy fallback)
-        intel-media-sdk # QSV runtime for OBS
-      ];
     };
   };
 
