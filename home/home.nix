@@ -61,7 +61,13 @@
     wtype
     mplayer
     opencode
-    obs-studio # screen recording with PipeWire support for Wayland
+    # OBS Studio with plugins for better audio quality
+    # Ref: https://nixos.wiki/wiki/OBS_Studio
+    (obs-studio.override {
+      plugins = with obs-studio-plugins; [
+        obs-pipewire-audio-capture # native PipeWire audio capture
+      ];
+    })
     # Modern CLI tools
     fzf # fuzzy finder
     bat # better cat with syntax highlighting

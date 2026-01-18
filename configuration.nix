@@ -138,6 +138,26 @@
           };
         };
       };
+      # Higher audio quality settings for recording/streaming
+      # Ref: https://wiki.archlinux.org/title/PipeWire#Audio_quality
+      extraConfig.pipewire = {
+        "92-high-quality" = {
+          "context.properties" = {
+            "default.clock.rate" = 48000;
+            "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+            "default.clock.quantum" = 1024;
+            "default.clock.min-quantum" = 32;
+            "default.clock.max-quantum" = 2048;
+          };
+        };
+      };
+      extraConfig.pipewire-pulse = {
+        "92-high-quality" = {
+          "pulse.properties" = {
+            "pulse.default.format" = "F32LE";
+          };
+        };
+      };
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;
 
