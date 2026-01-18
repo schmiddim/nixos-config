@@ -106,6 +106,17 @@
 
     ];
   };
+  # Laptop Power & Thermal Management
+  services.power-profiles-daemon.enable = true;
+  services.thermald.enable = true;
+  services.fstrim.enable = true;
+
+  # Compressed RAM swap (reduces disk I/O, improves responsiveness)
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
   services = {
     # Enable CUPS to print documents.
     printing.enable = true;
