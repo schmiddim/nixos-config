@@ -101,10 +101,6 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-wlr
-
-    ];
   };
   # Laptop Power & Thermal Management
   services.power-profiles-daemon.enable = true;
