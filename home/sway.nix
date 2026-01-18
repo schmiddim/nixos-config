@@ -138,14 +138,14 @@ in
         # Thinkpad Special Keys
         #############################
         # Audio
-        "XF86AudioMute" = "exec ${swayosd_client} output-volume mute-toggle";
+        "XF86AudioMute" = "exec ${swayosd_client} --output-volume=mute-toggle";
         "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        "XF86AudioLowerVolume" = "exec ${swayosd_client} output-volume lower";
-        "XF86AudioRaiseVolume" = "exec ${swayosd_client} output-volume raise";
+        "XF86AudioLowerVolume" = "exec ${swayosd_client} --output-volume=lower";
+        "XF86AudioRaiseVolume" = "exec ${swayosd_client} --output-volume=raise";
 
         # Brightness
-        "XF86MonBrightnessDown" = "exec ${swayosd_client} output-brightness lower";
-        "XF86MonBrightnessUp" = "exec ${swayosd_client} output-brightness raise";
+        "XF86MonBrightnessDown" = "exec ${swayosd_client} --brightness=lower";
+        "XF86MonBrightnessUp" = "exec ${swayosd_client} --brightness=raise";
 
         # Display switch (Fn+F8)
         "XF86Display" = "exec wdisplays";
