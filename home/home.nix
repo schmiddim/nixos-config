@@ -60,6 +60,12 @@
     wev
     wtype
     obs-studio # screen recording with PipeWire support for Wayland
+    # Modern CLI tools
+    fzf # fuzzy finder
+    bat # better cat with syntax highlighting
+    eza # modern ls replacement
+    fd # faster find
+
   ];
 
   home.sessionVariables = {
@@ -86,6 +92,18 @@
       extraConfig = ''
         set number relativenumber
       '';
+    };
+
+    # Auto-load environment per directory
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    # Fuzzy finder integration
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
     };
   };
 
