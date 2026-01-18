@@ -59,6 +59,7 @@
     codex
     wev
     wtype
+    obs-studio # screen recording with PipeWire support for Wayland
   ];
 
   home.sessionVariables = {
