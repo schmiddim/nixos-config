@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   mod = "Mod4";
   wtype = "${pkgs.wtype}/bin/wtype";
+  volume_script = "${config.home.homeDirectory}/.local/scripts/bin/volume-notify.sh";
 in
 {
   wayland.systemd.target = "sway-session.target";
@@ -133,10 +134,10 @@ in
         # Thinkpad Special Keys
         #############################
         # Audio
-        "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioMute" = "exec ${volume_script} toggle";
         "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-        "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+        "XF86AudioLowerVolume" = "exec ${volume_script} down";
+        "XF86AudioRaiseVolume" = "exec ${volume_script} up";
 
         # Brightness
         "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
