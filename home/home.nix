@@ -87,6 +87,17 @@
     "${config.home.homeDirectory}/.local/scripts/bin"
   ];
 
+  # Desktop-Eintrag für Präsentation (erscheint in Wofi/Rofi)
+  # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.desktopEntries
+  xdg.desktopEntries.start-presentation = {
+    name = "🎬 Start Presentation";
+    comment = "Startet make serve in ~/code/presentation";
+    exec = "${config.home.homeDirectory}/.local/scripts/bin/start-presentation.sh";
+    terminal = true;
+    type = "Application";
+    categories = [ "Utility" ];
+  };
+
   programs = {
 
     #  https://nixos.wiki/wiki/Neovim
