@@ -10,6 +10,11 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,6 +24,7 @@
       nixpkgs-unstable,
       nixos-hardware,
       home-manager,
+      stylix,
       ...
     }:
     let
@@ -40,7 +46,7 @@
             nixpkgs.hostPlatform = system;
             home-manager.useGlobalPkgs = false;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit unstablePkgs; };
+            home-manager.extraSpecialArgs = { inherit unstablePkgs stylix; };
           }
         ];
       };

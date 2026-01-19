@@ -1,14 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, stylix, ... }:
 
-let
-  stylixSrc = builtins.fetchTarball {
-    url = "https://github.com/nix-community/stylix/archive/release-25.11.tar.gz";
-    sha256 = "0lh4ah6k3l31ijap62bsi9258m7y542q2k3xrjlxi3nrr2yvbr6f";
-  };
-in
 {
   imports = [
-    (import stylixSrc).homeModules.stylix
+    stylix.homeModules.stylix
   ];
 
   stylix = {
