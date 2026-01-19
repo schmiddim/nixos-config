@@ -108,6 +108,15 @@
     categories = [ "Utility" ];
   };
 
+  xdg.desktopEntries.presentation-environment = {
+    name = "💻 Presentation Environment";
+    comment = "Öffnet 2 Terminals (k9s + shell) in ~/code/teapot-operator mit IntelliJ im Hintergrund";
+    exec = "${config.home.homeDirectory}/.local/scripts/bin/sway-presentation-environment.sh";
+    terminal = false;
+    type = "Application";
+    categories = [ "Development" ];
+  };
+
   programs = {
 
     #  https://nixos.wiki/wiki/Neovim
