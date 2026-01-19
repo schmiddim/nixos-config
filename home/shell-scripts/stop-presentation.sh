@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Stoppt alle Präsentations-Prozesse
+# Stops all presentation processes
 
 pkill -f "npm run serve" || true
 pkill -f "npm run dev" || true
 pkill -f "live-server" || true
 
-notify-send "Präsentation" "Server gestoppt"
+notify-send -t 5000 "Presentation" "Server stopped"
