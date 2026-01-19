@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Startet die Präsentation via make serve im ~/code/presentation Verzeichnis
+# Startet die Präsentation im Hintergrund (Browser öffnet sich automatisch)
 
 PRESENTATION_DIR="$HOME/code/presentation"
 
@@ -9,4 +9,8 @@ if [[ ! -d "$PRESENTATION_DIR" ]]; then
 fi
 
 cd "$PRESENTATION_DIR" || exit 1
-exec make serve
+
+# Starte im Hintergrund, redirect all output to /dev/null
+nohup npm run serve > /dev/null 2>&1 &
+
+notify-send "Präsentation" "Server startet... Browser öffnet sich gleich"
