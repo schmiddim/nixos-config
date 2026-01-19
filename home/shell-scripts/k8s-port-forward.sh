@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 SERVICE_NAME="${1:-my-teapot-svc}"
 LOCAL_PORT="${2:-8082}"
 
