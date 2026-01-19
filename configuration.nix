@@ -103,6 +103,7 @@
     wlr.enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-gnome
     ];
   };
   # Laptop Power & Thermal Management
