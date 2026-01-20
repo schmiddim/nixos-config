@@ -101,6 +101,11 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
+    # Add GTK portal as fallback for screen sharing in Electron apps (Teams)
+    extraPortals = [
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
   # Laptop Power & Thermal Management
   services.power-profiles-daemon.enable = true;

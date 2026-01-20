@@ -88,15 +88,33 @@
     "${config.home.homeDirectory}/.local/scripts/bin"
   ];
 
-  # Desktop-Eintrag für Präsentation (erscheint in Wofi/Rofi)
+  # Desktop-Einträge für Präsentation (erscheinen in Wofi/Rofi)
   # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.desktopEntries
   xdg.desktopEntries.start-presentation = {
     name = "🎬 Start Presentation";
-    comment = "Startet make serve in ~/code/presentation";
+    comment = "Öffnet Presentation im Browser (Server im Hintergrund)";
     exec = "${config.home.homeDirectory}/.local/scripts/bin/start-presentation.sh";
-    terminal = true;
+    terminal = false;
     type = "Application";
     categories = [ "Utility" ];
+  };
+
+  xdg.desktopEntries.stop-presentation = {
+    name = "⏹️ Stop Presentation";
+    comment = "Stoppt den Präsentations-Server";
+    exec = "${config.home.homeDirectory}/.local/scripts/bin/stop-presentation.sh";
+    terminal = false;
+    type = "Application";
+    categories = [ "Utility" ];
+  };
+
+  xdg.desktopEntries.presentation-environment = {
+    name = "💻 Presentation Environment";
+    comment = "Öffnet 2 Terminals (k9s + shell) in ~/code/teapot-operator mit IntelliJ im Hintergrund";
+    exec = "${config.home.homeDirectory}/.local/scripts/bin/sway-presentation-environment.sh";
+    terminal = false;
+    type = "Application";
+    categories = [ "Development" ];
   };
 
   programs = {
