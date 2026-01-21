@@ -51,7 +51,6 @@
     imagemagick
     file
     pavucontrol # audio settings
-    teams-for-linux
     signal-desktop
     nodejs
     wdisplays # screen management for wayland
