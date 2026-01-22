@@ -3,6 +3,7 @@
   pkgs,
   lib,
   unstablePkgs,
+  claude-desktop,
   ...
 }:
 
@@ -20,56 +21,61 @@
   ];
   home.stateVersion = "25.11";
 
-  home.packages = with pkgs; [
-    thunderbird
-    google-chrome
-    jetbrains.idea
-    freecad
-    gimp
-    go
-    gotools
-    gh
-    kubectl
-    k9s
-    gcc
-    wget
-    curl
-    jq
-    neofetch
-    alacritty
-    firefox
-    pcmanfm
-    nixd
-    nixfmt-rfc-style
-    grim # screenshot functionality
-    slurp # screenshot functionality
-    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-    mako # notification system developed by swaywm maintainer
-    swayosd # modern volume/brightness overlay for Sway
-    wofi
-    rofi
-    imagemagick
-    file
-    pavucontrol # audio settings
-    signal-desktop
-    nodejs
-    wdisplays # screen management for wayland
-    cliphist
-    ripgrep
-    libnotify
-    codex
-    wev
-    wtype
-    mplayer
-    unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
-    obs-studio # screen recording with PipeWire support for Wayland
-    # Modern CLI tools
-    fzf # fuzzy finder
-    bat # better cat with syntax highlighting
-    eza # modern ls replacement
-    fd # faster find
+  home.packages =
+    with pkgs;
+    [
+      thunderbird
+      google-chrome
+      jetbrains.idea
+      freecad
+      gimp
+      go
+      gotools
+      gh
+      kubectl
+      k9s
+      gcc
+      wget
+      curl
+      jq
+      neofetch
+      alacritty
+      firefox
+      pcmanfm
+      nixd
+      nixfmt-rfc-style
+      grim # screenshot functionality
+      slurp # screenshot functionality
+      wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+      mako # notification system developed by swaywm maintainer
+      swayosd # modern volume/brightness overlay for Sway
+      wofi
+      rofi
+      imagemagick
+      file
+      pavucontrol # audio settings
+      signal-desktop
+      nodejs
+      wdisplays # screen management for wayland
+      cliphist
+      ripgrep
+      libnotify
+      codex
+      wev
+      wtype
+      mplayer
+      unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
+      obs-studio # screen recording with PipeWire support for Wayland
+      # Modern CLI tools
+      fzf # fuzzy finder
+      bat # better cat with syntax highlighting
+      eza # modern ls replacement
+      fd # faster find
 
-  ];
+    ]
+    ++ [
+      claude-desktop.packages.${pkgs.stdenv.system}.claude-desktop-with-fhs # Claude Desktop with MCP server support
+    ];
 
   home.sessionVariables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
