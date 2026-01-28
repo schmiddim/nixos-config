@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 let
   mod = "Mod4";
   wtype = "${pkgs.wtype}/bin/wtype";
@@ -46,7 +46,9 @@ in
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [
-        #        { command = "alacritty"; }
+        {
+          command = "alacritty --class dropdown-term";
+        }
         {
           command = "${pkgs.swayosd}/bin/swayosd-server";
           always = true;
@@ -67,8 +69,20 @@ in
       floating = {
 
       };
+      gaps = {
+        inner = 10;
+        outer = 5;
+        smartGaps = true;
+      };
       window = {
         commands = [
+          # Dropdown-Terminal
+          {
+            criteria = {
+              app_id = "dropdown-term";
+            };
+            command = "move scratchpad, resize set width 80 ppt height 60 ppt, border pixel 3";
+          }
           {
             criteria = {
               app_id = "pavucontrol";
@@ -185,6 +199,17 @@ in
         "Mod5+Shift+bracketleft" = "exec ${wtype} Ü";
         "Mod5+minus" = "exec ${wtype} ß";
         "Mod5+Shift+minus" = "exec ${wtype} ẞ";
+
+        #############################
+        # Scratchpad
+        #############################
+        "${mod}+Shift+minus" = "move scratchpad";
+        "${mod}+minus" = "scratchpad show";
+        # Scratchpad direkt zu Tiled
+        "${mod}+Shift+Return" = "scratchpad show; floating toggle";
+
+        # Dropdown-Terminal (Taste über Tab)
+        "${mod}+grave" = "[app_id=\"dropdown-term\"] scratchpad show";
       };
     };
   };
