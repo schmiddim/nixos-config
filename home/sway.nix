@@ -101,7 +101,7 @@ in
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+e" = "exec 'swaymsg exit'";
         "${mod}+Shift+s" = "exec slurp | grim -g - - | wl-copy"; # screenshots
-        "${mod}+d" = "exec wofi --show drun";
+        "${mod}+d" = "exec rofi -show drun";
         "${mod}+q" = "kill";
         "${mod}+Return" = "exec alacritty";
         "Ctrl+Shift+l" = "exec systemctl suspend";
