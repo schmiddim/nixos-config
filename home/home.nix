@@ -61,6 +61,7 @@
     wev
     wtype
     mplayer
+    speedcrunch
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
     obs-studio # screen recording with PipeWire support for Wayland
     # Modern CLI tools

@@ -14,6 +14,8 @@ in
     ];
     wrapperFeatures.gtk = true; # fixes common GTK issues
     extraConfig = ''
+
+      include ~/.config/sway/config.local # for testing
       # focus
       client.focused          #5e81ac #5e81ac #ffffff #5e81ac #5e81ac
       client.focused_inactive #3b4252 #3b4252 #d8dee9 #3b4252 #3b4252
@@ -61,6 +63,25 @@ in
       ];
       bindswitches = {
 
+      };
+      floating = {
+
+      };
+      window = {
+        commands = [
+          {
+            criteria = {
+              app_id = "pavucontrol";
+            };
+            command = "floating enable";
+          }
+          {
+            criteria = {
+              app_id = "speedcrunch";
+            };
+            command = "floating enable";
+          }
+        ];
       };
       keybindings = {
         "${mod}+Shift+c" = "reload";
