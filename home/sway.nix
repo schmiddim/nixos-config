@@ -81,7 +81,7 @@ in
             criteria = {
               app_id = "dropdown-term";
             };
-            command = "move scratchpad, resize set width 80 ppt height 60 ppt, border pixel 3";
+  command = "move scratchpad, resize set width 100 ppt height 50 ppt, border pixel 3";
           }
           {
             criteria = {
@@ -206,10 +206,11 @@ in
         "${mod}+Shift+minus" = "move scratchpad";
         "${mod}+minus" = "scratchpad show";
         # Scratchpad direkt zu Tiled
-        "${mod}+Shift+Return" = "scratchpad show; floating toggle";
+      "${mod}+Shift+Return" = "floating toggle; focus";
 
         # Dropdown-Terminal (Taste über Tab)
-        "${mod}+grave" = "[app_id=\"dropdown-term\"] scratchpad show";
+        "${mod}+grave" = "exec swaymsg '[app_id=\"dropdown-term\"] scratchpad show, move position 0 0'";
+
       };
     };
   };

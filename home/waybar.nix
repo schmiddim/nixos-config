@@ -68,7 +68,6 @@
           # "timezone": "America/New_York",  # im Default auskommentiert
           format = "{:%a %d. %b %H:%M}";
           tooltip-format = "{:%Y %B}\n`{calendar}`";
-          format-alt = "{:%Y-%m-%d}";
         };
 
         cpu = {
