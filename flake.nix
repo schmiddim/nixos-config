@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration for ThinkPad P52";
+  description = "NixOS configurations for ThinkPad P52 and nixos-vm";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
@@ -41,6 +41,21 @@
         modules = [
           nixos-hardware.nixosModules.lenovo-thinkpad-p52
           ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            nixpkgs.hostPlatform = system;
+            home-manager.useGlobalPkgs = false;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit unstablePkgs stylix; };
+          }
+        ];
+      };
+
+      nixosConfigurations.nixos-vm = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          ./configuration-nixos-vm.nix
           home-manager.nixosModules.home-manager
           {
             nixpkgs.hostPlatform = system;
