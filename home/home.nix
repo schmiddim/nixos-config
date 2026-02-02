@@ -37,7 +37,7 @@
     jq
     neofetch
     alacritty
-    firefox
+    librewolf
     pcmanfm
     nixd
     nixfmt-rfc-style
@@ -63,7 +63,12 @@
     mplayer
     speedcrunch
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
-    obs-studio # screen recording with PipeWire support for Wayland
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs # Screen capture für wlroots/Sway
+        obs-pipewire-audio-capture # Audio via PipeWire
+      ];
+    })
     # Modern CLI tools
     fzf # fuzzy finder
     bat # better cat with syntax highlighting
