@@ -115,6 +115,14 @@
     type = "Application";
     categories = [ "Utility" ];
   };
+    xdg.desktopEntries.port-forward = {
+      name = "port forward";
+      comment = "forward the port";
+      exec = "${config.home.homeDirectory}/.local/scripts/bin/k8s-port-forward.sh";
+      terminal = false;
+      type = "Application";
+      categories = [ "Utility" ];
+    };
 
   xdg.desktopEntries.presentation-environment = {
     name = "💻 Presentation Environment";

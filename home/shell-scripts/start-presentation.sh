@@ -4,8 +4,7 @@
 kubectl delete teapots.kitchen.kitchen.example.com my-teapot
 kubectl delete waters.kitchen.kitchen.example.com h20
 kubectl delete tealeaves.kitchen.kitchen.example.com earl-grey
-k8s-port-forward.sh
-
+home/ms/.local/scripts/bin/k8s-port-forward.sh
 # Starts presentation in background (browser opens automatically)
 PRESENTATION_DIR="$HOME/code/presentation"
 
