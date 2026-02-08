@@ -61,6 +61,9 @@
     wev
     wtype
     mplayer
+    mpv
+    killall
+    xkill
     speedcrunch
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
     (pkgs.wrapOBS {

@@ -27,6 +27,8 @@ in
       seat seat0 hide_cursor 0
     '';
     config = {
+      defaultBorder = "pixel 1";
+      defaultFloatingBorder = "pixel 1";
       bars = [
         {
           command = "waybar";
@@ -70,9 +72,9 @@ in
 
       };
       gaps = {
-        inner = 10;
-        outer = 5;
-        smartGaps = true;
+        inner = 0;
+        outer = 0;
+        smartGaps = false;
       };
       window = {
         commands = [
@@ -81,7 +83,7 @@ in
             criteria = {
               app_id = "dropdown-term";
             };
-  command = "move scratchpad, resize set width 100 ppt height 50 ppt, border pixel 3";
+            command = "move scratchpad, resize set width 100 ppt height 50 ppt, border pixel 3";
           }
           {
             criteria = {
@@ -206,7 +208,7 @@ in
         "${mod}+Shift+minus" = "move scratchpad";
         "${mod}+minus" = "scratchpad show";
         # Scratchpad direkt zu Tiled
-      "${mod}+Shift+Return" = "floating toggle; focus";
+        "${mod}+Shift+Return" = "floating toggle; focus";
 
         # Dropdown-Terminal (Taste über Tab)
         "${mod}+grave" = "exec swaymsg '[app_id=\"dropdown-term\"] scratchpad show, move position 0 0'";
