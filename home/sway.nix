@@ -27,8 +27,6 @@ in
       seat seat0 hide_cursor 0
     '';
     config = {
-      defaultBorder = "pixel 1";
-      defaultFloatingBorder = "pixel 1";
       bars = [
         {
           command = "waybar";
