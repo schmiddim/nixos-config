@@ -20,7 +20,7 @@
 
   networking.networkmanager.enable = true;
 
-  time.timeZone = "Europe/Berlin";
+  time.timeZone = "Europe/London";
 
   i18n.defaultLocale = "de_DE.UTF-8";
   i18n.extraLocaleSettings = {
