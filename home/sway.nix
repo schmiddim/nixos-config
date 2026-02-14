@@ -95,6 +95,12 @@ in
             };
             command = "floating enable";
           }
+          {
+            criteria = {
+              app_id = "signal";
+            };
+            command = "floating enable";
+          }
         ];
       };
       keybindings = {
