@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
-# Starts presentation in background (browser opens automatically)
 
+# Cleanup Resources and Start port forwarding
+kubectl delete teapots.kitchen.kitchen.example.com my-teapot
+kubectl delete waters.kitchen.kitchen.example.com h20
+kubectl delete tealeaves.kitchen.kitchen.example.com earl-grey
+home/ms/.local/scripts/bin/k8s-port-forward.sh
+# Starts presentation in background (browser opens automatically)
 PRESENTATION_DIR="$HOME/code/presentation"
 
 if [[ ! -d "$PRESENTATION_DIR" ]]; then

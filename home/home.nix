@@ -37,7 +37,7 @@
     jq
     neofetch
     alacritty
-    firefox
+    librewolf
     pcmanfm
     nixd
     nixfmt-rfc-style
@@ -61,9 +61,17 @@
     wev
     wtype
     mplayer
+    mpv
+    killall
+    xkill
     speedcrunch
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
-    obs-studio # screen recording with PipeWire support for Wayland
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs # Screen capture für wlroots/Sway
+        obs-pipewire-audio-capture # Audio via PipeWire
+      ];
+    })
     # Modern CLI tools
     fzf # fuzzy finder
     bat # better cat with syntax highlighting
@@ -107,6 +115,14 @@
     type = "Application";
     categories = [ "Utility" ];
   };
+    xdg.desktopEntries.port-forward = {
+      name = "port forward";
+      comment = "forward the port";
+      exec = "${config.home.homeDirectory}/.local/scripts/bin/k8s-port-forward.sh";
+      terminal = false;
+      type = "Application";
+      categories = [ "Utility" ];
+    };
 
   xdg.desktopEntries.presentation-environment = {
     name = "💻 Presentation Environment";
