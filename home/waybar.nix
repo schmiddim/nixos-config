@@ -155,19 +155,6 @@
           };
           on-click = "pavucontrol";
         };
-
-        "custom/media" = {
-          format = "{icon} {text}";
-          return-type = "json";
-          max-length = 40;
-          format-icons = {
-            spotify = "";
-            default = "";
-          };
-          escape = true;
-          exec = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null";
-          # exec = "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null";
-        };
       }
     ];
     style = ''
