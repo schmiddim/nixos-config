@@ -119,6 +119,7 @@
     vim
     gnumake
     htop
+    iotop
     regreet
     libinput
     xdg-utils

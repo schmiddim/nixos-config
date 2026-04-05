@@ -22,6 +22,7 @@
 
   home.packages = with pkgs; [
     thunderbird
+    claude-code
     google-chrome
     jetbrains.idea
     freecad
