@@ -56,6 +56,7 @@
   };
 
   services = {
+    opensnitch.enable = true;
     printing.enable = true;
     avahi.enable = true;
     avahi.nssmdns4 = true;

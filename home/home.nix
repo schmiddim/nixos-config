@@ -157,8 +157,12 @@
     };
   };
 
-  # clipboard history
   services = {
+    # https://nixos.wiki/wiki/OpenSnitch
+    opensnitch-ui = {
+        enable = true;
+    };
+      # clipboard history
     cliphist = {
       enable = true;
       allowImages = true;
