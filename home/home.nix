@@ -67,6 +67,7 @@
     killall
     xkill
     speedcrunch
+    unzip
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
