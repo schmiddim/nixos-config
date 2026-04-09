@@ -63,6 +63,7 @@
     wtype
     mplayer
     mpv
+    opensnitch-ui
     killall
     xkill
     speedcrunch
