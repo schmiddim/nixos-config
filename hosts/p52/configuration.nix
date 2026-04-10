@@ -40,6 +40,11 @@
     };
   };
 
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
+
   services = {
     power-profiles-daemon.enable = true;
     thermald.enable = true;

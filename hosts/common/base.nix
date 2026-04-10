@@ -107,6 +107,7 @@
     shell = pkgs.zsh;
     extraGroups = [
       "audio"
+      "docker"
       "networkmanager"
       "video"
       "wheel"
@@ -116,6 +117,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    kubectl
     usbutils
     vim
     gnumake
