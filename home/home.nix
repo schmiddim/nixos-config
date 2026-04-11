@@ -31,9 +31,11 @@
     gotools
     gh
     kubectl
+    kubernetes-helm
     k9s
     gcc
     wget
+    nix-direnv
     curl
     jq
     neofetch
@@ -68,6 +70,7 @@
     xkill
     speedcrunch
     unzip
+    zip
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [

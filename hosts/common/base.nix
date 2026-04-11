@@ -117,7 +117,6 @@
 
   environment.systemPackages = with pkgs; [
     git
-    kubectl
     usbutils
     vim
     gnumake
