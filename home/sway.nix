@@ -47,7 +47,7 @@ in
       terminal = "alacritty";
       startup = [
         {
-          command = "alacritty --class dropdown-term";
+          command = "ghostty --class=dropdown-term";
         }
         {
           command = "${pkgs.swayosd}/bin/swayosd-server";
@@ -214,8 +214,8 @@ in
         # Scratchpad direkt zu Tiled
         "${mod}+Shift+Return" = "floating toggle; focus";
 
-        # Dropdown-Terminal (Taste über Tab)
-        "${mod}+grave" = "exec swaymsg '[app_id=\"dropdown-term\"] scratchpad show, move position 0 0'";
+        # Dropdown-Terminal (Quake-Style, F1)
+        "F1" = "exec swaymsg '[app_id=\"dropdown-term\"] scratchpad show, move position 0 0'";
 
       };
     };

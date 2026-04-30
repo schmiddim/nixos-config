@@ -16,6 +16,7 @@
     ./kanshi.nix
     ./waybar.nix
     ./mutt.nix
+    ./ghostty.nix
 
   ];
   home.stateVersion = "25.11";
