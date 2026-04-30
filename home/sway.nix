@@ -44,7 +44,7 @@ in
         };
       };
       modifier = "Mod4";
-      terminal = "alacritty";
+      terminal = "ghostty";
       startup = [
         {
           command = "ghostty --class=dropdown-term";
@@ -109,7 +109,7 @@ in
         "${mod}+Shift+s" = "exec slurp | grim -g - - | wl-copy"; # screenshots
         "${mod}+d" = "exec rofi -show drun";
         "${mod}+q" = "kill";
-        "${mod}+Return" = "exec alacritty";
+        "${mod}+Return" = "exec ghostty";
         "Ctrl+Shift+l" = "exec systemctl suspend";
         "${mod}+Shift+v" =
           "exec  rofi -modi clipboard:$HOME/.local/scripts/bin/cliphist-rofi-img.sh -show clipboard -show-icons";
