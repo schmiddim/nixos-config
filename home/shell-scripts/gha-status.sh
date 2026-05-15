@@ -6,13 +6,22 @@ if [[ -z "$branch" ]]; then
   exit 1
 fi
 
-run=$(gh run list --branch "$branch" --limit 1 --json databaseId,status,conclusion,displayTitle,workflowName --jq '.[0]')
+run=$(gh run list --branch "$branch" --limit 1 --json databaseId,status,conclusion,displayTitle,workflowName,createdAt --jq '.[0]')
+
+if [[ "$run" == "null" || -z "$run" ]]; then
+  echo "Keine GitHub Actions gefunden für Branch '$branch'"
+  echo "$(date '+%Y-%m-%d %H:%M:%S')"
+  exit 0
+fi
+
 id=$(echo "$run" | jq -r '.databaseId')
 status=$(echo "$run" | jq -r 'if .conclusion == "" then .status else .conclusion end')
 title=$(echo "$run" | jq -r '.displayTitle')
 workflow=$(echo "$run" | jq -r '.workflowName')
+created=$(echo "$run" | jq -r '.createdAt')
 
 echo "[$workflow] $title"
+echo "Gestartet: $created"
 
 if [[ "$status" == "in_progress" || "$status" == "queued" ]]; then
   echo "läuft noch – watching..."
