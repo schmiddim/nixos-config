@@ -51,7 +51,6 @@
     mako # notification system developed by swaywm maintainer
     swayosd # modern volume/brightness overlay for Sway
     wofi
-    rofi
     imagemagick
     file
     pavucontrol # audio settings
@@ -160,6 +159,13 @@
     fzf = {
       enable = true;
       enableZshIntegration = true;
+    };
+
+    # Application launcher
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
+    rofi = {
+      enable = true;
+      theme = "gruvbox-dark-hard";
     };
   };
 
