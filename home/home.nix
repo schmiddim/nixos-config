@@ -164,9 +164,10 @@
 
     # Application launcher
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
-    # Theme is managed by Stylix (see home/stylix.nix)
+    # mkForce needed to override Stylix's auto-generated rofi theme
     rofi = {
       enable = true;
+      theme = lib.mkForce "gruvbox-dark-hard";
     };
   };
 
