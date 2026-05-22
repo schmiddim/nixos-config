@@ -21,6 +21,5 @@
       colors.enable = true;
       opacity.enable = true; # nutzt config.stylix.opacity
     };
-
   };
 }
