@@ -37,6 +37,7 @@
     gcc
     wget
     nix-direnv
+    obsidian
     curl
     jq
     neofetch
@@ -163,9 +164,9 @@
 
     # Application launcher
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
+    # Theme is managed by Stylix (see home/stylix.nix)
     rofi = {
       enable = true;
-      theme = "gruvbox-dark-hard";
     };
   };
 
