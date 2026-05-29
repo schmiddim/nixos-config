@@ -17,6 +17,7 @@
       update = "sudo nixos-rebuild switch";
       screenshot = "slurp | grim -g - - | wl-copy";
       sl3 = "sleep 3 && swaylock -f && systemctl suspend";
+      amend = ''git commit -am "$(git log --pretty=format:%s -1)" --amend && git push "$(git remote | head -1)" "$(git rev-parse --abbrev-ref HEAD)" --force'';
     };
 
     history = {

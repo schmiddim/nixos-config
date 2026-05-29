@@ -3,31 +3,6 @@
 ## Scope
 Dieses Repo ist eine NixOS-Flake-Konfiguration für den Host `p52` (ThinkPad P52) inkl. Home-Manager.
 Alle Änderungen müssen **reproduzierbar, reviewbar und nicht-destruktiv** sein.
-
-
-## 🔁 Standard-Workflow: Branch → Push → Pull Request (verbindlich)
-
-Wenn du ein Feature/Bugfix umsetzt, dann **immer** so arbeiten:
-
-1) Erstelle einen neuen Branch (nie direkt auf default branch arbeiten)
-    - Branch-Schema: `codex/<kurzer-slug>` oder `codex/issue-<nr>-<slug>`
-    - Beispiel: `codex/issue-12-nvidia-suspend`
-
-2) Commit-Regeln
-    - Kleine, reviewbare Commits (max. ~200 LoC pro Commit, wenn möglich)
-    - Commit-Message: prägnant + was/warum
-    - Keine Lockfile-Änderungen (`flake.lock`), außer Aufgabe ist Update/Lock.
-3) Push
-    - Push den Branch ins Origin (upstream setzen).
-
-4) Pull Request erstellen
-    - PR-Titel: wie Branch / Issue
-    - PR-Beschreibung muss enthalten:
-        - Was geändert wurde (Bulletpoints)
-        - Hinweise zu Risiko-Bereichen (Boot/FS/GPU/etc.), falls betroffen
-        - Wenn `flake.lock` geändert: warum + was genau updated wurde
-
-5) Wenn der Pull Request erfolgreich ausgeführt wurde master branch lokal auschecken
 ---
 
 
