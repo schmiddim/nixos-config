@@ -40,12 +40,12 @@
     obsidian
     curl
     jq
-    neofetch
+    fastfetch
     alacritty
     librewolf
     pcmanfm
     nixd
-    nixfmt-rfc-style
+    nixfmt
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
@@ -145,6 +145,8 @@
     #  https://nixos.wiki/wiki/Neovim
     neovim = {
       enable = true;
+      withRuby = false;
+      withPython3 = false;
       extraConfig = ''
         set number relativenumber
       '';
@@ -174,9 +176,9 @@
   services = {
     # https://nixos.wiki/wiki/OpenSnitch
     opensnitch-ui = {
-        enable = true;
+      enable = true;
     };
-      # clipboard history
+    # clipboard history
     cliphist = {
       enable = true;
       allowImages = true;
