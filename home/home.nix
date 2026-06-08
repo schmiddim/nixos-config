@@ -73,12 +73,12 @@
     unzip
     zip
     unstablePkgs.opencode # aktuellste Version aus nixpkgs-unstable
-    (pkgs.wrapOBS {
-      plugins = with pkgs.obs-studio-plugins; [
-        wlrobs # Screen capture für wlroots/Sway
-        obs-pipewire-audio-capture # Audio via PipeWire
-      ];
-    })
+#    (pkgs.wrapOBS {
+#      plugins = with pkgs.obs-studio-plugins; [
+#        wlrobs # Screen capture für wlroots/Sway
+#        obs-pipewire-audio-capture # Audio via PipeWire
+#      ];
+#    })
     # Modern CLI tools
     fzf # fuzzy finder
     bat # better cat with syntax highlighting
